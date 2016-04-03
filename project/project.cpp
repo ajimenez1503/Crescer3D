@@ -1,12 +1,15 @@
-// Lab 4, terrain generation
+//#define __LINUX__
+#define __OSX__
 
-#ifdef __APPLE__
-	#include <OpenGL/gl3.h>
-	// Linking hint for Lightweight IDE
-	// uses framework Cocoa
+#ifdef __LINUX__
+	#include "../common/Linux/MicroGlut.h"
 #endif
 
-#include "../common/Linux/MicroGlut.h"
+#ifdef __OSX__
+	#include <OpenGL/gl3.h>
+	#include "../common/mac/MicroGlut.h"
+#endif
+
 #include "../common/GL_utilities.h"
 #include "../common/loadobj.h"
 #include "../common/VectorUtils3.h"

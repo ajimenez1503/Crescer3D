@@ -1,9 +1,3 @@
-#ifdef __APPLE__
-	#include <OpenGL/gl3.h>
-	// Linking hint for Lightweight IDE
-	// uses framework Cocoa
-#endif
-#include "../../common/Linux/MicroGlut.h"
 #include "../../common/GL_utilities.h"
 #include "../../common/loadobj.h"
 #include "../../common/VectorUtils3.h"
