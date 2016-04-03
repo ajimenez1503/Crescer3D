@@ -29,5 +29,5 @@
 # OS X Metadata
 .DS_Store
 
-# Build Folder
-/project
+# Binaries
+game
