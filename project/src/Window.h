@@ -26,6 +26,7 @@
 #include "Game.h"
 #include "Input.h"
 #include "DeleteUtil.h"
+#include "Logger.h"
 
 namespace Crescer3D
 {
@@ -37,6 +38,8 @@ namespace Crescer3D
 		static GLuint m_Program;
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
+		static bool m_CollisionState;
+		static int m_Score;
 
 	public:
 		Window(char* title, int width, int height);

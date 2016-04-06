@@ -73,16 +73,16 @@ void Sphere::setPosition(float x, float y,float z){
 	setPositionY(y);
 	setPositionZ(z);
 }
-bool Sphere::collision(Sphere other){
+bool Sphere::collision(Sphere* other){
 	// Calculate the sum of the radii, then square it
-	float sumradiusSquared = getRadius() + other.getRadius();
+	float sumradiusSquared = getRadius() + other->getRadius();
 	sumradiusSquared *= sumradiusSquared;
 
-	double deltaXSquared = getX() - other.getX(); // calc. delta X
+	double deltaXSquared = getX() - other->getX(); // calc. delta X
 	deltaXSquared *= deltaXSquared; // square delta X
-	double deltaYSquared = getY() - other.getY(); // calc. delta Y
+	double deltaYSquared = getY() - other->getY(); // calc. delta Y
 	deltaYSquared *= deltaYSquared; // square delta Y
-	double deltaZSquared = getZ() - other.getZ(); // calc. delta Y
+	double deltaZSquared = getZ() - other->getZ(); // calc. delta Y
 	deltaZSquared *= deltaZSquared; // square delta Y
 	if(deltaXSquared + deltaYSquared +deltaZSquared <= sumradiusSquared){
 		return true;

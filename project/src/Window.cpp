@@ -6,6 +6,8 @@ namespace Crescer3D
 	GLuint Window::m_Program;
 	Ground Window::m_Ground;
 	mat4 Window::m_ProjMat;
+	bool Window::m_CollisionState;
+	int Window::m_Score;
 
 	Window::Window(char* title, int width, int height)
 	: System(SystemType::Sys_Window)
@@ -59,7 +61,7 @@ namespace Crescer3D
 
 	void Window::Timer(int i)
 	{
-		glutTimerFunc(20, &Timer, i);
+		glutTimerFunc(2, &Timer, i);
 		glutPostRedisplay();
 	}
 
@@ -87,6 +89,20 @@ namespace Crescer3D
 		Game::GetEnemy()->draw(total, m_Program);
 		printError("Drawing");
 
+
+		if(!m_CollisionState && Game::GetPlayer()->collision(Game::GetEnemy()))
+		{
+			Logger::Log("Collision!");
+			m_Score++;
+			m_CollisionState=true;
+		}
+
+		if(m_CollisionState && !Game::GetPlayer()->collision(Game::GetEnemy()))
+		{
+			Logger::Log("No Collision!");
+			m_CollisionState=false;
+		}
+
 		// swapping buffers
 		glutSwapBuffers();
 		printError("Swapping Buffers");
@@ -95,7 +111,7 @@ namespace Crescer3D
 	void Window::DisplayScore()
 	{
 		// needs to be fixed: get score data from gameplay subsytem
-		int score = 123456;
+		int score = m_Score;
 		
 		char outString[28]; // enough to hold all numbers up to 64-bits and "Score: "
 		const char* a = "Score: ";
