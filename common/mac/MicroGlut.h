@@ -14,6 +14,7 @@ extern "C" {
 
 // Same or similar to old GLUT calls
 void glutMainLoop();
+void internalCheckLoop();
 void glutCheckLoop();
 void glutInit(int *argcp, char **argv);
 void glutPostRedisplay();

@@ -7,9 +7,10 @@ extern "C" {
 
 #ifdef __APPLE__
 	#include <OpenGL/gl3.h>
-	#include "MicroGlut.h"
+	#include "../common/mac/MicroGlut.h"
 #else
 	#include <GL/gl.h>
+	#include "../common/Linux/MicroGlut.h"
 #endif
 #include <stdlib.h>
 #include <string.h>
