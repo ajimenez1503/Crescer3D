@@ -7,7 +7,9 @@ The project makefile consists of a build target for OS X and Linux.
 
 ### How to build Crescer3D:
 
-1.) Define in "Platform.h" if you use OS X or Linux
-2.) Run "make mac" for OS X or "make linux" for Linux
-3.) Run the game with "./Crescer3D" from Console
+####1.) Define in "Platform.h" if you use OS X or Linux
+
+####2.) Run "make mac" for OS X or "make linux" for Linux
+
+####3.) Run the game with "./Crescer3D" from Console
  
