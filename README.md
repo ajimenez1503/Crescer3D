@@ -3,4 +3,11 @@ Inspired by the online game "agar.io" we want to do a "smash and run" game where
 
 
 ## Build Targets
-The project makefile consists of a build target for OS X and Linux. The mainfile needs to define in lines 1+2 the fitting system variable and then you can use "make mac" or "make linux" for building it for the desired system.
+The project makefile consists of a build target for OS X and Linux.
+
+### How to build Crescer3D:
+
+1.) Define in "Platform.h" if you use OS X or Linux
+2.) Run "make mac" for OS X or "make linux" for Linux
+3.) Run the game with "./Crescer3D" from Console
+ 
