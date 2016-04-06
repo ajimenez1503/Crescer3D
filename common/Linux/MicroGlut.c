@@ -75,6 +75,7 @@ struct timeval timeStart;
 static Atom wmDeleteMessage; // To handle delete msg
 char gKeymap[256];
 char gRunning = 1;
+char pressed;
 
 void glutInit(int *argc, char *argv[])
 {
@@ -435,11 +436,23 @@ void doKeyboardEvent(XEvent event, void (*keyProc)(unsigned char key, int x, int
 //		      		{	if (gKeyUp) gKeyUp(buffer[0], 0, 0); gKeymap[(int)buffer[0]] = 0;}
 }
 
+void glutStartLoop()
+{
+	pressed = 0;
+	XAllowEvents(dpy, AsyncBoth, CurrentTime);
+}
+
+void glutEndLoop()
+{
+	glXMakeCurrent(dpy, None, NULL);
+   glXDestroyContext(dpy, ctx);
+   XDestroyWindow(dpy, win);
+   XCloseDisplay(dpy);
+}
+
 void glutMainLoop()
 {
-	char pressed = 0;
-	int i;
-
+	pressed = 0;
 	XAllowEvents(dpy, AsyncBoth, CurrentTime);
 
 	while (gRunning)
@@ -483,7 +496,7 @@ void glutMainLoop()
 				break;
 		case MotionNotify:
 				pressed = 0;
-				for (i = 0; i < 5; i++)
+				for (int i = 0; i < 5; i++)
 					if (gButtonPressed[i]) pressed = 1;
 					if (pressed && gMouseDragged)
 						gMouseDragged(event.xbutton.x, event.xbutton.y);
@@ -516,6 +529,76 @@ void glutMainLoop()
    XDestroyWindow(dpy, win);
    XCloseDisplay(dpy);
 }
+
+void internalCheckLoop()
+{
+	int op = 0;
+      while (XPending(dpy) > 0)
+      {
+         XEvent event;
+         XNextEvent(dpy, &event);
+
+         switch (event.type)
+         {
+         	case ClientMessage:
+         		if (event.xclient.data.l[0] == wmDeleteMessage) // quit!
+         			gRunning = 0;
+	         	break;
+         	case Expose: 
+			op = 1; break; // Update event! Should do draw here.
+         	case ConfigureNotify:
+				if (gReshape)
+	      			gReshape(event.xconfigure.width, event.xconfigure.height);
+				else
+				{
+					glViewport(0, 0, event.xconfigure.width, event.xconfigure.height);
+				}
+				animate = 1;
+      			break;
+      		case KeyPress:
+				doKeyboardEvent(event, gKey, gSpecialKey, 1);break;
+      		case KeyRelease:
+				doKeyboardEvent(event, gKeyUp, gSpecialKeyUp, 0);break;
+			case ButtonPress:
+				gButtonPressed[event.xbutton.button] = 1;
+				if (gMouseFunc != NULL)
+					gMouseFunc(GLUT_LEFT_BUTTON, GLUT_DOWN, event.xbutton.x, event.xbutton.y);
+				break;
+			case ButtonRelease:
+				gButtonPressed[event.xbutton.button] = 0;
+				if (gMouseFunc != NULL)
+					gMouseFunc(GLUT_LEFT_BUTTON, GLUT_UP, event.xbutton.x, event.xbutton.y);
+				break;
+		case MotionNotify:
+				pressed = 0;
+				for (int i = 0; i < 5; i++)
+					if (gButtonPressed[i]) pressed = 1;
+					if (pressed && gMouseDragged)
+						gMouseDragged(event.xbutton.x, event.xbutton.y);
+					else
+					if (gMouseMoved)
+						gMouseMoved(event.xbutton.x, event.xbutton.y);
+				break;
+
+		default:
+			break;
+         }
+      }
+      
+      if (animate)
+      {
+      	animate = 0;
+		if (gDisplay)
+		  	gDisplay();
+		else
+			printf("No display function!\n");
+      	op = 0;
+      }
+		else
+		if (gIdle) gIdle();
+      checktimers();
+}
+
 
 void glutSwapBuffers()
 {

@@ -46,7 +46,6 @@ namespace Crescer3D
 		m_Ground.init();
 		Game::GetPlayer()->init(0);
 		Game::GetEnemy()->init(1);
-
 		Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 		sfMakeRasterFont(); // init font
 		glutTimerFunc(20, &Timer, 0);

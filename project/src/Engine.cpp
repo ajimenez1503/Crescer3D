@@ -75,8 +75,12 @@ namespace Crescer3D
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Window]->Initialize())
 			return false;
 
+
+		glutStartLoop();
+
 		// ... init more subsystems
 			return true;
+
 	}
 
 	Crescer3D::Game* Engine::CreateGame()
@@ -108,8 +112,8 @@ namespace Crescer3D
 	int Engine::Shutdown()
 	{
 		m_EngineState = ShuttingDown;
-
 		Logger::Log("Shutting down Crescer3D...");
+		glutEndLoop();
 
 		// Delete all subsystems
 		for (std::pair<Crescer3D::SystemType, Crescer3D::System*> pSys : m_mapSystems)

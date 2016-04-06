@@ -866,6 +866,16 @@ void oglutMainLoop()
 char inMainLoop = 0;
 char finished = 0;
 
+void glutStartLoop()
+{
+	return;
+}
+
+void glutEndLoop()
+{
+	return; 
+}
+
 void internalCheckLoop()
 {
 	NSEvent *event;
