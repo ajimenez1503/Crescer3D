@@ -1,6 +1,3 @@
-//#define __LINUX__
-#define __OSX__
-
 #include "src/Engine.h"
 #include "src/deleteutil.h"
 

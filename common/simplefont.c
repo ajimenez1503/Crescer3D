@@ -300,7 +300,6 @@ void sfMakeRasterFont(void)
 	GLuint saveprogram;
 	
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &tex);
-	glEnable(GL_TEXTURE_2D);
 	glGetIntegerv(GL_CURRENT_PROGRAM, &saveprogram);
 	
 	initVAO();
@@ -314,18 +313,14 @@ void sfMakeRasterFont(void)
 
 // Note that negative coordinates are allowed
 // and refer to the left or bottom!
-void sfDrawString(int h, int v,const char *s)
+void sfDrawString(int h, int v, const char *s)
 {
 	int off;
 	GLuint tex;
 	GLuint saveprogram;
-	
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &tex);
 	glBindTexture(GL_TEXTURE_2D, fontTexture);
-	glEnable(GL_TEXTURE_2D); // Should query and restore
-	// I also would like to get and restore the current shader program:
 	glGetIntegerv(GL_CURRENT_PROGRAM, &saveprogram);
-	
 	if (h < 0)
 		h = gRasterH + h - strlen(s)*10;
 	if (v < 0)

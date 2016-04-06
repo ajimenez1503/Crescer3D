@@ -10,12 +10,7 @@
 	#include "../common/mac/MicroGlut.h"
 #endif
 
-#include "../common/GL_utilities.h"
-#include "../common/loadobj.h"
-#include "../common/VectorUtils3.h"
-#include "../common/LoadTGA.h"
-#include "../common/simplefont.h"
-#include "../common/simplefont.h"
+#include "Platform.h"
 
 #include <math.h>
 #include <stdlib.h>

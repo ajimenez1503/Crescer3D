@@ -1,8 +1,10 @@
+#ifndef _GROUND_H
+#define _GROUND_H
+
 #include "../../common/GL_utilities.h"
 #include "../../common/loadobj.h"
 #include "../../common/VectorUtils3.h"
 #include "../../common/LoadTGA.h"
-
 
 class Ground {
 	private:
@@ -15,3 +17,4 @@ class Ground {
 		void draw(mat4 total,GLuint program);
 };
 
+#endif // _GROUND_H

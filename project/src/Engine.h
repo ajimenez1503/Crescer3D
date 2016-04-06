@@ -1,6 +1,8 @@
 #ifndef _ENGINE_H
 #define _ENGINE_H
 
+#include "Platform.h"
+
 #ifdef __LINUX__
 	extern "C"
 	{
@@ -18,9 +20,10 @@
 
 #include <map>
 #include "System.h"
-#include "deleteutil.h"
 #include "Window.h"
 #include "Game.h"
+#include "Input.h"
+#include "DeleteUtil.h"
 
 namespace Crescer3D
 {

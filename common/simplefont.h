@@ -1,17 +1,21 @@
 #ifndef _SIMPLEFONT_
 #define _SIMPLEFONT_
 
+#include "../project/src/Platform.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef __APPLE__
-	#include <OpenGL/gl3.h>
-	#include "../common/mac/MicroGlut.h"
-#else
+#ifdef __LINUX__
 	#include <GL/gl.h>
-	#include "../common/Linux/MicroGlut.h"
+	#include "../../common/Linux/MicroGlut.h"
 #endif
+#ifdef __OSX__
+	#include <OpenGL/gl3.h>
+	#include "../../common/mac/MicroGlut.h"
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 

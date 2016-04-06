@@ -1,4 +1,4 @@
-#include "sphere.h"
+#include "Sphere.h"
 
 void Sphere::moveForward () {
 	positionz-=velocity;

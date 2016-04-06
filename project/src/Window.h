@@ -1,6 +1,8 @@
 #ifndef _WINDOW_H
 #define _WINDOW_H
 
+#include "Platform.h"
+
 #ifdef __LINUX__
 	extern "C"
 	{
@@ -16,17 +18,14 @@
 	}
 #endif
 
-#include "../../common/GL_utilities.h"
-#include "../../common/loadobj.h"
-#include "../../common/VectorUtils3.h"
-#include "../../common/LoadTGA.h"
 #include "../../common/simplefont.h"
 
-#include <iostream>
 #include "System.h"
-#include "deleteutil.h"
-#include "sphere.h"
-#include "ground.h"
+#include "Sphere.h"
+#include "Ground.h"
+#include "Game.h"
+#include "Input.h"
+#include "DeleteUtil.h"
 
 namespace Crescer3D
 {
@@ -36,8 +35,6 @@ namespace Crescer3D
 		int m_Width, m_Height;
 		char* m_Title;
 		static GLuint m_Program;
-		static Sphere m_Player;
-		static Sphere m_Enemy;
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
 
@@ -46,8 +43,7 @@ namespace Crescer3D
 		~Window();
 
 		virtual bool Update();
-		
-
+	
 		inline int GetWidth() { return m_Width; };
 		inline int GetHeight() { return m_Height; };
 
@@ -56,7 +52,7 @@ namespace Crescer3D
 		static void Draw();
 		static void Clear();
 		static void Timer(int i);
-		void displayScore();
+		static void DisplayScore();
 	};
 }
 

@@ -7,6 +7,7 @@ namespace Crescer3D
 	Engine::Engine()
 	{
 		m_EngineState = Constructing;
+		//glutKeyboardFunc(runMainLoop);
 	}
 
 
@@ -42,6 +43,9 @@ namespace Crescer3D
 
 		// Add subsystems
 		if (!AddSystem(new Crescer3D::Window("Crescer3D", 800, 600)))
+			return false;
+
+		if (!AddSystem(new Crescer3D::Input()))
 			return false;
 
 		// ... add more subsystems
