@@ -18,8 +18,9 @@ linux:
 	g++ -c -w -std=c++11 -o $(bindir)Sphere.o $(src)Sphere.cpp
 	g++ -c -w -std=c++11 -o $(bindir)Ground.o $(src)Ground.cpp
 	g++ -c -w -std=c++11 -o $(bindir)Input.o $(src)Input.cpp
+	g++ -c -w -std=c++11 -o $(bindir)Logger.o $(src)Logger.cpp
 	g++ -c -w -std=c++11 -o $(bindir)main.o main.cpp
-	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Window.o $(bindir)Game.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
+	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)Window.o $(bindir)Game.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
 
 mac:
 	gcc -c -w -std=c99 -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
@@ -36,8 +37,9 @@ mac:
 	g++ -c -w -std=c++11 -o $(bindir)Sphere.o $(src)Sphere.cpp
 	g++ -c -w -std=c++11 -o $(bindir)Ground.o $(src)Ground.cpp
 	g++ -c -w -std=c++11 -o $(bindir)Input.o $(src)Input.cpp
+	g++ -c -w -std=c++11 -o $(bindir)Logger.o $(src)Logger.cpp
 	g++ -c -w -std=c++11 -o $(bindir)main.o main.cpp
-	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Window.o $(bindir)Game.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -I$(commondir) -I../common/mac -framework Cocoa -framework OpenGL
+	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)Window.o $(bindir)Game.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -I$(commondir) -I../common/mac -framework Cocoa -framework OpenGL
 
 clean:
 	rm game

@@ -3,14 +3,14 @@
 
 namespace Crescer3D
 {
+	// Enter new subsystems here
 	enum SystemType
 	{
 		Sys_Invalid,
 		Sys_Window,
 		Sys_Game,
 		Sys_Input,
-		Sys_Graphics,
-		Sys_Timer,
+		Sys_Logger,
 		Sys_MAX
 	};
 

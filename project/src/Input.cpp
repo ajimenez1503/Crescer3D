@@ -118,7 +118,8 @@ namespace Crescer3D
 				m_CameraPosY -= 0.01;
 				break;
 			case 'q' :
-				exit(1);
+			case GLUT_KEY_ESC :
+				Engine::GetEngine()->SetEngineState(ShuttingDown);
 			break;
 		}
 	}

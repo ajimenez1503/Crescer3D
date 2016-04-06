@@ -2,14 +2,31 @@
 
 namespace Crescer3D
 {
+	Engine* Engine::m_Engine;
 	EngineState Engine::m_EngineState = Invalid;
 
 	Engine::Engine()
 	{
 		m_EngineState = Constructing;
-		//glutKeyboardFunc(runMainLoop);
 	}
 
+	Engine* Engine::GetEngine()
+	{
+		if(m_Engine != NULL)
+		{
+			return m_Engine;
+		}
+		else
+		{
+			m_Engine = new Engine();
+			return m_Engine;
+		}
+	}
+
+	void Engine::SetEngineState(EngineState newState)
+	{
+		m_EngineState = newState;
+	}
 
 	Engine::~Engine()
 	{
@@ -37,11 +54,15 @@ namespace Crescer3D
 
 	int Engine::Initialize()
 	{
+		Logger::Log("Starting Crescer3D...");
 		m_EngineState = Initializing;
 
 		Crescer3D::Game* game = CreateGame();
 
 		// Add subsystems
+		if (!AddSystem(new Crescer3D::Logger()))
+			return false;
+
 		if (!AddSystem(new Crescer3D::Window("Crescer3D", 800, 600)))
 			return false;
 
@@ -88,12 +109,14 @@ namespace Crescer3D
 	{
 		m_EngineState = ShuttingDown;
 
+		Logger::Log("Shutting down Crescer3D...");
+
 		// Delete all subsystems
 		for (std::pair<Crescer3D::SystemType, Crescer3D::System*> pSys : m_mapSystems)
 		{
 			if (!pSys.second->ShutDown())
 			{
-				//Log::Logger("Failed to shutdown system " + pSys->GetSystemType());
+				Logger::Log("Failed to shutdown Subsystem: " + pSys.first);
 				continue;
 			}
 

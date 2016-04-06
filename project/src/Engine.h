@@ -19,10 +19,12 @@
 #endif
 
 #include <map>
+
 #include "System.h"
 #include "Window.h"
 #include "Game.h"
 #include "Input.h"
+#include "Logger.h"
 #include "DeleteUtil.h"
 
 namespace Crescer3D
@@ -45,19 +47,25 @@ namespace Crescer3D
 	{
 
 	public:
-		Engine();
 		~Engine();
+
 		bool runMainLoop();
+		int Shutdown();
+
 		static EngineState GetEngineState() { return m_EngineState; }
+		static void SetEngineState(EngineState);
+		static Engine* GetEngine();
 
 	private:
+		Engine();
+		
+		static Engine* m_Engine;
 		static EngineState m_EngineState;
 		std::map<Crescer3D::SystemType, Crescer3D::System*> m_mapSystems;
 
 		int Initialize();
 		int Update();
-		int Shutdown();
-
+	
 		Crescer3D::Game* CreateGame();
 
 		int AddSystem(Crescer3D::System* pSys);
@@ -69,7 +77,7 @@ namespace Crescer3D
 			T* psys = static_cast<T*>(m_mapSystems[sysType]);
 			if (!psys)
 			{
-				// Logger::Log("System is not valid");
+				Logger::Log("System is not valid");
 				return nullptr;
 			}
 			return psys;
