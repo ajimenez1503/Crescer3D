@@ -9,11 +9,11 @@ extern "C" {
 
 #ifdef __LINUX__
 	#include <GL/gl.h>
-	#include "../../common/Linux/MicroGlut.h"
+	#include "Linux/MicroGlut.h"
 #endif
 #ifdef __OSX__
 	#include <OpenGL/gl3.h>
-	#include "../../common/mac/MicroGlut.h"
+	#include "mac/MicroGlut.h"
 #endif
 
 #include <stdlib.h>

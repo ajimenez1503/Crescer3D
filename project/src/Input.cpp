@@ -11,6 +11,8 @@ namespace Crescer3D
 	float Input::m_CameraPosY;
 	float Input::m_CameraPosZ;
 	int   Input::m_xOrigin;
+	int   Input::m_MouseXPos;
+	int   Input::m_MouseYPos;
 	mat4  Input::m_LookAtMatrix;
 
 	Input::Input()
@@ -24,6 +26,8 @@ namespace Crescer3D
 		m_CameraPosY = 3.0f;
 		m_CameraPosZ = 8.0f;
 		m_xOrigin = -1;
+		m_MouseXPos = 0;
+		m_MouseYPos = 0;
 		m_LookAtMatrix = IdentityMatrix();
 		glutMouseFunc(MouseButton);
 		glutMotionFunc(MouseMove);
@@ -61,6 +65,13 @@ namespace Crescer3D
 			m_CameraDirX = sin(m_CameraAngle + m_DeltaAngle);
 			m_CameraDirZ = -cos(m_CameraAngle + m_DeltaAngle);
 		}
+		m_MouseXPos = x;
+		m_MouseYPos = y;
+	}
+
+	vec2 Input::GetMousePosition()
+	{
+		return vec2(m_MouseXPos, m_MouseYPos);
 	}
 
 	void Input::Keyboard(unsigned char key, int xx, int yy)

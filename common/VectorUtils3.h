@@ -25,10 +25,21 @@
 #define Matrix4f Matrix4D
 
 // GLSL-style
+#define Point2D vec2
 #define Point3D vec3
 #define Matrix3D mat3
 #define Matrix4D mat4
 	
+	// vec2 is very useful
+	typedef struct vec2
+	{
+		GLfloat x, y;
+		#ifdef __cplusplus
+            vec2() {}
+			vec2(GLfloat x2, GLfloat y2) : x(x2), y(y2) {}
+		#endif
+	} vec2, *vec2Ptr;
+
 	// vec3 is very useful
 	typedef struct vec3
 	{
@@ -147,6 +158,68 @@ extern "C" {
 #ifdef __cplusplus
 // Some C++ operator overloads
 // Non-member C++ operators!
+
+// --- vec2 operations ---
+inline
+vec2 operator+(const vec2 &a, const vec2 &b) // vec2+vec2
+{
+	return vec2(a.x+b.x, a.y+b.y);
+}
+
+inline
+vec2 operator-(const vec2 &a, const vec2 &b) // vec2-vec2
+{
+	return vec2(a.x-b.x, a.y-b.y);
+}
+
+	// Questionable, not like GLSL
+inline
+float operator*(const vec2 &a, const vec2 &b) // vec2 dot vec2
+{
+	return (a.x*b.x+ a.y*b.y);
+}
+
+inline
+vec2 operator*(const vec2 &b, double a) // vec2 * scalar
+{
+	return vec2(a*b.x, a*b.y);
+}
+
+inline
+vec2 operator*(double a, const vec2 &b) // scalar * vec2
+{
+	return vec2(a*b.x, a*b.y);
+}
+
+inline
+vec2 operator/(const vec2 &b, double a) // vec2 / scalar
+{
+	return vec2(b.x/a, b.y/a);
+}
+
+inline
+void operator+=(vec2 &a, const vec2 &b) // vec2+=vec2
+{
+	a = a + b;
+}
+
+inline
+void operator-=(vec2 &a, const vec2 &b) // vec2-=vec2
+{
+	a = a - b;
+}
+
+inline
+void operator*=(vec2 &a, const float &b) // vec2*=scalar
+{
+	a = a * b;
+}
+
+inline
+void operator/=(vec2 &a, const float &b) // vec2/=scalar
+{
+	a = a / b;
+}
 
 // --- vec3 operations ---
 inline

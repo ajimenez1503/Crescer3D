@@ -33,6 +33,7 @@ namespace Crescer3D
 
 		virtual bool Update();
 		static inline mat4 GetLookAtMatrix() { return m_LookAtMatrix; }
+		static vec2 GetMousePosition();
 
 	private:
 		static void Keyboard(unsigned char key, int xx, int yy);
@@ -50,6 +51,8 @@ namespace Crescer3D
 		static float m_CameraPosY;
 		static float m_DeltaAngle;
 		static int m_xOrigin;
+		static int m_MouseXPos;
+		static int m_MouseYPos;
 	};
 }
 
