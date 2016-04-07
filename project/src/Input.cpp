@@ -81,16 +81,16 @@ namespace Crescer3D
 
 		switch (key)
 		{
-			case 'i' :
+			case GLUT_KEY_UP :
 				Game::GetPlayer()->moveForward();
 			break;
-			case 'j' :
+			case GLUT_KEY_LEFT :
 				Game::GetPlayer()->moveLeft();
 			break;
-			case 'l' :
+			case GLUT_KEY_RIGHT :
 				Game::GetPlayer()->moveRight();
 			break;
-			case 'k' :
+			case GLUT_KEY_DOWN :
 				Game::GetPlayer()->moveBack();
 			break;
 			case 'a' :
@@ -118,7 +118,7 @@ namespace Crescer3D
 				m_CameraPosY -= 0.01;
 				break;
 			case 'q' :
-			case GLUT_KEY_ESC :
+			case GLUT_KEY_ESC:
 				Engine::GetEngine()->SetEngineState(ShuttingDown);
 			break;
 		}

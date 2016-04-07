@@ -6,7 +6,7 @@
 #ifdef __LINUX__
 	extern "C"
 	{
-		#include <GL/gl.h>
+		#define GL_GLEXT_PROTOTYPES
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
