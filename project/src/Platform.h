@@ -3,7 +3,7 @@
 
 // Choose your development platform accordingly
 
-//#define __LINUX__
-#define __OSX__
+#define __LINUX__
+//#define __OSX__
 
 #endif // _PLATFORM_H
