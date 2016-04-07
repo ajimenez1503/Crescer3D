@@ -6,6 +6,7 @@
 #ifdef __LINUX__
 	extern "C"
 	{
+		#include <GL/gl.h>
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
