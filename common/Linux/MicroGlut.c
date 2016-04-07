@@ -428,7 +428,7 @@ void doKeyboardEvent(XEvent event, void (*keyProc)(unsigned char key, int x, int
 			keyProc(buffer[0], 0, 0);
 	gKeymap[(int)buffer[0]] = keyMapValue;
 	
-	printf("%c %d %d %d\n", buffer[0], buffer[0], r, code);
+	//printf("%c %d %d %d\n", buffer[0], buffer[0], r, code);
 
 //	      			if (event.type == KeyPress)
 //		      		{	if (gKey) gKey(buffer[0], 0, 0); gKeymap[(int)buffer[0]] = 1;}
@@ -778,7 +778,7 @@ char glutKeyIsDown(unsigned char c)
 	return gKeymap[(unsigned int)c];
 }
 
-// Added by the Risinger/RŒberg/Wikstršm project! But... gButtonPressed
+// Added by the Risinger/R\8Cberg/Wikstr\9Am project! But... gButtonPressed
 // was already here! Did I miss something?
 char glutMouseIsDown(unsigned char c)
 {
