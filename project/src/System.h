@@ -11,6 +11,7 @@ namespace Crescer3D
 		Sys_Game,
 		Sys_Input,
 		Sys_Logger,
+		Sys_Player,
 		Sys_MAX
 	};
 
