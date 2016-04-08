@@ -71,6 +71,8 @@ namespace Crescer3D
 
 		if (!AddSystem(new Crescer3D::Player()))
 			return false;
+		if (!AddSystem(new Crescer3D::HighScore()))
+			return false;
 
 		// ... add more subsystems
 
@@ -78,6 +80,8 @@ namespace Crescer3D
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Window]->Initialize())
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Player]->Initialize())
+			return false;
+		if (!m_mapSystems[Crescer3D::SystemType::Sys_HighScore]->Initialize())
 			return false;
 
 

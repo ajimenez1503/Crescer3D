@@ -19,8 +19,8 @@
 	}
 #endif
 
-#include "../../common/simplefont.h"
 
+#include "HighScore.h"
 #include "System.h"
 #include "Sphere.h"
 #include "Ground.h"
@@ -40,14 +40,13 @@ namespace Crescer3D
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
 		static bool m_CollisionState;
-		static int m_Score;
 
 	public:
 		Window(char* title, int width, int height);
 		~Window();
 
 		virtual bool Update();
-	
+
 		inline int GetWidth() { return m_Width; };
 		inline int GetHeight() { return m_Height; };
 
@@ -56,7 +55,7 @@ namespace Crescer3D
 		static void Draw();
 		static void Clear();
 		static void Timer(int i);
-		static void DisplayScore();
+		
 	};
 }
 

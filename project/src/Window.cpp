@@ -7,7 +7,6 @@ namespace Crescer3D
 	Ground Window::m_Ground;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
-	int Window::m_Score;
 
 	Window::Window(char* title, int width, int height)
 	: System(SystemType::Sys_Window)
@@ -42,12 +41,11 @@ namespace Crescer3D
 		printError("Shader Init");
 
 		glUniformMatrix4fv(glGetUniformLocation(m_Program, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-		
+
 		m_Ground.init();
 		Game::GetPlayer()->init(0);
 		Game::GetEnemy()->init(1);
 		Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
-		sfMakeRasterFont(); // init font
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
@@ -83,7 +81,7 @@ namespace Crescer3D
 
 		// draw stuff
 		m_Ground.draw(total, m_Program);
-		DisplayScore();
+		HighScore::DisplayScore();
 		Game::GetPlayer()->draw(total, m_Program);
 		Game::GetEnemy()->draw(total, m_Program);
 		printError("Drawing");
@@ -92,7 +90,7 @@ namespace Crescer3D
 		if(!m_CollisionState && Game::GetPlayer()->collision(Game::GetEnemy()))
 		{
 			Logger::Log("Collision!");
-			m_Score++;
+			HighScore::IncrementScore();
 			m_CollisionState=true;
 		}
 
@@ -107,14 +105,5 @@ namespace Crescer3D
 		printError("Swapping Buffers");
 	}
 
-	void Window::DisplayScore()
-	{
-		// needs to be fixed: get score data from gameplay subsytem
-		int score = m_Score;
-		
-		char outString[28]; // enough to hold all numbers up to 64-bits and "Score: "
-		const char* a = "Score: ";
-		sprintf(outString,"%s%d",a,score);
-		sfDrawString(20, 20, outString);
-	}
+
 }

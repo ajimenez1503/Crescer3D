@@ -27,6 +27,7 @@
 #include "Game.h"
 #include "Input.h"
 #include "Logger.h"
+#include "HighScore.h"
 #include "DeleteUtil.h"
 
 namespace Crescer3D
@@ -60,14 +61,14 @@ namespace Crescer3D
 
 	private:
 		Engine();
-		
+
 		static Engine* m_Engine;
 		static EngineState m_EngineState;
 		std::map<Crescer3D::SystemType, Crescer3D::System*> m_mapSystems;
 
 		int Initialize();
 		int Update();
-	
+
 		Crescer3D::Game* CreateGame();
 
 		int AddSystem(Crescer3D::System* pSys);
