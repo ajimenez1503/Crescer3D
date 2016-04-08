@@ -4,7 +4,7 @@
 #include "../../common/simplefont.h"
 #include "System.h"
 #include<stdio.h>
-
+#include <string>
 namespace Crescer3D
 {
 	class HighScore : public System

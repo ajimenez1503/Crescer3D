@@ -22,14 +22,10 @@ namespace Crescer3D
 
 	void HighScore::DisplayScore()
 	{
-		//TODO improve with gcc11
-		// needs to be fixed: get score data from gameplay subsytem
-		int score = m_Score;
-
-		char outString[28]; // enough to hold all numbers up to 64-bits and "Score: "
-		const char* a = "Score: ";
-		sprintf(outString,"%s%d",a,score);
-		sfDrawString(20, 20, outString);
+		//with C++11
+		std::string result = "Score: ";
+		result = result + std::to_string(m_Score);
+		sfDrawString(20, 20, result.c_str());
 	}
 
 	void HighScore::IncrementScore()
