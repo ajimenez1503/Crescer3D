@@ -7,6 +7,7 @@
 
 namespace Crescer3D
 {
+
 	class Game : public System
 	{
 	public:

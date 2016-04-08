@@ -44,10 +44,6 @@ namespace Crescer3D
 		{
 			this->Update();
 			internalCheckLoop();
-			if(m_EngineState == ShuttingDown)//when the game is over save the score
-			{
-				HighScore::SaveScore("Max");
-			}
 		}
 
 		if (!this->Shutdown())

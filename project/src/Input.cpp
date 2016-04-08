@@ -119,7 +119,7 @@ namespace Crescer3D
 				break;
 			case 'q' :
 			case GLUT_KEY_ESC:
-				Engine::GetEngine()->SetEngineState(ShuttingDown);
+				Window::GameOver();
 			break;
 		}
 	}

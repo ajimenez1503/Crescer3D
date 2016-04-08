@@ -7,6 +7,7 @@ namespace Crescer3D
 	Ground Window::m_Ground;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
+	GameStates Window::gameState;
 
 	Window::Window(char* title, int width, int height)
 	: System(SystemType::Sys_Window)
@@ -14,6 +15,7 @@ namespace Crescer3D
 		m_Title = title;
 		m_Width = width;
 		m_Height = height;
+		SetGameState(Game_Init);
 	}
 
 	Window::~Window()
@@ -79,30 +81,59 @@ namespace Crescer3D
 		glUniformMatrix4fv(glGetUniformLocation(m_Program, "mdlMatrix"), 1, GL_TRUE, total.m);
 		printError("Getting Camera Matrix");
 
-		// draw stuff
-		m_Ground.draw(total, m_Program);
-		HighScore::DisplayScore();
-		Game::GetPlayer()->draw(total, m_Program);
-		Game::GetEnemy()->draw(total, m_Program);
-		printError("Drawing");
-
-
-		if(!m_CollisionState && Game::GetPlayer()->collision(Game::GetEnemy()))
+		if(gameState==Game_Init)
 		{
-			Logger::Log("Collision!");
-			HighScore::IncrementScore();
-			m_CollisionState=true;
-		}
+			HighScore::DisplayListScores();
+			//TODO move to Game_Play when click on play
+			SetGameState(Game_Play);
+			//TODO move to Game_GameOver when click on Exit
+			SetGameState(Game_Play);
 
-		if(m_CollisionState && !Game::GetPlayer()->collision(Game::GetEnemy()))
+		}
+		if(gameState==Game_Play)
 		{
-			Logger::Log("No Collision!");
-			m_CollisionState=false;
-		}
+			// draw stuff
+			m_Ground.draw(total, m_Program);
+			HighScore::DisplayScore();
+			Game::GetPlayer()->draw(total, m_Program);
+			Game::GetEnemy()->draw(total, m_Program);
+			printError("Drawing");
 
+
+			if(!m_CollisionState && Game::GetPlayer()->collision(Game::GetEnemy()))
+			{
+				Logger::Log("Collision!");
+				HighScore::IncrementScore();
+				m_CollisionState=true;
+			}
+
+			if(m_CollisionState && !Game::GetPlayer()->collision(Game::GetEnemy()))
+			{
+				Logger::Log("No Collision!");
+				m_CollisionState=false;
+			}
+		}
+		if(gameState==Game_GameOver)
+		{
+			HighScore::SaveScore("Max");
+			//TODO write the name
+			Engine::GetEngine()->SetEngineState(ShuttingDown);
+
+		}
 		// swapping buffers
 		glutSwapBuffers();
 		printError("Swapping Buffers");
+	}
+
+	void Window::GameOver()
+	{
+		SetGameState(Game_GameOver);
+
+	}
+
+	void Window::SetGameState(GameStates newState)
+	{
+		gameState = newState;
 	}
 
 

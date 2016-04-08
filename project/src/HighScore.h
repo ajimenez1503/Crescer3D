@@ -12,7 +12,7 @@ namespace Crescer3D
 	{
 	private:
 		static int m_Score;
-		static void DisplayListScores();
+
 
 	public:
 		HighScore();
@@ -21,6 +21,7 @@ namespace Crescer3D
 		static void DisplayScore();
 		static void IncrementScore();
 		static void SaveScore(std::string name);
+		static void DisplayListScores();
 	};
 }
 
