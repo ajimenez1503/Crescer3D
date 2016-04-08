@@ -13,9 +13,9 @@ void Ground::draw(mat4 total,GLuint program){
 	glUseProgram(program);
 	mdlMatrix=Mult(total,S(100000,1,100000));
 	glUniformMatrix4fv(glGetUniformLocation(program, "mdlMatrix"), 1, GL_TRUE, mdlMatrix.m);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, tex0);		// Bind Our Texture tex1
-	glUniform1i(glGetUniformLocation(program, "tex"), 0); // Texture unit 0
-	// draw ground	
+	glUniform1i(glGetUniformLocation(program, "tex"), 1); // Texture unit 0
+	// draw ground
 	DrawModel(cube, program, "inPosition", "inNormal", "inTexCoord");
 }

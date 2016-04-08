@@ -28,6 +28,7 @@
 #include "Input.h"
 #include "Logger.h"
 #include "HighScore.h"
+#include "GUI.h"
 #include "DeleteUtil.h"
 
 namespace Crescer3D

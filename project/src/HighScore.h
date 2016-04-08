@@ -22,6 +22,7 @@ namespace Crescer3D
 		static void IncrementScore();
 		static void SaveScore(std::string name);
 		static void DisplayListScores();
+		static void Reset();
 	};
 }
 

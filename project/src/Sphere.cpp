@@ -25,10 +25,10 @@ float Sphere::getZ(){
 	return positionz;
 }
 
-void Sphere::incrementRadius(){ 
+void Sphere::incrementRadius(){
 	radius+=0.5;
 }
-void Sphere::decrementRadius(){ 
+void Sphere::decrementRadius(){
 	radius-=0.5;
 }
 void Sphere::setPositionX(float x){
@@ -62,10 +62,10 @@ void Sphere::draw(mat4 total,GLuint program){
 	glUseProgram(program);
 	mdlMatrix=Mult(total,Mult(T(positionx,positiony,positionz),S(radius,radius,radius)));
 	glUniformMatrix4fv(glGetUniformLocation(program, "mdlMatrix"), 1, GL_TRUE, mdlMatrix.m);
-	glActiveTexture(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, tex1);		// Bind Our Texture tex1
-	glUniform1i(glGetUniformLocation(program, "tex"), 1); // Texture unit 0
-	// draw ground	
+	glUniform1i(glGetUniformLocation(program, "tex"), 2); // Texture unit 0
+	// draw ground
 	DrawModel(model, program, "inPosition", "inNormal", "inTexCoord");
 }
 void Sphere::setPosition(float x, float y,float z){

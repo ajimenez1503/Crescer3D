@@ -85,9 +85,11 @@ namespace Crescer3D
 		{
 			HighScore::DisplayListScores();
 			//TODO move to Game_Play when click on play
+			//TODO set initial position of Player
+
 			SetGameState(Game_Play);
 			//TODO move to Game_GameOver when click on Exit
-			SetGameState(Game_Play);
+			//SetGameState(Game_GameOver);
 
 		}
 		if(gameState==Game_Play)
@@ -115,10 +117,7 @@ namespace Crescer3D
 		}
 		if(gameState==Game_GameOver)
 		{
-			HighScore::SaveScore("Max");
-			//TODO write the name
-			Engine::GetEngine()->SetEngineState(ShuttingDown);
-
+			GUI::GameOverView();
 		}
 		// swapping buffers
 		glutSwapBuffers();
@@ -128,7 +127,6 @@ namespace Crescer3D
 	void Window::GameOver()
 	{
 		SetGameState(Game_GameOver);
-
 	}
 
 	void Window::SetGameState(GameStates newState)

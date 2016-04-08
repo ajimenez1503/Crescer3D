@@ -32,6 +32,10 @@ namespace Crescer3D
 	{
 		m_Score++;
 	}
+	void HighScore::Reset()
+	{
+		m_Score=0;
+	}
 
 	void HighScore::DisplayListScores()
 	{

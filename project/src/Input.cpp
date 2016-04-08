@@ -118,6 +118,7 @@ namespace Crescer3D
 				m_CameraPosY -= 0.01;
 				break;
 			case 'q' :
+			case 'Q' :
 			case GLUT_KEY_ESC:
 				Window::GameOver();
 			break;

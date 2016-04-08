@@ -13,7 +13,8 @@ namespace Crescer3D
 		Sys_Logger,
 		Sys_HighScore,
 		Sys_Player,
-		Sys_MAX
+		Sys_MAX,
+		Sys_GUI
 	};
 
 	struct SystemData
