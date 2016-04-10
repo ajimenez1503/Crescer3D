@@ -32,12 +32,6 @@
 namespace Crescer3D
 {
 
-	enum GameStates
-	{
-		Game_Init,
-		Game_Play,
-		Game_GameOver,
-	};
 
 	class Window : public System
 	{
@@ -48,7 +42,6 @@ namespace Crescer3D
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
 		static bool m_CollisionState;
-		static GameStates gameState;
 
 	public:
 		Window(char* title, int width, int height);
@@ -58,8 +51,7 @@ namespace Crescer3D
 
 		inline int GetWidth() { return m_Width; };
 		inline int GetHeight() { return m_Height; };
-		static void GameOver();
-		static void SetGameState(GameStates);
+
 
 	private:
 		virtual bool Initialize();

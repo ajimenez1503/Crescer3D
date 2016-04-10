@@ -38,6 +38,8 @@ namespace Crescer3D
 		virtual bool Initialize();
 		virtual ~GUI();
 		static void GameOverView();
+		static void InitView();
+		static void PlayView();
 	};
 }
 

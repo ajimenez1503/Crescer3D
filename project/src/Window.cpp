@@ -7,7 +7,7 @@ namespace Crescer3D
 	Ground Window::m_Ground;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
-	GameStates Window::gameState;
+
 
 	Window::Window(char* title, int width, int height)
 	: System(SystemType::Sys_Window)
@@ -15,7 +15,6 @@ namespace Crescer3D
 		m_Title = title;
 		m_Width = width;
 		m_Height = height;
-		SetGameState(Game_Init);
 	}
 
 	Window::~Window()
@@ -81,22 +80,16 @@ namespace Crescer3D
 		glUniformMatrix4fv(glGetUniformLocation(m_Program, "mdlMatrix"), 1, GL_TRUE, total.m);
 		printError("Getting Camera Matrix");
 
-		if(gameState==Game_Init)
+		if(Game::IsStateInit())
 		{
-			HighScore::DisplayListScores();
-			//TODO move to Game_Play when click on play
-			//TODO set initial position of Player
-
-			SetGameState(Game_Play);
-			//TODO move to Game_GameOver when click on Exit
-			//SetGameState(Game_GameOver);
-
+			GUI::InitView();
 		}
-		if(gameState==Game_Play)
+		if(Game::IsStatePlay())
 		{
+			GUI::PlayView();
 			// draw stuff
 			m_Ground.draw(total, m_Program);
-			HighScore::DisplayScore();
+
 			Game::GetPlayer()->draw(total, m_Program);
 			Game::GetEnemy()->draw(total, m_Program);
 			printError("Drawing");
@@ -115,7 +108,7 @@ namespace Crescer3D
 				m_CollisionState=false;
 			}
 		}
-		if(gameState==Game_GameOver)
+		if(Game::IsStateGameOver())
 		{
 			GUI::GameOverView();
 		}
@@ -124,15 +117,7 @@ namespace Crescer3D
 		printError("Swapping Buffers");
 	}
 
-	void Window::GameOver()
-	{
-		SetGameState(Game_GameOver);
-	}
 
-	void Window::SetGameState(GameStates newState)
-	{
-		gameState = newState;
-	}
 
 
 }

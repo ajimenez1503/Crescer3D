@@ -8,6 +8,12 @@
 namespace Crescer3D
 {
 
+	enum GameStates
+	{
+		Game_Init,
+		Game_Play,
+		Game_GameOver,
+	};
 	class Game : public System
 	{
 	public:
@@ -17,9 +23,18 @@ namespace Crescer3D
 		static Sphere* GetPlayer();
 		static Sphere* GetEnemy();
 
+		static void GameOver();
+		static void SetGameStateInit();
+		static void SetGameStatePlay();
+		static void SetGameStateGameOver();
+		static bool IsStateInit();
+		static bool IsStatePlay();
+		static bool IsStateGameOver();
+
 	private:
 		static Sphere* m_Player;
 		static Sphere* m_Enemy;
+		static GameStates gameState;
 	};
 }
 

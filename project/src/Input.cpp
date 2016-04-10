@@ -120,7 +120,7 @@ namespace Crescer3D
 			case 'q' :
 			case 'Q' :
 			case GLUT_KEY_ESC:
-				Window::GameOver();
+				Game::GameOver();
 			break;
 		}
 	}

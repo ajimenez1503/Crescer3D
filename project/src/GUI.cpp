@@ -33,15 +33,11 @@ namespace Crescer3D
 		if(NameIsReady())
 		{
 			HighScore::SaveScore(namePlayer);
-			//TODO write the name
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
-			//TODO display button exit and close game
 		}
 		//TODO display button
 			//TODO move to Game_Play when click on play
-				//Window::SetGameState(Game_Play);
-			//TODO move to Game_GameOver when click on Exit
-				//Window::SetGameState(Game_GameOver);
+				//Game::SetGameStatePlay();
 			//TODO display button exit and close game
 				//Engine::GetEngine()->SetEngineState(ShuttingDown);
 
@@ -67,6 +63,24 @@ namespace Crescer3D
 			}
 		}
 
+	}
+
+	void GUI::InitView()
+	{
+		HighScore::DisplayListScores();
+		//TODO move to Game_Play when click on play
+		//TODO set initial position of Player
+
+		Game::SetGameStatePlay();
+		//TODO move to Game_GameOver when click on Exit
+		//SetGameStateGameOver();
+	}
+
+	void GUI::PlayView()
+	{
+		HighScore::DisplayScore();
+		//TODO move to Game_GameOver when click on Exit
+		//SetGameStateGameOver();
 	}
 
 }

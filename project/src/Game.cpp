@@ -6,11 +6,14 @@ namespace Crescer3D
 	Sphere* Game::m_Player;
 	Sphere* Game::m_Enemy;
 
+	GameStates Game::gameState;
+
 	Game::Game()
 		: System(SystemType::Sys_Game)
 	{
 		m_Player = new Sphere();
 		m_Enemy = new Sphere();
+		SetGameStateInit();
 	}
 
 	Game::~Game()
@@ -33,5 +36,38 @@ namespace Crescer3D
 	Sphere* Game::GetEnemy()
 	{
 		return m_Enemy;
+	}
+
+
+	void Game::GameOver()
+	{
+		SetGameStateGameOver();
+	}
+
+	void Game::SetGameStatePlay()
+	{
+		gameState = Game_Play;
+	}
+
+	void Game::SetGameStateInit()
+	{
+		gameState = Game_Init;
+	}
+	void Game::SetGameStateGameOver()
+	{
+		gameState = Game_GameOver;
+	}
+
+	bool Game::IsStateInit()
+	{
+		return gameState==Game_Init;
+	}
+	bool Game::IsStatePlay()
+	{
+		return gameState==Game_Play;
+	}
+	bool Game::IsStateGameOver()
+	{
+		return gameState==Game_GameOver;
 	}
 }
