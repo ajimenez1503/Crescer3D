@@ -29,6 +29,14 @@ namespace Crescer3D
 
 	void GUI::GameOverView()
 	{
+		//save score and name
+		if(NameIsReady())
+		{
+			HighScore::SaveScore(namePlayer);
+			//TODO write the name
+			Engine::GetEngine()->SetEngineState(ShuttingDown);
+			//TODO display button exit and close game
+		}
 		//TODO display button
 			//TODO move to Game_Play when click on play
 				//Window::SetGameState(Game_Play);
@@ -41,15 +49,9 @@ namespace Crescer3D
 		sfDrawString(300,150, "Write your name: ");
 		sfDrawString(300,200, namePlayer.c_str());
 		glutKeyboardFunc(ReadName);
-		//READ name until there are 5 character
-		//save score and name
-		if(NameIsReady())
-		{
-			HighScore::SaveScore(namePlayer);
-			//TODO write the name
-			Engine::GetEngine()->SetEngineState(ShuttingDown);
-			//TODO display button exit and close game
-		}
+		//READ name until there are 7 character
+
+
 
 	}
 

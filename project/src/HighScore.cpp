@@ -37,21 +37,25 @@ namespace Crescer3D
 		m_Score=0;
 	}
 
+	bool compare (int a, int b) {return a>b;}//compara element of map
+
 	void HighScore::DisplayListScores()
 	{
-		int positionx=-30;
-		int positiony= 40;
-		int limmitScores=10;//not display more than 10 lines
+
+		bool(*fn_pt)(int,int) = compare;
+		std::multimap<int,std::string,bool(*)(int,int)> map (fn_pt); // function pointer as comp;
+
+		int score=0;
 		std::string line;
 		std::ifstream myfile ("dataBase/Score.txt", std::ios::in );
 		if (myfile.is_open())
 		{
-			while ( getline (myfile,line) && limmitScores>0)
+			while ( getline (myfile,line) )
 			{
-				//Logger::Log(line);
-				sfDrawString(positionx, positiony, line.c_str());
-				limmitScores--;
-				positiony+=20;
+				//save score
+				 score = std::stoi(line.substr(line.find(" "),line.size()));
+				//save line
+				map.insert(std::pair<int,std::string>(score,line));
 			}
 			myfile.close();
 		}
@@ -59,6 +63,16 @@ namespace Crescer3D
 		{
 			Logger::Log( "Unable to open file");
 		}
+
+		int positionx=-30;
+  		int positiony= 40;
+  		int limmitScores=10;//not display more than 10 lines
+		for (std::map<int,std::string>::const_iterator it = map.begin(); it != map.end() && limmitScores>0; it++) {
+			sfDrawString(positionx, positiony, it->second.c_str());
+			limmitScores--;
+			positiony+=20;
+		}
+
 	}
 	void HighScore::SaveScore(std::string name)
 	{

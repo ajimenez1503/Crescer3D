@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include "Logger.h"
+#include <map>
 namespace Crescer3D
 {
 	class HighScore : public System
