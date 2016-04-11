@@ -34,6 +34,24 @@ namespace Crescer3D
 		glutKeyboardFunc(Keyboard);
 	}
 
+	void Input::Restart()
+	{
+		m_CameraAngle = 0.0f;
+		m_DeltaAngle = 0.0f;
+		m_CameraDirX = 0.0f;
+		m_CameraDirZ = -1.0f;
+		m_CameraPosX = 0.0f;
+		m_CameraPosY = 3.0f;
+		m_CameraPosZ = 8.0f;
+		m_xOrigin = -1;
+		m_MouseXPos = 0;
+		m_MouseYPos = 0;
+		m_LookAtMatrix = IdentityMatrix();
+		glutMouseFunc(MouseButton);
+		glutMotionFunc(MouseMove);
+		glutKeyboardFunc(Keyboard);
+	}
+
 	Input::~Input()
 	{
 	}

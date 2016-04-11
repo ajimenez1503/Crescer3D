@@ -46,7 +46,6 @@ namespace Crescer3D
 		m_Ground.init();
 		Game::GetPlayer()->init(0);
 		Game::GetEnemy()->init(1);
-		Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
@@ -82,6 +81,10 @@ namespace Crescer3D
 
 		if(Game::IsStateInit())
 		{
+			//TODO set init all postion
+			Input::Restart();
+			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
+			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 			GUI::InitView();
 		}
 		if(Game::IsStatePlay())

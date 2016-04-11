@@ -25,7 +25,7 @@ namespace Crescer3D
 		//with C++11
 		std::string result = "Score: ";
 		result = result + std::to_string(m_Score);
-		sfDrawString(20, 20, result.c_str());
+		sfDrawString(-20, 20, result.c_str());
 	}
 
 	void HighScore::IncrementScore()

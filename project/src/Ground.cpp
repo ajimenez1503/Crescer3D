@@ -1,6 +1,8 @@
 #include "Ground.h"
 
- Ground::Ground(){
+Ground::Ground()
+{
+
 }
 void Ground::init(){
 	LoadTGATextureSimple("model/cube/grass.tga", &tex0);

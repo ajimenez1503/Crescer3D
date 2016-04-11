@@ -4,6 +4,9 @@ namespace Crescer3D
 {
 	// forward declaration of static members
 	std::string GUI::namePlayer;
+	Button GUI::buttonPlay;
+	Button GUI::buttonExit;
+
 
 	GUI::GUI(): System(SystemType::Sys_GUI)
 	{
@@ -17,6 +20,21 @@ namespace Crescer3D
 	bool GUI::Initialize()
 	{
 		sfMakeRasterFont(); // init font
+		//shader to button
+		GLuint Program;
+		mat4 m_ProjMat;
+		m_ProjMat = ortho(0,800, 600, 0, -1,1);
+
+		// Load and compile shader
+		Program = loadShaders("shader/shader_button.vert", "shader/shader_button.frag");
+		glUseProgram(Program);
+		printError("Shader Init");
+		glUniformMatrix4fv(glGetUniformLocation((Program), "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+
+
+		//define button
+		buttonPlay.set("Play",Program);
+		buttonExit.set("Exit",Program);
 		return true;
 	}
 
@@ -29,17 +47,23 @@ namespace Crescer3D
 
 	void GUI::GameOverView()
 	{
+		buttonPlay.setPosition(40,30);
+		buttonPlay.Draw();
+		//TODO set initial position of Player
+			//Game::SetGameStatePlay();
+
+
+		//TODO move to exit when click on exit
+		buttonExit.setPosition(40,80);
+		buttonExit.Draw();
+			//Engine::GetEngine()->SetEngineState(ShuttingDown);
 		//save score and name
 		if(NameIsReady())
 		{
 			HighScore::SaveScore(namePlayer);
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
 		}
-		//TODO display button
-			//TODO move to Game_Play when click on play
-				//Game::SetGameStatePlay();
-			//TODO display button exit and close game
-				//Engine::GetEngine()->SetEngineState(ShuttingDown);
+
 
 		//display name
 		sfDrawString(300,150, "Write your name: ");
@@ -67,20 +91,29 @@ namespace Crescer3D
 
 	void GUI::InitView()
 	{
-		HighScore::DisplayListScores();
-		//TODO move to Game_Play when click on play
-		//TODO set initial position of Player
 
+		HighScore::DisplayListScores();
+
+		//TODO move to Game_Play when click on play
+		buttonPlay.setPosition(40,30);
+		buttonPlay.Draw();
+		//TODO set initial position of Player
 		Game::SetGameStatePlay();
+
+		buttonExit.setPosition(40,80);
+		buttonExit.Draw();
 		//TODO move to Game_GameOver when click on Exit
-		//SetGameStateGameOver();
+			//SetGameStateGameOver();
 	}
 
 	void GUI::PlayView()
 	{
 		HighScore::DisplayScore();
+
 		//TODO move to Game_GameOver when click on Exit
-		//SetGameStateGameOver();
+		buttonExit.setPosition(40,30);
+		buttonExit.Draw();
+			//SetGameStateGameOver();
 	}
 
 }

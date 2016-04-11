@@ -74,8 +74,10 @@ namespace Crescer3D
 
 		if (!AddSystem(new Crescer3D::HighScore()))
 			return false;
+
 		if (!AddSystem(new Crescer3D::GUI()))
 			return false;
+
 
 		// ... add more subsystems
 

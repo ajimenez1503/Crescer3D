@@ -6,7 +6,7 @@
 #ifdef __LINUX__
 	extern "C"
 	{
-		#include <GL/gl.h>
+		#define GL_GLEXT_PROTOTYPES
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
@@ -25,14 +25,19 @@
 #include "Logger.h"
 #include "Window.h"
 #include "HighScore.h"
+#include "Button.h"
 namespace Crescer3D
 {
 	class GUI : public System
 	{
 	private:
 		static std::string namePlayer;
+		static Button buttonPlay;
+		static Button buttonExit;
+
 		static bool NameIsReady();
 		static void ReadName(unsigned char key, int xx, int yy);
+
 	public:
 		GUI();
 		virtual bool Initialize();

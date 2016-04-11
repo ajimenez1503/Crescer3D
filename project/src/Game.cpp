@@ -38,7 +38,6 @@ namespace Crescer3D
 		return m_Enemy;
 	}
 
-
 	void Game::GameOver()
 	{
 		SetGameStateGameOver();
@@ -46,6 +45,7 @@ namespace Crescer3D
 
 	void Game::SetGameStatePlay()
 	{
+		//TODO set initial position of Player
 		gameState = Game_Play;
 	}
 
