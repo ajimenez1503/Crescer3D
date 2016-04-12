@@ -24,6 +24,7 @@
 #include "Engine.h"
 #include "../../common/VectorUtils3.h"
 #include "Window.h"
+#include "GUI.h"
 
 namespace Crescer3D
 {

@@ -64,8 +64,11 @@ namespace Crescer3D
 			Logger::Log( "Unable to open file");
 		}
 
-		int positionx=-30;
-  		int positiony= 40;
+
+		int positionx=500;
+  		int positiony=200;
+		sfDrawString(positionx, positiony, "Best highScore:");
+		positiony+=50;
   		int limmitScores=10;//not display more than 10 lines
 		for (std::map<int,std::string>::const_iterator it = map.begin(); it != map.end() && limmitScores>0; it++) {
 			sfDrawString(positionx, positiony, it->second.c_str());

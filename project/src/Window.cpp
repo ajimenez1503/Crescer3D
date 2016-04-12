@@ -87,7 +87,7 @@ namespace Crescer3D
 			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 			GUI::InitView();
 		}
-		if(Game::IsStatePlay())
+		else if(Game::IsStatePlay())
 		{
 			GUI::PlayView();
 			// draw stuff
@@ -111,7 +111,7 @@ namespace Crescer3D
 				m_CollisionState=false;
 			}
 		}
-		if(Game::IsStateGameOver())
+		else if(Game::IsStateGameOver())
 		{
 			GUI::GameOverView();
 		}

@@ -61,6 +61,10 @@ namespace Crescer3D
 		// only start motion if the left button is pressed
 		if (button == GLUT_LEFT_BUTTON)
 		{
+			//check button
+			GUI::positionClickMouse(x,y);
+
+
 			// when the button is released
 			if (state == GLUT_UP)
 			{
@@ -74,6 +78,7 @@ namespace Crescer3D
 
 	void Input::MouseMove(int x, int y)
 	{
+		Logger::Log("postion"+std::to_string( x)+ " , "+std::to_string(y));
 		// this will only be true when the left button is down
 		if (m_xOrigin >= 0)
 		{

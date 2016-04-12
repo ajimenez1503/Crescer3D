@@ -1,5 +1,6 @@
 #ifndef _BUTTON_H
 #define _BUTTON_H
+
 #include "Platform.h"
 
 #ifdef __LINUX__
@@ -23,7 +24,7 @@
 #include "../../common/VectorUtils3.h"
 #include <string>
 #include "../../common/simplefont.h"
-#include "Logger.h"
+
 
 
 	class Button
@@ -34,13 +35,18 @@
 		~Button();
 		void Draw();
 		void set(std::string l,GLuint Program_shader);
-		void setPosition(int pos_x,int pos_y);
-
+		void setPositionSize(int pos_x,int pos_y,int w,int h);
+		bool isClick();
+		void ClickFalse();
+		void ClickTest(int x_pos,int y_pos);
 
 	private:
 		 Model *cube;
 		 int   x;							/* top left x coord of the button */
 		 int   y;							/* top left y coord of the button */
+		 int   width;							/* the width of the button */
+		 int   height;							/* the height of the button */
+		 bool click;
 		 GLuint Program;
 		 std::string label;				/* the text label of the button */
 		 void WriteLabel();

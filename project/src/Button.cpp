@@ -7,6 +7,9 @@
 		label="";
 		cube=NULL;
 		Program=NULL;
+		width=0;
+		height=0;
+		click=false;
 	}
 
 	Button::Button(int pos_x,int pos_y, std::string l,GLuint Program_shader)
@@ -17,6 +20,9 @@
 		y=pos_y;
 		label=l;
 		Program=Program_shader;
+		width=0;
+		height=0;
+		click=false;
 	}
 
 	Button::~Button()
@@ -26,6 +32,9 @@
 		label="";
 		cube=NULL;
 		Program=NULL;
+		width=30;
+		height=20;
+		click=false;
 	}
 
 	void Button::WriteLabel()
@@ -40,11 +49,13 @@
 		label=l;
 		Program=Program_shader;
 	}
-
-	void Button::setPosition(int pos_x,int pos_y)
+	//postion is %
+	void Button::setPositionSize(int pos_x,int pos_y,int w,int h)
 	{
-		x=pos_x;
-		y=pos_y;
+		height=h;
+		width=w;
+		x=/*glutGet(GLUT_WINDOW_WIDTH)*/800*pos_x /100;
+		y=/*glutGet(GLUT_WINDOW_HEIGHT)*/600*pos_y /100;
 	}
 
 
@@ -58,7 +69,7 @@
 		mat4 mdlMatrix;
 		mdlMatrix=IdentityMatrix();
 		glUseProgram(Program);
-		mdlMatrix=Mult(T(x,y,0),S(60,40,1));
+		mdlMatrix=Mult(T(x,y,0),S(width,height,1));
 		glUniformMatrix4fv(glGetUniformLocation(Program, "mdlMatrix"), 1, GL_TRUE, mdlMatrix.m);
 		DrawModel(cube, Program, "inPosition", NULL, NULL);
 
@@ -67,4 +78,36 @@
 		 */
 		WriteLabel();
 		glEnable(GL_DEPTH_TEST);
+	}
+
+	bool Button::isClick()
+	{
+		if(click)
+		{
+			ClickFalse();
+			return true;
+		}else
+		{
+			return false;
+		}
+
+	}
+
+		/*----------------------------------------------------------------------------------------
+	 *	\brief	This function is used to see if a mouse click or event is within a button
+	 *			client area.
+	 *	\param	b	-	a pointer to the button to test
+	 *	\param	x	-	the x coord to test
+	 *	\param	y	-	the y-coord to test
+	 */
+	void Button::ClickTest(int x_pos,int y_pos)
+	{
+	    if( x_pos > x-width   && x < x+width &&
+			y_pos > y-height  && y_pos < y+height ) {
+				click=true;
+		}
+	}
+	void Button::ClickFalse()
+	{
+		click=false;
 	}

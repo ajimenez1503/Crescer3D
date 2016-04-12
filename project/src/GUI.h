@@ -45,6 +45,7 @@ namespace Crescer3D
 		static void GameOverView();
 		static void InitView();
 		static void PlayView();
+		static void positionClickMouse(int x_pos,int y_pos);
 	};
 }
 

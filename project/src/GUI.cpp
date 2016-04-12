@@ -38,25 +38,53 @@ namespace Crescer3D
 		return true;
 	}
 
-	//return true if there arent any "-" o on the name
-	bool GUI::NameIsReady()
+	void GUI::InitView()
 	{
-		return std::string::npos==namePlayer.find("-");
+		HighScore::DisplayListScores();
+
+		buttonExit.setPositionSize(25,30,100,75);
+		buttonExit.Draw();
+		if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
+			Engine::GetEngine()->SetEngineState(ShuttingDown);
+		}
+
+		//move to Game_Play when click on play
+		buttonPlay.setPositionSize(25,70,100,75);
+		buttonPlay.Draw();
+		//TODO set initial position of Player
+		if(buttonPlay.isClick()){
+			Game::SetGameStatePlay();
+		}
 	}
 
+	void GUI::PlayView()
+	{
+		HighScore::DisplayScore();
+
+		buttonExit.setPositionSize(5,5,30,20);
+		buttonExit.Draw();
+		if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
+			Game::SetGameStateGameOver();
+		}
+	}
 
 	void GUI::GameOverView()
 	{
-		buttonPlay.setPosition(40,30);
+		buttonExit.setPositionSize(30,25,80,60);
+		buttonExit.Draw();
+		if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
+			Engine::GetEngine()->SetEngineState(ShuttingDown);
+		}
+
+		//move to Game_Play when click on play
+		buttonPlay.setPositionSize(70,25,80,60);
 		buttonPlay.Draw();
 		//TODO set initial position of Player
-			//Game::SetGameStatePlay();
+		if(buttonPlay.isClick()){
+			Game::SetGameStateInit();
+		}
 
 
-		//TODO move to exit when click on exit
-		buttonExit.setPosition(40,80);
-		buttonExit.Draw();
-			//Engine::GetEngine()->SetEngineState(ShuttingDown);
 		//save score and name
 		if(NameIsReady())
 		{
@@ -64,15 +92,39 @@ namespace Crescer3D
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
 		}
 
-
 		//display name
-		sfDrawString(300,150, "Write your name: ");
-		sfDrawString(300,200, namePlayer.c_str());
+		sfDrawString(300,300, "Write your name: ");
+		sfDrawString(350,350, namePlayer.c_str());
 		glutKeyboardFunc(ReadName);
 		//READ name until there are 7 character
 
+	}
 
 
+
+
+		/*----------------------------------------------------------------------------------------
+	 *	\brief	This function is used to see if a mouse click or event is within a button
+	 *			client area.
+	 *	\param	x	-	the x coord to test
+	 *	\param	y	-	the y-coord to test
+	 */
+	void GUI::positionClickMouse(int x_pos,int y_pos)
+	{
+		if(Game::IsStateGameOver())
+		{
+			buttonPlay.ClickTest(x_pos,y_pos);
+			buttonExit.ClickTest(x_pos,y_pos);
+		}
+		else if(Game::IsStateInit())
+		{
+			buttonPlay.ClickTest(x_pos,y_pos);
+			buttonExit.ClickTest(x_pos,y_pos);
+		}
+		else if(Game::IsStatePlay())
+		{
+			buttonExit.ClickTest(x_pos,y_pos);
+		}
 	}
 
 
@@ -86,34 +138,12 @@ namespace Crescer3D
 				namePlayer.replace (found,  1,  1, key);
 			}
 		}
-
 	}
 
-	void GUI::InitView()
+	//return true if there arent any "-" o on the name
+	bool GUI::NameIsReady()
 	{
-
-		HighScore::DisplayListScores();
-
-		//TODO move to Game_Play when click on play
-		buttonPlay.setPosition(40,30);
-		buttonPlay.Draw();
-		//TODO set initial position of Player
-		Game::SetGameStatePlay();
-
-		buttonExit.setPosition(40,80);
-		buttonExit.Draw();
-		//TODO move to Game_GameOver when click on Exit
-			//SetGameStateGameOver();
-	}
-
-	void GUI::PlayView()
-	{
-		HighScore::DisplayScore();
-
-		//TODO move to Game_GameOver when click on Exit
-		buttonExit.setPosition(40,30);
-		buttonExit.Draw();
-			//SetGameStateGameOver();
+		return std::string::npos==namePlayer.find("-");
 	}
 
 }

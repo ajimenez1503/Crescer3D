@@ -13,7 +13,7 @@ namespace Crescer3D
 
 	bool Player::Initialize()
 	{
-		Logger::Log("Hello Player!");
+		//Logger::Log("Hello Player!");
 		return true;
 	}
 }
