@@ -52,11 +52,12 @@
 	//postion is %
 	void Button::setPositionSize(int pos_x,int pos_y,int w,int h)
 	{
-		height=h;
-		width=w;
 		x=/*glutGet(GLUT_WINDOW_WIDTH)*/800*pos_x /100;
 		y=/*glutGet(GLUT_WINDOW_HEIGHT)*/600*pos_y /100;
+		width=w;
+		height=h;
 	}
+
 
 
 	/*----------------------------------------------------------------------------------------
@@ -102,7 +103,7 @@
 	 */
 	void Button::ClickTest(int x_pos,int y_pos)
 	{
-	    if( x_pos > x-width   && x < x+width &&
+	    if( x_pos > x-width   && x_pos < x+width &&
 			y_pos > y-height  && y_pos < y+height ) {
 				click=true;
 		}

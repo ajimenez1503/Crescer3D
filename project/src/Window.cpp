@@ -81,8 +81,9 @@ namespace Crescer3D
 
 		if(Game::IsStateInit())
 		{
-			//TODO set init all postion
-			Input::Restart();
+			//TODO set init all postion ans reset all
+			HighScore::Reset();
+			Input::Reset();
 			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
 			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 			GUI::InitView();

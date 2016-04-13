@@ -34,7 +34,7 @@ namespace Crescer3D
 		glutKeyboardFunc(Keyboard);
 	}
 
-	void Input::Restart()
+	void Input::Reset()
 	{
 		m_CameraAngle = 0.0f;
 		m_DeltaAngle = 0.0f;
@@ -78,7 +78,6 @@ namespace Crescer3D
 
 	void Input::MouseMove(int x, int y)
 	{
-		Logger::Log("postion"+std::to_string( x)+ " , "+std::to_string(y));
 		// this will only be true when the left button is down
 		if (m_xOrigin >= 0)
 		{
