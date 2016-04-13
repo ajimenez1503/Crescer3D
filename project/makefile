@@ -3,20 +3,19 @@ commondir = ../common/
 bindir = bin/
 src = src/
 
+
+
 linux: SYSTEM_FLAG := -D__LINUX__
+linux: MICROGLUT := Linux/MicroGlut.c
+linux: PARAM := -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
+
 mac: SYSTEM_FLAG := -D__OSX__
+mac: MICROGLUT := mac/MicroGlut.m
+mac: PARAM := -I$(commondir) -I../common/mac -framework Cocoa -framework OpenGL
 
-linux: compile linux_link
+linux: compile link
 
-mac: compile mac_link
-
-linux_link:
-	gcc -c -w -std=c99 -o $(bindir)MicroGlut.o $(commondir)Linux/MicroGlut.c
-	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)HighScore.o $(bindir)GUI.o $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)Player.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
-
-mac_link:
-	gcc -c -w -std=c99 -o $(bindir)MicroGlut.o $(commondir)mac/MicroGlut.m
-	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)HighScore.o  $(bindir)GUI.o  $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)System.o $(bindir)Player.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o -I$(commondir) -I../common/mac -framework Cocoa -framework OpenGL
+mac: compile link
 
 compile:
 	gcc -c -w -std=c99 $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
@@ -38,6 +37,10 @@ compile:
 	g++ -c -w -std=c++11 $(SYSTEM_FLAG) -o $(bindir)Logger.o $(src)Logger.cpp
 	g++ -c -w -std=c++11 $(SYSTEM_FLAG) -o $(bindir)Player.o $(src)Player.cpp
 	g++ -c -w -std=c++11 $(SYSTEM_FLAG) -o $(bindir)main.o main.cpp
+
+link:
+	gcc -c -w -std=c99 -o $(bindir)MicroGlut.o $(commondir)$(MICROGLUT)
+	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)HighScore.o $(bindir)GUI.o $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)Player.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o $(PARAM)
 
 clean:
 	rm game
