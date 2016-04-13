@@ -1,8 +1,6 @@
 #ifndef _BUTTON_H
 #define _BUTTON_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{

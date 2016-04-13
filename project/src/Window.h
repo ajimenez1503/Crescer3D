@@ -1,8 +1,6 @@
 #ifndef _WINDOW_H
 #define _WINDOW_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{

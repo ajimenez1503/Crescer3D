@@ -1,8 +1,6 @@
 #ifndef _GUI_H
 #define _GUI_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{

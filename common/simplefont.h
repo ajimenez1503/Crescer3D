@@ -1,8 +1,6 @@
 #ifndef _SIMPLEFONT_
 #define _SIMPLEFONT_
 
-#include "../project/src/Platform.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

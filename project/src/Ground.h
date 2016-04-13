@@ -1,8 +1,6 @@
 #ifndef _GROUND_H
 #define _GROUND_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{

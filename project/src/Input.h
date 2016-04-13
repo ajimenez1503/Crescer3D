@@ -1,8 +1,6 @@
 #ifndef _INPUT_H
 #define _INPUT_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{

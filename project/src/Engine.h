@@ -1,8 +1,6 @@
 #ifndef _ENGINE_H
 #define _ENGINE_H
 
-#include "Platform.h"
-
 #ifdef __LINUX__
 	extern "C"
 	{
