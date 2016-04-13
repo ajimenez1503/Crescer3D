@@ -1,22 +1,25 @@
-# directory variables
+# Global variables
 commondir = ../common/
 bindir = bin/
 src = src/
 
-
-
+# Variables to build for Linux
 linux: SYSTEM_FLAG := -D__LINUX__
 linux: MICROGLUT := Linux/MicroGlut.c
 linux: PARAM := -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
 
+# Variables to build for OS X
 mac: SYSTEM_FLAG := -D__OSX__
 mac: MICROGLUT := mac/MicroGlut.m
 mac: PARAM := -I$(commondir) -I../common/mac -framework Cocoa -framework OpenGL
 
+# Build Target for Linux
 linux: compile link
 
+# Build Target for OS X
 mac: compile link
 
+# Compile Commands
 compile:
 	gcc -c -w -std=c99 $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
 	gcc -c -w -std=c99 $(SYSTEM_FLAG) -o $(bindir)VectorUtils3.o $(commondir)VectorUtils3.c
@@ -38,9 +41,12 @@ compile:
 	g++ -c -w -std=c++11 $(SYSTEM_FLAG) -o $(bindir)Player.o $(src)Player.cpp
 	g++ -c -w -std=c++11 $(SYSTEM_FLAG) -o $(bindir)main.o main.cpp
 
+# Link Commands
 link:
 	gcc -c -w -std=c99 -o $(bindir)MicroGlut.o $(commondir)$(MICROGLUT)
 	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)HighScore.o $(bindir)GUI.o $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)Player.o $(bindir)System.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o $(PARAM)
 
+# Removing the Binary
 clean:
 	rm game
+	rm $(bindir)*.o
