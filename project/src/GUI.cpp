@@ -40,6 +40,7 @@ namespace Crescer3D
 
 	void GUI::InitView()
 	{
+
 		HighScore::DisplayListScores();
 
 		buttonExit.setPositionSize(25,30,100,75);
@@ -70,6 +71,20 @@ namespace Crescer3D
 
 	void GUI::GameOverView()
 	{
+		//save score and name
+		if(NameIsReady())
+		{
+
+			HighScore::SaveScore(namePlayer);
+			Engine::GetEngine()->SetEngineState(ShuttingDown);
+		}
+
+		//display name
+		sfDrawString(300,300, "Write your name: ");
+		sfDrawString(350,350, namePlayer.c_str());
+		glutKeyboardFunc(ReadName);
+		//READ name until there are 7 character
+
 		buttonExit.setPositionSize(30,25,80,60);
 		buttonExit.Draw();
 		if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
@@ -81,22 +96,13 @@ namespace Crescer3D
 		buttonPlay.Draw();
 		//TODO set initial position of Player
 		if(buttonPlay.isClick()){
+			namePlayer="-------";//default name user
+			Input::Reset();
 			Game::SetGameStateInit();
 		}
 
 
-		//save score and name
-		if(NameIsReady())
-		{
-			HighScore::SaveScore(namePlayer);
-			Engine::GetEngine()->SetEngineState(ShuttingDown);
-		}
 
-		//display name
-		sfDrawString(300,300, "Write your name: ");
-		sfDrawString(350,350, namePlayer.c_str());
-		glutKeyboardFunc(ReadName);
-		//READ name until there are 7 character
 
 	}
 

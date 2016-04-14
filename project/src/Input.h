@@ -30,6 +30,7 @@ namespace Crescer3D
 	{
 	public:
 		Input();
+		virtual bool Initialize();
 		virtual ~Input();
 
 		virtual bool Update();

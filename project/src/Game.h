@@ -1,9 +1,13 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+
 #include "System.h"
 #include "Sphere.h"
 #include "DeleteUtil.h"
+#include "HighScore.h"
+
+
 
 namespace Crescer3D
 {
@@ -30,11 +34,13 @@ namespace Crescer3D
 		static bool IsStateInit();
 		static bool IsStatePlay();
 		static bool IsStateGameOver();
+		static void ResetGame();
 
 	private:
 		static Sphere* m_Player;
 		static Sphere* m_Enemy;
 		static GameStates gameState;
+		static bool gameNeedReset;
 	};
 }
 

@@ -13,6 +13,7 @@ namespace Crescer3D
 	{
 	private:
 		static int m_Score;
+		static std::multimap<int,std::string> map;
 
 
 	public:
@@ -22,6 +23,7 @@ namespace Crescer3D
 		static void DisplayScore();
 		static void IncrementScore();
 		static void SaveScore(std::string name);
+		static void CalculateListScores();
 		static void DisplayListScores();
 		static void Reset();
 	};

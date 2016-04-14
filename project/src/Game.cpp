@@ -5,14 +5,16 @@ namespace Crescer3D
 	// forward declaration of static members
 	Sphere* Game::m_Player;
 	Sphere* Game::m_Enemy;
-
+	bool Game::gameNeedReset;
 	GameStates Game::gameState;
+
 
 	Game::Game()
 		: System(SystemType::Sys_Game)
 	{
 		m_Player = new Sphere();
 		m_Enemy = new Sphere();
+		gameNeedReset=true;
 		SetGameStateInit();
 	}
 
@@ -51,6 +53,7 @@ namespace Crescer3D
 
 	void Game::SetGameStateInit()
 	{
+		gameNeedReset=true;
 		gameState = Game_Init;
 	}
 	void Game::SetGameStateGameOver()
@@ -70,4 +73,19 @@ namespace Crescer3D
 	{
 		return gameState==Game_GameOver;
 	}
+
+	// set init all postion ans reset all
+	void Game::ResetGame()
+	{
+		if(gameNeedReset)
+		{
+			HighScore::Reset();
+			HighScore::CalculateListScores();
+			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
+			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
+			gameNeedReset=false;
+		}
+
+	}
+
 }

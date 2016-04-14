@@ -2,17 +2,22 @@
 
 namespace Crescer3D
 {
+	//bool compare (int a, int b) {return a>b;}//compara element of map
+
 	// forward declaration of static members
 	int HighScore::m_Score;
+	std::multimap<int,std::string> HighScore::map ;
 
 	HighScore::HighScore(): System(SystemType::Sys_HighScore)
 	{
 		m_Score=0;
+		std::multimap<int,std::string> map ();
 	}
 
 	HighScore::~HighScore()
 	{
 		m_Score=0;
+		map.erase(map.begin(),map.end());
 	}
 	bool HighScore::Initialize()
 	{
@@ -35,16 +40,12 @@ namespace Crescer3D
 	void HighScore::Reset()
 	{
 		m_Score=0;
+		map.erase(map.begin(),map.end());
 	}
 
-	bool compare (int a, int b) {return a>b;}//compara element of map
 
-	void HighScore::DisplayListScores()
+	void HighScore::CalculateListScores()
 	{
-
-		bool(*fn_pt)(int,int) = compare;
-		std::multimap<int,std::string,bool(*)(int,int)> map (fn_pt); // function pointer as comp;
-
 		int score=0;
 		std::string line;
 		std::ifstream myfile ("dataBase/Score.txt", std::ios::in );
@@ -53,7 +54,7 @@ namespace Crescer3D
 			while ( getline (myfile,line) )
 			{
 				//save score
-				 score = std::stoi(line.substr(line.find(" "),line.size()));
+				score = std::stoi(line.substr(line.find(" "),line.size()));
 				//save line
 				map.insert(std::pair<int,std::string>(score,line));
 			}
@@ -65,18 +66,25 @@ namespace Crescer3D
 		}
 
 
+	}
+	void HighScore::DisplayListScores()
+	{
 		int positionx=500;
   		int positiony=200;
 		sfDrawString(positionx, positiony, "Best highScore:");
 		positiony+=50;
   		int limmitScores=10;//not display more than 10 lines
-		for (std::map<int,std::string>::const_iterator it = map.begin(); it != map.end() && limmitScores>0; it++) {
-			sfDrawString(positionx, positiony, it->second.c_str());
-			limmitScores--;
-			positiony+=20;
+		if(map.size()>0){
+			std::map<int,std::string>::const_iterator it = map.end();
+		    do{
+		        it--;
+				sfDrawString(positionx, positiony, it->second.c_str());
+				limmitScores--;
+				positiony+=20;
+		    } while (it != map.begin() && limmitScores>0);
 		}
-
 	}
+
 	void HighScore::SaveScore(std::string name)
 	{
 		//TODO save only if score >0
@@ -94,7 +102,6 @@ namespace Crescer3D
 				Logger::Log( "Unable to open file");
 			}
 		}
-
 	}
 
 }

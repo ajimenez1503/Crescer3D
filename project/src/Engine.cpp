@@ -90,6 +90,8 @@ namespace Crescer3D
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_GUI]->Initialize())
 			return false;
+		if (!m_mapSystems[Crescer3D::SystemType::Sys_Input]->Initialize())
+			return false;
 
 		glutStartLoop();
 

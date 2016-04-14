@@ -33,6 +33,10 @@ namespace Crescer3D
 		glutMotionFunc(MouseMove);
 		glutKeyboardFunc(Keyboard);
 	}
+	bool Input::Initialize()
+	{
+		return true;
+	}
 
 	void Input::Reset()
 	{
