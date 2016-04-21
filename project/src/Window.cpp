@@ -3,7 +3,9 @@
 namespace Crescer3D
 {
 	// forward declaration of static members
-	GLuint Window::m_Program;
+	GLuint Window::m_stdShader;
+	GLuint Window::m_sphereShader;
+	GLuint Window::m_groundShader;
 	Ground Window::m_Ground;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
@@ -37,11 +39,17 @@ namespace Crescer3D
 		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 50.0);
 
 		// Load and compile shader
-		m_Program = loadShaders("shader/shader.vert", "shader/shader.frag");
-		glUseProgram(m_Program);
+		m_stdShader = loadShaders("shader/shader_std.vert", "shader/shader_std.frag");
+		m_sphereShader = loadShaders("shader/Cell_Shader_Objects.vert", "shader/Cell_Shader_Objects.frag");
+		m_groundShader = loadShaders("shader/Cell_Shader_Ground.vert", "shader/Cell_Shader_Ground.frag");
+		
+		glUseProgram(m_stdShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(m_sphereShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(m_groundShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		printError("Shader Init");
-
-		glUniformMatrix4fv(glGetUniformLocation(m_Program, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 
 		m_Ground.init();
 		Game::GetPlayer()->init(0);
@@ -71,13 +79,17 @@ namespace Crescer3D
 	{
 		// clear the screen
 		Clear();
-		glUseProgram(m_Program);
 		printError("Clearing Screen");
 
-		// build matrix
-		mat4 total = Input::GetLookAtMatrix();
-		glUniformMatrix4fv(glGetUniformLocation(m_Program, "mdlMatrix"), 1, GL_TRUE, total.m);
-		printError("Getting Camera Matrix");
+		// Update View Matrix
+		mat4 viewMatrix = Input::GetLookAtMatrix();
+		glUseProgram(m_stdShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
+		glUseProgram(m_sphereShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
+		glUseProgram(m_groundShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
+		printError("Updating View Matrix");
 
 		if(Game::IsStateInit())
 		{
@@ -88,11 +100,15 @@ namespace Crescer3D
 		else if(Game::IsStatePlay())
 		{
 			GUI::PlayView();
-			// draw stuff
-			m_Ground.draw(total, m_Program);
 
-			Game::GetPlayer()->draw(total, m_Program);
-			Game::GetEnemy()->draw(total, m_Program);
+			// Draw ground
+			//glUseProgram(m_groundShader);
+			m_Ground.draw(viewMatrix, m_groundShader);
+
+			// Draw Objects
+			//glUseProgram(m_sphereShader);
+			Game::GetPlayer()->draw(viewMatrix, m_sphereShader);
+			Game::GetEnemy()->draw(viewMatrix, m_sphereShader);
 			printError("Drawing");
 
 

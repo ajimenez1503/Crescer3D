@@ -36,7 +36,9 @@ namespace Crescer3D
 	private:
 		int m_Width, m_Height;
 		char* m_Title;
-		static GLuint m_Program;
+		static GLuint m_stdShader;
+		static GLuint m_sphereShader;
+		static GLuint m_groundShader;
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
 		static bool m_CollisionState;

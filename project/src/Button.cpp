@@ -66,12 +66,11 @@
 	void Button::Draw()
 	{
 		glDisable(GL_DEPTH_TEST);
-
 		mat4 mdlMatrix;
 		mdlMatrix=IdentityMatrix();
 		glUseProgram(Program);
 		mdlMatrix=Mult(T(x,y,0),S(width,height,1));
-		glUniformMatrix4fv(glGetUniformLocation(Program, "mdlMatrix"), 1, GL_TRUE, mdlMatrix.m);
+		glUniformMatrix4fv(glGetUniformLocation(Program, "mdlViewMatrix"), 1, GL_TRUE, mdlMatrix.m);
 		DrawModel(cube, Program, "inPosition", NULL, NULL);
 
 		/*

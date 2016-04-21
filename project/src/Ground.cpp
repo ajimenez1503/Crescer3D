@@ -10,11 +10,11 @@ void Ground::init(){
 }
 
 
-void Ground::draw(mat4 total,GLuint program){
-	mat4 mdlMatrix;
+void Ground::draw(mat4 viewMatrix, GLuint program){
+	mat4 mdlViewMatrix;
 	glUseProgram(program);
-	mdlMatrix=Mult(total,S(100000,1,100000));
-	glUniformMatrix4fv(glGetUniformLocation(program, "mdlMatrix"), 1, GL_TRUE, mdlMatrix.m);
+	mdlViewMatrix=Mult(viewMatrix,S(100000,1,100000));
+	glUniformMatrix4fv(glGetUniformLocation(program, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, tex0);		// Bind Our Texture tex1
 	glUniform1i(glGetUniformLocation(program, "tex"), 1); // Texture unit 0

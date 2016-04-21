@@ -7,7 +7,6 @@ namespace Crescer3D
 	Button GUI::buttonPlay;
 	Button GUI::buttonExit;
 
-
 	GUI::GUI(): System(SystemType::Sys_GUI)
 	{
 		namePlayer="-------";//default name user
@@ -20,27 +19,24 @@ namespace Crescer3D
 	bool GUI::Initialize()
 	{
 		sfMakeRasterFont(); // init font
-		//shader to button
-		GLuint Program;
 		mat4 m_ProjMat;
+		GLuint GUIshader;
 		m_ProjMat = ortho(0,800, 600, 0, -1,1);
 
 		// Load and compile shader
-		Program = loadShaders("shader/shader_button.vert", "shader/shader_button.frag");
-		glUseProgram(Program);
+		GUIshader = loadShaders("shader/shader_button.vert", "shader/shader_button.frag");
+		glUseProgram(GUIshader);
 		printError("Shader Init");
-		glUniformMatrix4fv(glGetUniformLocation((Program), "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-
+		glUniformMatrix4fv(glGetUniformLocation(GUIshader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 
 		//define button
-		buttonPlay.set("Play",Program);
-		buttonExit.set("Exit",Program);
+		buttonPlay.set("Play", GUIshader);
+		buttonExit.set("Exit", GUIshader);
 		return true;
 	}
 
 	void GUI::InitView()
 	{
-
 		HighScore::DisplayListScores();
 
 		buttonExit.setPositionSize(25,30,100,75);
@@ -78,7 +74,6 @@ namespace Crescer3D
 			HighScore::SaveScore(namePlayer);
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
 		}
-
 		//display name
 		sfDrawString(300,300, "Write your name: ");
 		sfDrawString(350,350, namePlayer.c_str());
