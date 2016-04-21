@@ -100,6 +100,11 @@ namespace Crescer3D
 		return vec2(m_MouseXPos, m_MouseYPos);
 	}
 
+	vec3 Input::GetCameraDirection()
+	{
+		return vec3(m_CameraDirX, 1.0f, m_CameraDirZ);
+	}
+
 	void Input::Keyboard(unsigned char key, int xx, int yy)
 	{
 		float fraction = 0.1f;

@@ -25,4 +25,9 @@ namespace Crescer3D
 	{
 		std::cout << s << std::endl;
 	}
+
+	void Logger::Log(float f)
+	{
+		std::cout << f << std::endl;
+	}
 }

@@ -42,6 +42,7 @@ namespace Crescer3D
 		static Ground m_Ground;
 		static mat4 m_ProjMat;
 		static bool m_CollisionState;
+		static vec3 m_lightDirection;
 
 	public:
 		Window(char* title, int width, int height);

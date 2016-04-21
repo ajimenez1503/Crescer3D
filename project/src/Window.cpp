@@ -7,6 +7,7 @@ namespace Crescer3D
 	GLuint Window::m_sphereShader;
 	GLuint Window::m_groundShader;
 	Ground Window::m_Ground;
+	vec3 Window::m_lightDirection;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
 
@@ -36,19 +37,22 @@ namespace Crescer3D
 		glDisable(GL_CULL_FACE);
 		printError("OpenGL Init");
 
+		m_lightDirection = vec3(10, 10, 10);
 		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 50.0);
 
 		// Load and compile shader
 		m_stdShader = loadShaders("shader/shader_std.vert", "shader/shader_std.frag");
 		m_sphereShader = loadShaders("shader/Cell_Shader_Objects.vert", "shader/Cell_Shader_Objects.frag");
 		m_groundShader = loadShaders("shader/Cell_Shader_Ground.vert", "shader/Cell_Shader_Ground.frag");
-		
+
 		glUseProgram(m_stdShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		glUseProgram(m_sphereShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUniform3fv(glGetUniformLocation(m_sphereShader, "lightDirection"), 1, &m_lightDirection.x);
 		glUseProgram(m_groundShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUniform3fv(glGetUniformLocation(m_groundShader, "lightDirection"), 1, &m_lightDirection.x);
 		printError("Shader Init");
 
 		m_Ground.init();
@@ -83,12 +87,15 @@ namespace Crescer3D
 
 		// Update View Matrix
 		mat4 viewMatrix = Input::GetLookAtMatrix();
+		vec3 cameraDirection = Input::GetCameraDirection();
 		glUseProgram(m_stdShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
 		glUseProgram(m_sphereShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
+		glUniform3fv(glGetUniformLocation(m_sphereShader, "inCamera"), 1, &cameraDirection.x);
 		glUseProgram(m_groundShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
+		glUniform3fv(glGetUniformLocation(m_groundShader, "inCamera"), 1, &cameraDirection.x);
 		printError("Updating View Matrix");
 
 		if(Game::IsStateInit())
@@ -102,13 +109,14 @@ namespace Crescer3D
 			GUI::PlayView();
 
 			// Draw ground
-			//glUseProgram(m_groundShader);
+			glUseProgram(m_groundShader);
 			m_Ground.draw(viewMatrix, m_groundShader);
 
 			// Draw Objects
-			//glUseProgram(m_sphereShader);
+			glUseProgram(m_sphereShader);
 			Game::GetPlayer()->draw(viewMatrix, m_sphereShader);
 			Game::GetEnemy()->draw(viewMatrix, m_sphereShader);
+			
 			printError("Drawing");
 
 

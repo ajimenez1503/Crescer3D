@@ -1,22 +1,21 @@
 #version 150
 
-in  vec3 inPosition;
-in  vec3 inNormal;
+in vec3 inPosition;
+in vec3 inNormal;
 in vec2 inTexCoord;
-out vec2 texCoord;
+in vec3 inCamera;
 
-// NY
 uniform mat4 projMatrix;
 uniform mat4 mdlViewMatrix;
 
-out vec3 exSurface; // Phong (specular)
-out vec3 exNormal; // Phong
+out vec3 vertNormal;
+out vec2 vertTexCoord;
+out vec3 vertCamera;
 
 void main(void)
 {
-	texCoord = inTexCoord;
-	exNormal = mat3(mdlViewMatrix)* inNormal;
-	exSurface = vec3(mdlViewMatrix* vec4(inPosition, 1.0)); // Don't include projection here - we only want to 	go to view coordinates
-	
+	vertCamera = inCamera;
+	vertTexCoord = inTexCoord;
+	vertNormal = mat3(mdlViewMatrix)* inNormal;
 	gl_Position = projMatrix * mdlViewMatrix * vec4(inPosition, 1.0);
 }

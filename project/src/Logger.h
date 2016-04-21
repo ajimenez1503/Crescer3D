@@ -15,6 +15,7 @@ namespace Crescer3D
 		static void Log(const char* c);
 		static void Log(std::string s);
 		static void Log(char* c);
+		static void Log(float f);
 	};
 }
 
