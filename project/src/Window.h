@@ -29,8 +29,6 @@
 
 namespace Crescer3D
 {
-
-
 	class Window : public System
 	{
 	private:

@@ -25,6 +25,7 @@ namespace Crescer3D
 
 	bool Window::Initialize()
 	{
+		m_CollisionState=false;
 		glutInit(0, 0);
 		glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH |  GLUT_RGB);
 		glutInitContextVersion(3, 2);
@@ -58,6 +59,7 @@ namespace Crescer3D
 		m_Ground.init();
 		Game::GetPlayer()->init(0);
 		Game::GetEnemy()->init(1);
+		Game::GetFood()->init(2);
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
@@ -100,7 +102,6 @@ namespace Crescer3D
 
 		if(Game::IsStateInit())
 		{
-
 			Game::ResetGame();
 			GUI::InitView();
 		}
@@ -116,18 +117,20 @@ namespace Crescer3D
 			glUseProgram(m_sphereShader);
 			Game::GetPlayer()->draw(viewMatrix, m_sphereShader);
 			Game::GetEnemy()->draw(viewMatrix, m_sphereShader);
-			
+			Game::GetFood()->draw(viewMatrix,m_sphereShader);
 			printError("Drawing");
 
 
-			if(!m_CollisionState && Game::GetPlayer()->collision(Game::GetEnemy()))
+			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
+			|| Game::GetPlayer()->collisionAABB(Game::GetFood())))
 			{
 				Logger::Log("Collision!");
 				HighScore::IncrementScore();
 				m_CollisionState=true;
 			}
 
-			if(m_CollisionState && !Game::GetPlayer()->collision(Game::GetEnemy()))
+			if(m_CollisionState && (!Game::GetPlayer()->collision(Game::GetEnemy())
+			&& !Game::GetPlayer()->collisionAABB(Game::GetFood())))
 			{
 				Logger::Log("No Collision!");
 				m_CollisionState=false;
@@ -141,8 +144,4 @@ namespace Crescer3D
 		glutSwapBuffers();
 		printError("Swapping Buffers");
 	}
-
-
-
-
 }

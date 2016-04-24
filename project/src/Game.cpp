@@ -5,6 +5,7 @@ namespace Crescer3D
 	// forward declaration of static members
 	Sphere* Game::m_Player;
 	Sphere* Game::m_Enemy;
+	Cube * Game::m_Food;
 	bool Game::gameNeedReset;
 	GameStates Game::gameState;
 
@@ -14,6 +15,7 @@ namespace Crescer3D
 	{
 		m_Player = new Sphere();
 		m_Enemy = new Sphere();
+		m_Food = new Cube();
 		gameNeedReset=true;
 		SetGameStateInit();
 	}
@@ -22,6 +24,7 @@ namespace Crescer3D
 	{
 		SafeDelete(m_Player);
 		SafeDelete(m_Enemy);
+		SafeDelete(m_Food);
 	}
 
 	bool Game::Update()
@@ -38,6 +41,10 @@ namespace Crescer3D
 	Sphere* Game::GetEnemy()
 	{
 		return m_Enemy;
+	}
+	Cube* Game::GetFood()
+	{
+		return m_Food;
 	}
 
 	void Game::GameOver()
@@ -83,6 +90,7 @@ namespace Crescer3D
 			HighScore::CalculateListScores();
 			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
 			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
+			Game::GetFood()->setPosition(3.0,2.0,0.0);
 			gameNeedReset=false;
 		}
 

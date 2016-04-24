@@ -1,5 +1,5 @@
-#ifndef _SPHERE_H
-#define _SPHERE_H
+#ifndef _CUBE_H
+#define _CUBE_H
 
 #ifdef __LINUX__
 	extern "C"
@@ -23,46 +23,45 @@
 #include "../../common/LoadTGA.h"
 #include <math.h>
 #include <stdlib.h>
-#include "Cube.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-class Sphere {
+class Cube {
 	private:
 		float positionx,positiony,positionz;
 		GLuint tex1;
 		Model *model;
 		int id;
 		float velocity;
-		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
-		float SquaredDistPointAABB( float pn, float bmin, float bmax);
-
+		float size;
 	public:
-		Sphere();
+		Cube();
 		void init(int x);
 		void draw(mat4 total,GLuint program);
 		void moveForward ();
 		void moveBack () ;
 		void moveLeft ();
 		void moveRight ();
-		float getRadius();
+		void moveUp ();
+		void moveDown ();
+		vec3 getMinBox();
+		vec3 getMaxBox();
 		float getX();
 		float getY();
 		float getZ();
-		void incrementRadius();
-		void decrementRadius();
+		float getSize();
+		void incrementSize();
+		void decrementSize();
 		void setPositionX(float x);
 		void setPositionY(float y);
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
-		bool collision(Sphere* other);
-		bool collisionAABB(Cube* AABB);
 };
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // _SPHERE_H
+#endif //  _CUBE_H
