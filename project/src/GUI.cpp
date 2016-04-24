@@ -70,12 +70,15 @@ namespace Crescer3D
 		//save score and name
 		if(NameIsReady())
 		{
-
 			HighScore::SaveScore(namePlayer);
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
 		}
 		//display name
-		sfDrawString(300,300, "Write your name: ");
+		int positionx=glutGetWidth()/*800*/*40 /100;//40% of the width
+		int positiony=glutGetHeight()/*600*/*50 /100;//50% of the height
+		sfDrawString(positionx,positiony, "Write your name: ");
+		positiony+=50;
+		positionx+=50;
 		sfDrawString(350,350, namePlayer.c_str());
 		glutKeyboardFunc(ReadName);
 		//READ name until there are 7 character
@@ -95,13 +98,7 @@ namespace Crescer3D
 			Input::Reset();
 			Game::SetGameStateInit();
 		}
-
-
-
-
 	}
-
-
 
 
 		/*----------------------------------------------------------------------------------------

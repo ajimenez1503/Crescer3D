@@ -92,6 +92,16 @@ void glutInitWindowSize(int w, int h)
 	winHeight = h;
 }
 
+int glutGetWidth ()
+{
+	return winWidth;
+}
+int glutGetHeight ()
+{
+	return winHeight;
+}
+
+
 void glutInitWindowPosition (int x, int y)
 {
 	winPosX = x;
