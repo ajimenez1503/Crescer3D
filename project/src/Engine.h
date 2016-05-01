@@ -22,6 +22,7 @@
 #include "System.h"
 #include "Window.h"
 #include "Player.h"
+#include "Camera.h"
 #include "Game.h"
 #include "Input.h"
 #include "Logger.h"
