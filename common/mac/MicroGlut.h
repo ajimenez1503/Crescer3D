@@ -34,6 +34,8 @@ void glutMotionFunc(void (*func)(int x, int y));
 
 void glutInitWindowPosition (int x, int y);
 void glutInitWindowSize (int width, int height);
+int glutGetWidth ();
+int glutGetHeight ();
 int glutCreateWindow (char *windowTitle);
 
 void glutSwapBuffers();
@@ -126,7 +128,7 @@ void glutInitContextVersion(int major, int minor);
 #define GLUT_KEY_ESC			 27
 #define GLUT_KEY_TAB			  9
 #define GLUT_KEY_RETURN			 13
-#define GLUT_KEY_SPACE			' ' 
+#define GLUT_KEY_SPACE			' '
 #define GLUT_KEY_SEMICOLON		';'
 #define GLUT_KEY_COMMA			','
 #define GLUT_KEY_DECIMAL		'.'

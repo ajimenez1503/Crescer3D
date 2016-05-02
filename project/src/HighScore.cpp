@@ -72,7 +72,6 @@ namespace Crescer3D
 	{
 		int positionx = glutGet(GLUT_WINDOW_WIDTH) * 60 / 100; // 60% of the width
 		int positiony = glutGet(GLUT_WINDOW_HEIGHT) * 30 / 100; // 30% of the height
-
 		sfDrawString(positionx, positiony, "Best highScore:");
 		positiony+=50;
   		int limmitScores=10;//not display more than 10 lines

@@ -76,7 +76,6 @@ namespace Crescer3D
 		//display name
 		int positionx=glutGet(GLUT_WINDOW_WIDTH)/*800*/*40 /100;//40% of the width
 		int positiony=glutGet(GLUT_WINDOW_HEIGHT)/*600*/*50 /100;//50% of the height
-
 		sfDrawString(positionx,positiony, "Write your name: ");
 		positiony+=50;
 		positionx+=50;

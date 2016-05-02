@@ -33,6 +33,8 @@ void glutMotionFunc(void (*func)(int x, int y));
 
 void glutInitWindowPosition (int x, int y);
 void glutInitWindowSize (int width, int height);
+int glutGetWidth ();
+int glutGetHeight ();
 void glutCreateWindow (char *windowTitle);
 
 void glutSwapBuffers();
