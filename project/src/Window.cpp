@@ -10,14 +10,16 @@ namespace Crescer3D
 	vec3 Window::m_lightDirection;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
+	int Window::m_Width;
+	int Window::m_Height;
 
 
 	Window::Window(char* title, int width, int height)
 	: System(SystemType::Sys_Window)
 	{
 		m_Title = title;
-		m_Width = width;
-		m_Height = height;
+		Window::SetWidth(width);
+		Window::SetHeight(height);
 	}
 
 	Window::~Window()
@@ -29,7 +31,7 @@ namespace Crescer3D
 		glutInit(0, 0);
 		glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH |  GLUT_RGB);
 		glutInitContextVersion(3, 2);
-		glutInitWindowSize (m_Width, m_Height);
+		glutInitWindowSize (Window::GetWidth(), Window::GetHeight());
 		glutCreateWindow (m_Title);
 		glutDisplayFunc(Draw);
 

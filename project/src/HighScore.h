@@ -17,12 +17,14 @@
 	}
 #endif
 
-#include "../../common/simplefont.h"
-#include "System.h"
 #include <string>
 #include <fstream>
-#include "Logger.h"
 #include <map>
+#include "../../common/simplefont.h"
+#include "System.h"
+#include "Window.h"
+#include "Logger.h"
+
 
 namespace Crescer3D
 {

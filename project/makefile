@@ -3,7 +3,7 @@ commondir = ../common/
 bindir = bin/
 src = src/
 cStd = c99
-cppStd = c++98
+cppStd = c++0x
 
 # Variables to build for Linux
 linux: SYSTEM_FLAG := -D__LINUX__

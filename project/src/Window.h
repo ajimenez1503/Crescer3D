@@ -31,7 +31,7 @@ namespace Crescer3D
 	class Window : public System
 	{
 	private:
-		int m_Width, m_Height;
+		static int m_Width, m_Height;
 		char* m_Title;
 		static GLuint m_stdShader;
 		static GLuint m_sphereShader;
@@ -47,9 +47,10 @@ namespace Crescer3D
 
 		virtual bool Update();
 
-		inline int GetWidth() { return m_Width; };
-		inline int GetHeight() { return m_Height; };
-
+		inline static int GetWidth() { return m_Width; };
+		inline static int GetHeight() { return m_Height; };
+		inline static int SetWidth(int w) { m_Width = w; };
+		inline static int SetHeight(int h) { m_Height = h; };
 
 	private:
 		virtual bool Initialize();

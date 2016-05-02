@@ -29,8 +29,8 @@ namespace Crescer3D
 	{
 		std::string result("Score: ");
 		result = result + std::to_string(static_cast<long long unsigned>(m_Score));
-		int positionx = glutGet(GLUT_WINDOW_WIDTH) * 90 / 100; // 90% of the width
-		int positiony = glutGet(GLUT_WINDOW_HEIGHT) * 5 / 100; //5% of the height
+		int positionx = Window::GetWidth() * 90 / 100; // 90% of the width
+		int positiony = Window::GetHeight() * 5 / 100; //5% of the height
 		sfDrawString(-20, 20, result.c_str());
 	}
 
@@ -70,8 +70,8 @@ namespace Crescer3D
 	}
 	void HighScore::DisplayListScores()
 	{
-		int positionx = glutGet(GLUT_WINDOW_WIDTH) * 60 / 100; // 60% of the width
-		int positiony = glutGet(GLUT_WINDOW_HEIGHT) * 30 / 100; // 30% of the height
+		int positionx = Window::GetWidth() * 60 / 100; // 60% of the width
+		int positiony = Window::GetHeight() * 30 / 100; // 30% of the height
 		sfDrawString(positionx, positiony, "Best highScore:");
 		positiony+=50;
   		int limmitScores=10;//not display more than 10 lines

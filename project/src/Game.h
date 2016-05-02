@@ -1,14 +1,11 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-
 #include "System.h"
 #include "Sphere.h"
 #include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
-
-
 
 namespace Crescer3D
 {

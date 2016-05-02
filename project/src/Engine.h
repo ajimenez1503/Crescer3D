@@ -33,6 +33,7 @@ namespace Crescer3D
 {
 	// Forward Declaration
 	class System;
+	class Game;
 	enum  SystemType;
 
 	enum EngineState
