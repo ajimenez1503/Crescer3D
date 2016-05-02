@@ -17,7 +17,6 @@
 	}
 #endif
 
-
 #include "HighScore.h"
 #include "System.h"
 #include "Sphere.h"
@@ -29,8 +28,6 @@
 
 namespace Crescer3D
 {
-
-
 	class Window : public System
 	{
 	private:

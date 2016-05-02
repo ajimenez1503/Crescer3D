@@ -1,6 +1,7 @@
 #version 150
 
-in  vec3 inPosition;
+in vec3 inPosition;
+in vec2 inTexCoord;
 
 // NY
 uniform mat4 projMatrix;

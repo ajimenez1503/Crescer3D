@@ -4,6 +4,7 @@
 
 #include "System.h"
 #include "Sphere.h"
+#include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
 
@@ -26,6 +27,7 @@ namespace Crescer3D
 		virtual bool Update();
 		static Sphere* GetPlayer();
 		static Sphere* GetEnemy();
+		static Cube* GetFood();
 
 		static void GameOver();
 		static void SetGameStateInit();
@@ -39,6 +41,7 @@ namespace Crescer3D
 	private:
 		static Sphere* m_Player;
 		static Sphere* m_Enemy;
+		static Cube * m_Food;
 		static GameStates gameState;
 		static bool gameNeedReset;
 	};

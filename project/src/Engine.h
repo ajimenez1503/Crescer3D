@@ -80,7 +80,7 @@ namespace Crescer3D
 			if (!psys)
 			{
 				Logger::Log("System is not valid");
-				return nullptr;
+				return NULL;
 			}
 			return psys;
 		}

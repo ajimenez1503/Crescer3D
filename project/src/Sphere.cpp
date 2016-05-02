@@ -40,8 +40,14 @@ void Sphere::setPositionY(float y){
 void Sphere::setPositionZ(float z){
 	positionz=z;
 }
-
-Sphere::Sphere(){
+void Sphere::setPosition(float x, float y,float z)
+{
+	setPositionX(x);
+	setPositionY(y);
+	setPositionZ(z);
+}
+Sphere::Sphere()
+{
 	positionx=0.0f;
 	positiony=1.0f;
 	positionz=0.0f;
@@ -49,15 +55,16 @@ Sphere::Sphere(){
 	radius=1.0;
 }
 
-void Sphere::init(int x){
+void Sphere::init(int x)
+{
 	id=x;
 	LoadTGATextureSimple("model/sphere/conc.tga", &tex1);
 	model=LoadModelPlus("model/sphere/groundsphere.obj");
-	//position=SetVector(0.0f, 1.0f, 0.0f);
 }
 
 
-void Sphere::draw(mat4 viewMatrix, GLuint program){
+void Sphere::draw(mat4 viewMatrix, GLuint program)
+{
 	mat4 mdlViewMatrix;
 	glUseProgram(program);
 	mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(radius,radius,radius)));
@@ -68,12 +75,9 @@ void Sphere::draw(mat4 viewMatrix, GLuint program){
 	// draw ground
 	DrawModel(model, program, "inPosition", "inNormal", "inTexCoord");
 }
-void Sphere::setPosition(float x, float y,float z){
-	setPositionX(x);
-	setPositionY(y);
-	setPositionZ(z);
-}
-bool Sphere::collision(Sphere* other){
+
+bool Sphere::collision(Sphere* other)
+{
 	// Calculate the sum of the radii, then square it
 	float sumradiusSquared = getRadius() + other->getRadius();
 	sumradiusSquared *= sumradiusSquared;
@@ -88,4 +92,38 @@ bool Sphere::collision(Sphere* other){
 		return true;
 	}
 	return false;
+}
+
+
+float Sphere::SquaredDistPointAABB( float pn, float bmin, float bmax  )
+{
+        float out = 0;
+        float v = pn;
+        if ( v < bmin )
+        {
+            double val = (bmin - v);
+            out += val * val;
+        }
+
+        if ( v > bmax )
+        {
+            double val = (v - bmax);
+            out += val * val;
+        }
+        return out;
+}
+// True if the Sphere and AABB intersects
+bool Sphere::collisionAABB(Cube* AABB)
+{
+	// Squared distance
+    double squaredDistance = 0.0;
+	vec3 BMax=AABB->getMaxBox();
+	vec3 BMin=AABB->getMinBox();
+    squaredDistance += SquaredDistPointAABB( positionx, BMin.x, BMax.x );
+    squaredDistance += SquaredDistPointAABB( positiony, BMin.y, BMax.y );
+    squaredDistance += SquaredDistPointAABB( positionz, BMin.z, BMax.z );
+    // Intersection if the distance from center is larger than the radius
+    // of the sphere.
+
+    return squaredDistance <= (getRadius() *getRadius());
 }
