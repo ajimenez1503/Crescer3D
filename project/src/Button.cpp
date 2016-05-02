@@ -52,8 +52,8 @@
 	//postion is %
 	void Button::setPositionSize(int pos_x,int pos_y,int w,int h)
 	{
-		x=glutGet(GLUT_WINDOW_WIDTH)/*800*/*pos_x /100;
-		y=glutGet(GLUT_WINDOW_HEIGHT)/*600*/*pos_y /100;
+		x=Window::GetWidth()/*800*/*pos_x /100;
+		y=Window::GetHeight()/*600*/*pos_y /100;
 		width=w;
 		height=h;
 	}

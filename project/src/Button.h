@@ -22,6 +22,7 @@
 #include "../../common/VectorUtils3.h"
 #include <string>
 #include "../../common/simplefont.h"
+#include "Window.h"
 
 
 
