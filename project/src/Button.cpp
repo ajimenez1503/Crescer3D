@@ -1,5 +1,7 @@
 #include "Button.h"
 
+namespace Crescer3D
+{
 	Button::Button()
 	{
 		x=0;
@@ -111,3 +113,4 @@
 	{
 		click=false;
 	}
+}

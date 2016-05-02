@@ -28,6 +28,8 @@
 
 namespace Crescer3D
 {
+	class Button;
+
 	class GUI : public System
 	{
 	private:

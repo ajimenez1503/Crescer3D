@@ -1,5 +1,8 @@
 #include "Cube.h"
 
+namespace Crescer3D
+{
+
 Cube::Cube()
 {
 	positionx=0.0f;
@@ -94,4 +97,6 @@ vec3  Cube::getMaxBox()
 {
 	vec3 MaxB(positionx+size,positiony+size,positionz+size);
 	return MaxB;
+}
+
 }

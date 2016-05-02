@@ -25,7 +25,8 @@
 #include "Window.h"
 
 
-
+namespace Crescer3D
+{
 	class Button
 	{
 	public:
@@ -50,5 +51,6 @@
 		 std::string label;				/* the text label of the button */
 		 void WriteLabel();
 	};
+}
 
 #endif // _BUTTON_H

@@ -1,5 +1,8 @@
 #include "Sphere.h"
 
+namespace Crescer3D
+{
+
 void Sphere::moveForward () {
 	positionz-=velocity;
 }
@@ -126,4 +129,6 @@ bool Sphere::collisionAABB(Cube* AABB)
     // of the sphere.
 
     return squaredDistance <= (getRadius() *getRadius());
+}
+
 }
