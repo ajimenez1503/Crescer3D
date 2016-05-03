@@ -5,7 +5,7 @@ namespace Crescer3D
 	//bool compare (int a, int b) {return a>b;}//compara element of map
 
 	// forward declaration of static members
-	int HighScore::m_Score;
+	long long unsigned HighScore::m_Score;
 	std::multimap<int,std::string> HighScore::map ;
 
 	HighScore::HighScore(): System(SystemType::Sys_HighScore)
@@ -27,11 +27,10 @@ namespace Crescer3D
 
 	void HighScore::DisplayScore()
 	{
-		//with C++11
-		std::string result = "Score: ";
-		result = result + std::to_string(m_Score);
-		int positionx=glutGetWidth()/*800*/*90 /100;//90% of the width
-		int positiony=glutGetHeight()/*600*/*5 /100;//5% of the height
+		std::string result("Score: ");
+		result = result + std::to_string(static_cast<long long unsigned>(m_Score));
+		int positionx = Window::GetWidth() * 90 / 100; // 90% of the width
+		int positiony = Window::GetHeight() * 5 / 100; //5% of the height
 		sfDrawString(-20, 20, result.c_str());
 	}
 
@@ -71,8 +70,8 @@ namespace Crescer3D
 	}
 	void HighScore::DisplayListScores()
 	{
-		int positionx=glutGetWidth()/*800*/*60 /100;//60% of the width
-		int positiony=glutGetHeight()/*600*/*30 /100;//30% of the height
+		int positionx = Window::GetWidth() * 60 / 100; // 60% of the width
+		int positiony = Window::GetHeight() * 30 / 100; // 30% of the height
 		sfDrawString(positionx, positiony, "Best highScore:");
 		positiony+=50;
   		int limmitScores=10;//not display more than 10 lines
@@ -95,8 +94,9 @@ namespace Crescer3D
 			std::ofstream myfile ("dataBase/Score.txt", std::ios::out| std::ios::app );
 			if (myfile.is_open() )
 			{
-				myfile << name+" "+std::to_string(m_Score)+"\n";
-				Logger::Log( name+" "+std::to_string(m_Score)+"\n");
+				std::string score = std::to_string(static_cast<long long unsigned>(m_Score));
+				myfile << name + std::string(" ") + score + std::string("\n");
+				Logger::Log( name + std::string(" ") + score + std::string("\n") );
 				myfile.close();
 			}
 			else

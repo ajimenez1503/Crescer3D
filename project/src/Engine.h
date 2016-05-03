@@ -23,6 +23,7 @@
 #include "Window.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Enemy.h"
 #include "Game.h"
 #include "Input.h"
 #include "Logger.h"
@@ -34,6 +35,7 @@ namespace Crescer3D
 {
 	// Forward Declaration
 	class System;
+	class Game;
 	enum  SystemType;
 
 	enum EngineState
@@ -81,7 +83,7 @@ namespace Crescer3D
 			if (!psys)
 			{
 				Logger::Log("System is not valid");
-				return nullptr;
+				return NULL;
 			}
 			return psys;
 		}

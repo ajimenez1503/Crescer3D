@@ -1,5 +1,8 @@
 #include "Sphere.h"
 
+namespace Crescer3D
+{
+
 void Sphere::moveForward () {
 	positionz-=velocity;
 }
@@ -25,6 +28,10 @@ float Sphere::getZ(){
 	return positionz;
 }
 vec3 Sphere::getPosVector(){
+	return vec3(positionx, positiony, positionz);
+}
+
+vec3 Sphere::getPosition() {
 	return vec3(positionx, positiony, positionz);
 }
 
@@ -75,7 +82,7 @@ void Sphere::draw(mat4 viewMatrix, GLuint program)
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, tex1);		// Bind Our Texture tex1
 	glUniform1i(glGetUniformLocation(program, "tex"), 2); // Texture unit 0
-	// draw ground
+	printError("Drawing Predefines");
 	DrawModel(model, program, "inPosition", "inNormal", "inTexCoord");
 }
 
@@ -129,4 +136,6 @@ bool Sphere::collisionAABB(Cube* AABB)
     // of the sphere.
 
     return squaredDistance <= (getRadius() *getRadius());
+}
+
 }

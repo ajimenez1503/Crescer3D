@@ -71,7 +71,6 @@ namespace Crescer3D
 		return vec2(m_MouseXPos, m_MouseYPos);
 	}
 
-
 	void Input::Keyboard(unsigned char key, int xx, int yy)
 	{
 		float fraction = 0.1f;

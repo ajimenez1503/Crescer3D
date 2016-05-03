@@ -72,6 +72,9 @@ namespace Crescer3D
 		if (!AddSystem(new Crescer3D::Player()))
 			return false;
 
+		if (!AddSystem(new Crescer3D::Enemy()))
+			return false;
+
 		if (!AddSystem(new Crescer3D::Camera()))
 			return false;
 		
@@ -88,6 +91,8 @@ namespace Crescer3D
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Window]->Initialize())
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Player]->Initialize())
+			return false;
+		if (!m_mapSystems[Crescer3D::SystemType::Sys_Enemy]->Initialize())
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Camera]->Initialize())
 			return false;
@@ -108,24 +113,25 @@ namespace Crescer3D
 	Crescer3D::Game* Engine::CreateGame()
 	{
 		if (!AddSystem(new Crescer3D::Game()))
-			return nullptr;
+			return NULL;
 
 		Crescer3D::Game* game = GetSystem<Crescer3D::Game>(Crescer3D::Sys_Game);
 
 		if (!game)
-			return nullptr;
+			return NULL;
 
 		return game;
 	}
 
 	int Engine::Update()
 	{
-		for (std::pair<Crescer3D::SystemType, Crescer3D::System*> pSys : m_mapSystems)
+		typedef std::map<Crescer3D::SystemType, Crescer3D::System*>::const_iterator it_type;
+		for (it_type iterator = m_mapSystems.begin(); iterator != m_mapSystems.end(); iterator++)
 		{
-			if (!pSys.second)
+			if (!iterator->second)
 				continue;
 
-			pSys.second->Update();
+			iterator->second->Update();
 		}
 
 			return true;
@@ -138,15 +144,14 @@ namespace Crescer3D
 		glutEndLoop();
 
 		// Delete all subsystems
-		for (std::pair<Crescer3D::SystemType, Crescer3D::System*> pSys : m_mapSystems)
+		typedef std::map<Crescer3D::SystemType, Crescer3D::System*>::iterator it_type;
+		for (it_type iterator = m_mapSystems.begin(); iterator != m_mapSystems.end(); iterator++)
 		{
-			if (!pSys.second->ShutDown())
-			{
-				Logger::Log("Failed to shutdown Subsystem: " + pSys.first);
+			if (!iterator->second->ShutDown())
+				Logger::Log("Failed to shutdown Subsystem: " + iterator->first);
 				continue;
-			}
 
-			SafeDelete(pSys.second);
+			SafeDelete(iterator->second);
 		}
 		return true;
 	}

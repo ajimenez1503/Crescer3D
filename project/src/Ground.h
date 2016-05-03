@@ -22,6 +22,8 @@
 #include "../../common/VectorUtils3.h"
 #include "../../common/LoadTGA.h"
 
+namespace Crescer3D {
+
 class Ground {
 	private:
 		GLuint tex0;
@@ -32,5 +34,5 @@ class Ground {
 		void init();
 		void draw(mat4 total,GLuint program);
 };
-
+}
 #endif // _GROUND_H

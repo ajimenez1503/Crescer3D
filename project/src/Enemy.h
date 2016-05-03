@@ -1,5 +1,5 @@
-#ifndef _PLAYER_H
-#define _PLAYER_H
+#ifndef _ENEMY_H
+#define _ENEMY_H
 
 #include "System.h"
 #include "Logger.h"
@@ -7,15 +7,15 @@
 
 namespace Crescer3D
 {
-	class Player : public System, public Sphere
+	class Enemy : public System, public Sphere
 	{
 		public:
-			Player();
-			virtual ~Player();
+			Enemy();
+			virtual ~Enemy();
 			virtual bool Initialize();
 
 		
 	};
 }
 
-#endif // _PLAYER_H
+#endif // _ENEMY_H

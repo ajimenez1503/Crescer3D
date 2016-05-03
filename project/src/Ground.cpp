@@ -1,5 +1,6 @@
 #include "Ground.h"
 
+namespace Crescer3D {
 Ground::Ground()
 {
 
@@ -20,4 +21,6 @@ void Ground::draw(mat4 viewMatrix, GLuint program){
 	glUniform1i(glGetUniformLocation(program, "tex"), 1); // Texture unit 0
 	// draw ground
 	DrawModel(cube, program, "inPosition", "inNormal", "inTexCoord");
+}
+
 }

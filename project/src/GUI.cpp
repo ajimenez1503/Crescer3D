@@ -74,8 +74,8 @@ namespace Crescer3D
 			Engine::GetEngine()->SetEngineState(ShuttingDown);
 		}
 		//display name
-		int positionx=glutGetWidth()/*800*/*40 /100;//40% of the width
-		int positiony=glutGetHeight()/*600*/*50 /100;//50% of the height
+		int positionx=Window::GetWidth()/*800*/*40 /100;//40% of the width
+		int positiony=Window::GetHeight()/*600*/*50 /100;//50% of the height
 		sfDrawString(positionx,positiony, "Write your name: ");
 		positiony+=50;
 		positionx+=50;

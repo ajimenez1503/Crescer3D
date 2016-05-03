@@ -25,8 +25,11 @@
 #include "HighScore.h"
 #include "Button.h"
 #include "Input.h"
+
 namespace Crescer3D
 {
+	class Button;
+
 	class GUI : public System
 	{
 	private:

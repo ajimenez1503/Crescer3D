@@ -1,15 +1,14 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-
 #include "System.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "Sphere.h"
 #include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
 #include "Camera.h"
-
-
 
 namespace Crescer3D
 {	
@@ -26,8 +25,8 @@ namespace Crescer3D
 		Game();
 		virtual ~Game();
 		virtual bool Update();
-		static Sphere* GetPlayer();
-		static Sphere* GetEnemy();
+		static Player* GetPlayer();
+		static Enemy* GetEnemy();
 		static Cube* GetFood();
 		static Camera* GetCamera();
 
@@ -42,8 +41,8 @@ namespace Crescer3D
 		static void ResetGame();
 
 	private:
-		static Sphere* m_Player;
-		static Sphere* m_Enemy;
+		static Player* m_Player;
+		static Enemy* m_Enemy;
 		static Cube * m_Food;
 		static Camera* m_Camera;
 		static GameStates gameState;

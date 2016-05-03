@@ -1,18 +1,37 @@
 #ifndef _HIGHSCORE_H
 #define _HIGHSCORE_H
 
-#include "../../common/simplefont.h"
-#include "System.h"
+#ifdef __LINUX__
+	extern "C"
+	{
+		#define GL_GLEXT_PROTOTYPES
+		#include "../../common/Linux/MicroGlut.h"
+	}
+#endif
+
+#ifdef __OSX__
+	extern "C"
+	{
+		#include <OpenGL/gl3.h>
+		#include "../../common/mac/MicroGlut.h"
+	}
+#endif
+
 #include <string>
 #include <fstream>
-#include "Logger.h"
 #include <map>
+#include "../../common/simplefont.h"
+#include "System.h"
+#include "Window.h"
+#include "Logger.h"
+
+
 namespace Crescer3D
 {
 	class HighScore : public System
 	{
 	private:
-		static int m_Score;
+		static long long unsigned m_Score;
 		static std::multimap<int,std::string> map;
 
 

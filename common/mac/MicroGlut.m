@@ -793,15 +793,6 @@ void glutInitWindowSize (int width, int height)
 	gWindowHeight = height;
 }
 
-int glutGetWidth ()
-{
-	return gWindowWidth;
-}
-int glutGetHeight ()
-{
-	return gWindowHeight;
-}
-
 int glutCreateWindow (char *windowTitle)
 {
 	NSRect frame = NSMakeRect(gWindowPosX, NSScreen.mainScreen.frame.size.height - gWindowPosY-gWindowHeight, gWindowWidth, gWindowHeight);

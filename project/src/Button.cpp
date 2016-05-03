@@ -1,5 +1,7 @@
 #include "Button.h"
 
+namespace Crescer3D
+{
 	Button::Button()
 	{
 		x=0;
@@ -52,8 +54,8 @@
 	//postion is %
 	void Button::setPositionSize(int pos_x,int pos_y,int w,int h)
 	{
-		x=glutGetWidth()/*800*/*pos_x /100;
-		y=glutGetHeight()/*600*/*pos_y /100;
+		x=Window::GetWidth()/*800*/*pos_x /100;
+		y=Window::GetHeight()/*600*/*pos_y /100;
 		width=w;
 		height=h;
 	}
@@ -111,3 +113,4 @@
 	{
 		click=false;
 	}
+}
