@@ -88,8 +88,9 @@ namespace Crescer3D
 		printError("Clearing Screen");
 
 		// Update View Matrix
-		mat4 viewMatrix = Input::GetLookAtMatrix();
-		vec3 cameraDirection = Input::GetCameraDirection();
+		Game::GetCamera() -> CameraUpdate();
+		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
+		vec3 cameraDirection = Game::GetCamera() -> getCameraDir();
 		glUseProgram(m_stdShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
 		glUseProgram(m_sphereShader);

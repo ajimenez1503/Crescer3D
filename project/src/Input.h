@@ -34,7 +34,7 @@ namespace Crescer3D
 		virtual ~Input();
 
 		virtual bool Update();
-		static inline mat4 GetLookAtMatrix() { return m_LookAtMatrix; }
+		//static inline mat4 GetLookAtMatrix() { return m_LookAtMatrix; }
 		static vec2 GetMousePosition();
 		static vec3 GetCameraDirection();
 		static void Reset();
@@ -46,13 +46,6 @@ namespace Crescer3D
 		// camera steering parameters
 		// should be moved into the camera class later
 		static mat4 m_LookAtMatrix;
-		static float m_CameraAngle;
-		static float m_CameraDirX;
-		static float m_CameraDirZ;
-		static float m_CameraPosX;
-		static float m_CameraPosZ;
-		static float m_CameraPosY;
-		static float m_DeltaAngle;
 		static int m_xOrigin;
 		static int m_MouseXPos;
 		static int m_MouseYPos;

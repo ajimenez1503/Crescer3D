@@ -7,12 +7,13 @@
 #include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
+#include "Camera.h"
 
 
 
 namespace Crescer3D
-{
-
+{	
+	class Camera;
 	enum GameStates
 	{
 		Game_Init,
@@ -28,6 +29,8 @@ namespace Crescer3D
 		static Sphere* GetPlayer();
 		static Sphere* GetEnemy();
 		static Cube* GetFood();
+		static Camera* GetCamera();
+
 
 		static void GameOver();
 		static void SetGameStateInit();
@@ -42,6 +45,7 @@ namespace Crescer3D
 		static Sphere* m_Player;
 		static Sphere* m_Enemy;
 		static Cube * m_Food;
+		static Camera* m_Camera;
 		static GameStates gameState;
 		static bool gameNeedReset;
 	};

@@ -6,6 +6,7 @@ namespace Crescer3D
 	Sphere* Game::m_Player;
 	Sphere* Game::m_Enemy;
 	Cube * Game::m_Food;
+	Camera* Game::m_Camera;
 	bool Game::gameNeedReset;
 	GameStates Game::gameState;
 
@@ -16,6 +17,7 @@ namespace Crescer3D
 		m_Player = new Sphere();
 		m_Enemy = new Sphere();
 		m_Food = new Cube();
+		m_Camera = new Camera();
 		gameNeedReset=true;
 		SetGameStateInit();
 	}
@@ -25,6 +27,7 @@ namespace Crescer3D
 		SafeDelete(m_Player);
 		SafeDelete(m_Enemy);
 		SafeDelete(m_Food);
+		SafeDelete(m_Camera);
 	}
 
 	bool Game::Update()
@@ -36,6 +39,11 @@ namespace Crescer3D
 	Sphere* Game::GetPlayer()
 	{
 		return m_Player;
+	}
+
+	Camera* Game::GetCamera()
+	{
+		return m_Camera;
 	}
 
 	Sphere* Game::GetEnemy()

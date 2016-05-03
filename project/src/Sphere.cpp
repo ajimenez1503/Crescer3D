@@ -24,6 +24,9 @@ float Sphere::getY(){
 float Sphere::getZ(){
 	return positionz;
 }
+vec3 Sphere::getPosVector(){
+	return vec3(positionx, positiony, positionz);
+}
 
 void Sphere::incrementRadius(){
 	radius+=0.5;
