@@ -13,6 +13,7 @@ namespace Crescer3D
 		Sys_Logger,
 		Sys_HighScore,
 		Sys_Player,
+		Sys_Enemy,
 		Sys_MAX,
 		Sys_GUI
 	};
