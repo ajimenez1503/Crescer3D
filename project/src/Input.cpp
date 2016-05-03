@@ -100,9 +100,14 @@ namespace Crescer3D
 		return vec2(m_MouseXPos, m_MouseYPos);
 	}
 
+	vec3 Input::GetCameraPosition()
+	{
+		return vec3(m_CameraPosX, m_CameraPosY, m_CameraPosZ);
+	}
+
 	vec3 Input::GetCameraDirection()
 	{
-		return vec3(m_CameraDirX, 1.0f, m_CameraDirZ);
+		return vec3(m_CameraDirX, 0.0f, m_CameraDirZ);
 	}
 
 	void Input::Keyboard(unsigned char key, int xx, int yy)

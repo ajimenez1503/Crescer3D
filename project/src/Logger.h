@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "../../common/VectorUtils3.h"
 #include "System.h"
 
 namespace Crescer3D
@@ -16,6 +17,7 @@ namespace Crescer3D
 		static void Log(std::string s);
 		static void Log(char* c);
 		static void Log(float f);
+		static void Log(vec3 v);
 	};
 }
 

@@ -7,7 +7,6 @@ namespace Crescer3D
 	GLuint Window::m_sphereShader;
 	GLuint Window::m_groundShader;
 	Ground Window::m_Ground;
-	vec3 Window::m_lightDirection;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
 	int Window::m_Width;
@@ -40,7 +39,6 @@ namespace Crescer3D
 		glDisable(GL_CULL_FACE);
 		printError("OpenGL Init");
 
-		m_lightDirection = vec3(10, 10, 10);
 		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 50.0);
 
 		// Load and compile shader
@@ -52,10 +50,9 @@ namespace Crescer3D
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		glUseProgram(m_sphereShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-		glUniform3fv(glGetUniformLocation(m_sphereShader, "lightDirection"), 1, &m_lightDirection.x);
+		glUniform1i(glGetUniformLocation(m_sphereShader, "inTest"), 666);
 		glUseProgram(m_groundShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-		glUniform3fv(glGetUniformLocation(m_groundShader, "lightDirection"), 1, &m_lightDirection.x);
 		printError("Shader Init");
 
 		m_Ground.init();
@@ -81,6 +78,7 @@ namespace Crescer3D
 	void Window::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearStencil(0);
 	}
 
 	void Window::Draw()
@@ -88,18 +86,18 @@ namespace Crescer3D
 		// clear the screen
 		Clear();
 		printError("Clearing Screen");
-
 		// Update View Matrix
 		mat4 viewMatrix = Input::GetLookAtMatrix();
-		vec3 cameraDirection = Input::GetCameraDirection();
+		vec3 cameraPosition = Input::GetCameraPosition();
+
 		glUseProgram(m_stdShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
 		glUseProgram(m_sphereShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
-		glUniform3fv(glGetUniformLocation(m_sphereShader, "inCamera"), 1, &cameraDirection.x);
+		glUniform3fv(glGetUniformLocation(m_sphereShader, "cameraPosition"), 1, &cameraPosition.x);
 		glUseProgram(m_groundShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
-		glUniform3fv(glGetUniformLocation(m_groundShader, "inCamera"), 1, &cameraDirection.x);
+		glUniform3fv(glGetUniformLocation(m_groundShader, "cameraPosition"), 1, &cameraPosition.x);
 		printError("Updating View Matrix");
 
 		if(Game::IsStateInit())

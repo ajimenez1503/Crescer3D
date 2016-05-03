@@ -30,4 +30,9 @@ namespace Crescer3D
 	{
 		std::cout << f << std::endl;
 	}
+
+	void Logger::Log(vec3 v)
+	{
+		std::cout << v.x << ", " << v.y << ", " << v.z << std::endl;
+	}
 }
