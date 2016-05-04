@@ -67,37 +67,58 @@ namespace Crescer3D
 
 	void GUI::GameOverView()
 	{
-		//save score and name
-		if(NameIsReady())
-		{
-			HighScore::SaveScore(namePlayer);
-			Engine::GetEngine()->SetEngineState(ShuttingDown);
-		}
-		//display name
 		int positionx=Window::GetWidth()/*800*/*40 /100;//40% of the width
 		int positiony=Window::GetHeight()/*600*/*50 /100;//50% of the height
-		sfDrawString(positionx,positiony, "Write your name: ");
-		positiony+=50;
-		positionx+=50;
-		sfDrawString(350,350, namePlayer.c_str());
-		glutKeyboardFunc(ReadName);
-		//READ name until there are 7 character
-
 		buttonExit.setPositionSize(30,25,80,60);
 		buttonExit.Draw();
-		if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
-			Engine::GetEngine()->SetEngineState(ShuttingDown);
-		}
-
+		//save score and name
 		//move to Game_Play when click on play
 		buttonPlay.setPositionSize(70,25,80,60);
 		buttonPlay.Draw();
-		//TODO set initial position of Player
-		if(buttonPlay.isClick()){
-			namePlayer="-------";//default name user
-			Input::Reset();
-			Game::SetGameStateInit();
+
+		if(NameIsReady())
+		{
+			//display name
+			sfDrawString(positionx,positiony, "HighScore and name saved. ");
+
+			if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
+				HighScore::SaveScore(namePlayer);
+				Engine::GetEngine()->SetEngineState(ShuttingDown);
+			}
+
+			//TODO set initial position of Player
+			if(buttonPlay.isClick()){
+				HighScore::SaveScore(namePlayer);
+				namePlayer="-------";//default name user
+				Input::Reset();
+				Game::SetGameStateInit();
+			}
 		}
+		else
+		{
+			//display name
+			sfDrawString(positionx,positiony, "Write your name: ");
+			positiony+=50;
+			positionx+=50;
+			sfDrawString(350,350, namePlayer.c_str());
+			glutKeyboardFunc(ReadName);
+			//READ name until there are 7 character
+
+			if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
+				Engine::GetEngine()->SetEngineState(ShuttingDown);
+			}
+
+			//TODO set initial position of Player
+			if(buttonPlay.isClick()){
+				namePlayer="-------";//default name user
+				Input::Reset();
+				Game::SetGameStateInit();
+			}
+		}
+
+
+
+
 	}
 
 
@@ -128,7 +149,16 @@ namespace Crescer3D
 
 	void GUI::ReadName(unsigned char key, int xx, int yy)
 	{
-		if((key>='a' && key<='z') || (key==' ') || (key>='A' && key<='Z'))
+		if(key==GLUT_KEY_RETURN)
+		{
+			std::size_t found = namePlayer.find("-");
+			std::size_t length = namePlayer.size()-found;
+			if (found!=std::string::npos)
+			{
+				namePlayer.replace (found, length, length, ' ');
+			}
+		}
+		else if((key>='a' && key<='z') || (key==' ') || (key>='A' && key<='Z'))
 		{
 			std::size_t found = namePlayer.find("-");
 			if (found!=std::string::npos)

@@ -55,7 +55,7 @@ namespace Crescer3D
 			while ( getline (myfile,line) )
 			{
 				//save score
-				score = std::stoi(line.substr(line.find(" "),line.size()));
+				score = std::stoi(line.substr(line.find("  "),line.size()));
 				//save line
 				map.insert(std::pair<int,std::string>(score,line));
 			}
@@ -65,8 +65,6 @@ namespace Crescer3D
 		{
 			Logger::Log( "Unable to open file");
 		}
-
-
 	}
 	void HighScore::DisplayListScores()
 	{
@@ -74,15 +72,23 @@ namespace Crescer3D
 		int positiony = Window::GetHeight() * 30 / 100; // 30% of the height
 		sfDrawString(positionx, positiony, "Best highScore:");
 		positiony+=50;
-  		int limmitScores=10;//not display more than 10 lines
+		positionx+=20;
+  		int position=1;//not display more than 10 lines
+		std::string line;
 		if(map.size()>0){
 			std::map<int,std::string>::const_iterator it = map.end();
 		    do{
 		        it--;
-				sfDrawString(positionx, positiony, it->second.c_str());
-				limmitScores--;
+				if(position>=10){
+					line = std::to_string(static_cast<long long unsigned>(position)) + ". "+ it->second  ;
+				}
+				else{
+					line = std::to_string(static_cast<long long unsigned>(position)) + ".  "+ it->second  ;
+				}
+				sfDrawString(positionx, positiony, line.c_str());
+				position++;
 				positiony+=20;
-		    } while (it != map.begin() && limmitScores>0);
+		    } while (it != map.begin() && position<=10);
 		}
 	}
 
@@ -95,7 +101,7 @@ namespace Crescer3D
 			if (myfile.is_open() )
 			{
 				std::string score = std::to_string(static_cast<long long unsigned>(m_Score));
-				myfile << name + std::string(" ") + score + std::string("\n");
+				myfile << name + std::string("  ") + score + std::string("\n");
 				Logger::Log( name + std::string(" ") + score + std::string("\n") );
 				myfile.close();
 			}
