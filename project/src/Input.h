@@ -23,6 +23,7 @@
 #include "../../common/VectorUtils3.h"
 #include "Window.h"
 #include "GUI.h"
+#include "Sound.h"
 
 namespace Crescer3D
 {

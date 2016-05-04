@@ -78,6 +78,9 @@ namespace Crescer3D
 		if (!AddSystem(new Crescer3D::Camera()))
 			return false;
 		
+		if (!AddSystem(new Crescer3D::Sound()))
+			return false;
+
 		if (!AddSystem(new Crescer3D::HighScore()))
 			return false;
 
@@ -95,6 +98,8 @@ namespace Crescer3D
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Enemy]->Initialize())
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Camera]->Initialize())
+			return false;
+		if (!m_mapSystems[Crescer3D::SystemType::Sys_Sound]->Initialize())
 			return false;
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_HighScore]->Initialize())
 			return false;

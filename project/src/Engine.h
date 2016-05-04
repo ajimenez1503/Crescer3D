@@ -30,6 +30,8 @@
 #include "HighScore.h"
 #include "GUI.h"
 #include "DeleteUtil.h"
+#include "Sound.h"
+
 
 namespace Crescer3D
 {

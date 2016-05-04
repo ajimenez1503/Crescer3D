@@ -108,6 +108,12 @@ namespace Crescer3D
 			case 'm' :
 				Game::GetCamera() -> decreaseCameraDistance();
 			break;
+			case '1' :
+				Sound::playSound(1);
+			break;
+			case '2' :
+				Sound::playSound(2);
+			break;
 			case 'q' :
 			case 'Q' :
 			case GLUT_KEY_ESC:

@@ -16,7 +16,8 @@ namespace Crescer3D
 		Sys_Player,
 		Sys_Enemy,
 		Sys_MAX,
-		Sys_GUI
+		Sys_GUI,
+		Sys_Sound
 	};
 
 	struct SystemData
