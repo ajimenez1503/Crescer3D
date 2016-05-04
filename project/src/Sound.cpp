@@ -11,24 +11,24 @@ namespace Crescer3D
 
 	Sound::~Sound()
 	{
-		engine->drop(); // delete sound engine
+		if(engine)
+			engine->drop(); // delete sound engine
 	}
 
 	bool Sound::Initialize()
 	{
-		return true;
+		engine = irrklang::createIrrKlangDevice();
+		if(!engine) {
+			Logger::Log("Could not startup engine\n");
+			return false;
+		}
+		else
+			return true;
 	}
 
 	void Sound::playSound(int index)
 	{
-		engine = irrklang::createIrrKlangDevice(); //create sound engine
-
-		if (!engine)
-		{			
-			Logger::Log("Could not startup engine\n");
-		}
-
-		// play sounds accourding to index 
+		// play sounds according to index 
 		if (index == 1)
 		{
 			engine->play2D("sounds/slurp.wav");
