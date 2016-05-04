@@ -109,8 +109,6 @@ namespace Crescer3D
 		}
 		else if(Game::IsStatePlay())
 		{
-			GUI::PlayView();
-
 			// Draw ground
 			glUseProgram(m_groundShader);
 			m_Ground.draw(viewMatrix, m_groundShader);
@@ -137,6 +135,7 @@ namespace Crescer3D
 				Logger::Log("No Collision!");
 				m_CollisionState=false;
 			}
+			GUI::PlayView();
 		}
 		else if(Game::IsStateGameOver())
 		{

@@ -80,13 +80,12 @@ namespace Crescer3D
 		{
 			//display name
 			sfDrawString(positionx,positiony, "HighScore and name saved. ");
-
 			if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
 				HighScore::SaveScore(namePlayer);
 				Engine::GetEngine()->SetEngineState(ShuttingDown);
 			}
 
-			//TODO set initial position of Player
+			//set initial position of Player
 			if(buttonPlay.isClick()){
 				HighScore::SaveScore(namePlayer);
 				namePlayer="-------";//default name user
@@ -116,11 +115,7 @@ namespace Crescer3D
 			}
 		}
 
-
-
-
 	}
-
 
 		/*----------------------------------------------------------------------------------------
 	 *	\brief	This function is used to see if a mouse click or event is within a button
