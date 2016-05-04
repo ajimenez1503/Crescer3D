@@ -40,8 +40,8 @@ void main(void)
 	if(outline < 0)
 		outline = 0;
 
-	if ( outline < 0.35 )
-		color = vec4(0.1, 0.1, 0.1, 1.0);
+	//if ( outline < 0.35 )
+	//	color = vec4(0.1, 0.1, 0.1, 1.0);
 	
 	outColor = color;
 }

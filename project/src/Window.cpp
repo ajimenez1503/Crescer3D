@@ -90,7 +90,7 @@ namespace Crescer3D
 
 		Game::GetCamera() -> CameraUpdate();
 		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
-		vec3 cameraDirection = Game::GetCamera() -> getCameraDir();
+		vec3 cameraPosition = Game::GetCamera() -> getCameraPos();
 
 		glUseProgram(m_stdShader);
 		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);

@@ -47,6 +47,10 @@ namespace Crescer3D
 	{
 		return cameraDir;
 	}
+	vec3 Camera::getCameraPos()
+	{
+		return cameraPos;
+	}
 	void Camera::setCameraDistance(float distance)
 	{
 		cameraDistance = distance;
