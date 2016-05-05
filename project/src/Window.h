@@ -19,7 +19,7 @@
 #include "HighScore.h"
 #include "System.h"
 #include "Sphere.h"
-#include "Ground.h"
+#include "World.h"
 #include "Game.h"
 #include "Input.h"
 #include "DeleteUtil.h"
@@ -32,10 +32,7 @@ namespace Crescer3D
 	private:
 		static int m_Width, m_Height;
 		char* m_Title;
-		static GLuint m_stdShader;
-		static GLuint m_sphereShader;
-		static GLuint m_groundShader;
-		static Ground m_Ground;
+		static World m_World;
 		static mat4 m_ProjMat;
 		static bool m_CollisionState;
 

@@ -3,10 +3,7 @@
 namespace Crescer3D
 {
 	// forward declaration of static members
-	GLuint Window::m_stdShader;
-	GLuint Window::m_sphereShader;
-	GLuint Window::m_groundShader;
-	Ground Window::m_Ground;
+	World Window::m_World;
 	mat4 Window::m_ProjMat;
 	bool Window::m_CollisionState;
 	int Window::m_Width;
@@ -39,26 +36,28 @@ namespace Crescer3D
 		glDisable(GL_CULL_FACE);
 		printError("OpenGL Init");
 
-		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 50.0);
+		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 1000.0);
 
 		// Load and compile shader
-		m_stdShader = loadShaders("shader/shader_std.vert", "shader/shader_std.frag");
-		m_sphereShader = loadShaders("shader/Cell_Shader_Objects.vert", "shader/Cell_Shader_Objects.frag");
-		m_groundShader = loadShaders("shader/Cell_Shader_Ground.vert", "shader/Cell_Shader_Ground.frag");
+		GLuint skyboxShader = loadShaders("shader/Shader_Skybox.vert", "shader/Shader_Skybox.frag");
+		GLuint sphereShader = loadShaders("shader/Shader_Objects.vert", "shader/Shader_Objects.frag");
+		GLuint groundShader = loadShaders("shader/Shader_Ground.vert", "shader/Shader_Ground.frag");
+		GLuint wallShader = loadShaders("shader/Shader_Ground.vert", "shader/Shader_Ground.frag");
 
-		glUseProgram(m_stdShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-		glUseProgram(m_sphereShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
-		glUniform1i(glGetUniformLocation(m_sphereShader, "inTest"), 666);
-		glUseProgram(m_groundShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(skyboxShader);
+		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(sphereShader);
+		glUniformMatrix4fv(glGetUniformLocation(sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(groundShader);
+		glUniformMatrix4fv(glGetUniformLocation(groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(wallShader);
+		glUniformMatrix4fv(glGetUniformLocation(wallShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		printError("Shader Init");
 
-		m_Ground.init();
-		Game::GetPlayer()->init(0);
-		Game::GetEnemy()->init(1);
-		Game::GetFood()->init(2);
+		m_World.init(skyboxShader, groundShader, wallShader);
+		Game::GetPlayer()->init(0, sphereShader);
+		Game::GetEnemy()->init(1, sphereShader);
+		Game::GetFood()->init(2, sphereShader);
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
@@ -78,7 +77,6 @@ namespace Crescer3D
 	void Window::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearStencil(0);
 	}
 
 	void Window::Draw()
@@ -92,16 +90,6 @@ namespace Crescer3D
 		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
 		vec3 cameraPosition = Game::GetCamera() -> getCameraPos();
 
-		glUseProgram(m_stdShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_stdShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
-		glUseProgram(m_sphereShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_sphereShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
-		glUniform3fv(glGetUniformLocation(m_sphereShader, "cameraPosition"), 1, &cameraPosition.x);
-		glUseProgram(m_groundShader);
-		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "mdlViewMatrix"), 1, GL_TRUE, viewMatrix.m);
-		glUniform3fv(glGetUniformLocation(m_groundShader, "cameraPosition"), 1, &cameraPosition.x);
-		printError("Updating View Matrix");
-
 		if(Game::IsStateInit())
 		{
 			Game::ResetGame();
@@ -109,17 +97,15 @@ namespace Crescer3D
 		}
 		else if(Game::IsStatePlay())
 		{
-			// Draw ground
-			glUseProgram(m_groundShader);
-			m_Ground.draw(viewMatrix, m_groundShader);
+			// Draw World
+			m_World.draw(viewMatrix, cameraPosition);
 
 			// Draw Objects
-			glUseProgram(m_sphereShader);
-			Game::GetPlayer()->draw(viewMatrix, m_sphereShader);
-			Game::GetEnemy()->draw(viewMatrix, m_sphereShader);
-			Game::GetFood()->draw(viewMatrix,m_sphereShader);
-			printError("Drawing");
+			Game::GetPlayer()->draw(viewMatrix, cameraPosition);
+			Game::GetEnemy()->draw(viewMatrix, cameraPosition);
+			Game::GetFood()->draw(viewMatrix, cameraPosition);
 
+			printError("Drawing");
 
 			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
 			|| Game::GetPlayer()->collisionAABB(Game::GetFood())))

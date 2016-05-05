@@ -26,7 +26,7 @@ namespace Crescer3D
 
 	bool Camera::Initialize()
 	{
-		Logger::Log("Hello Camera!");
+		//Logger::Log("Hello Camera!");
 		return true;
 	}
 
