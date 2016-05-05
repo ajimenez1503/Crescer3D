@@ -13,8 +13,10 @@ namespace Crescer3D
 
 	Sound::~Sound()
 	{
+#ifndef __CENTOS__
 		if(engine)
 			engine->drop(); // delete sound engine
+#endif
 	}
 
 	bool Sound::Initialize()

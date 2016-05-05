@@ -1,14 +1,7 @@
 #ifndef _BUTTON_H
 #define _BUTTON_H
 
-#ifdef __LINUX__
-	extern "C"
-	{
-		#define GL_GLEXT_PROTOTYPES
-		#include "../../common/Linux/MicroGlut.h"
-	}
-#endif
-#ifdef __CENTOS__
+#if defined (__LINUX__) || (__CENTOS__)
 	extern "C"
 	{
 		#define GL_GLEXT_PROTOTYPES

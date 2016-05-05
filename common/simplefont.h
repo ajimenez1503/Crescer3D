@@ -5,11 +5,7 @@
 extern "C" {
 #endif
 
-#ifdef __LINUX__
-	#include <GL/gl.h>
-	#include "Linux/MicroGlut.h"
-#endif
-#ifdef __CENTOS__
+#if defined (__LINUX__) || (__CENTOS__)
 	#include <GL/gl.h>
 	#include "Linux/MicroGlut.h"
 #endif

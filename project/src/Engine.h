@@ -1,17 +1,10 @@
 #ifndef _ENGINE_H
 #define _ENGINE_H
 
-#ifdef __LINUX__
+#if defined (__LINUX__) || (__CENTOS__)
 	extern "C"
 	{
-		#include <GL/gl.h>
-		#include "../../common/Linux/MicroGlut.h"
-	}
-#endif
-#ifdef __CENTOS__
-	extern "C"
-	{
-		#include <GL/gl.h>
+		#define GL_GLEXT_PROTOTYPES
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
