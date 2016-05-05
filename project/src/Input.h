@@ -8,7 +8,13 @@
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
-
+#ifdef __CENTOS__
+	extern "C"
+	{
+		#include <GL/gl.h>
+		#include "../../common/Linux/MicroGlut.h"
+	}
+#endif
 #ifdef __OSX__
 	extern "C"
 	{
@@ -16,7 +22,6 @@
 		#include "../../common/mac/MicroGlut.h"
 	}
 #endif
-
 #include "System.h"
 #include "Game.h"
 #include "Engine.h"

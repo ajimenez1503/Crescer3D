@@ -9,6 +9,10 @@ extern "C" {
 	#include <GL/gl.h>
 	#include "Linux/MicroGlut.h"
 #endif
+#ifdef __CENTOS__
+	#include <GL/gl.h>
+	#include "Linux/MicroGlut.h"
+#endif
 #ifdef __OSX__
 	#include <OpenGL/gl3.h>
 	#include "mac/MicroGlut.h"
