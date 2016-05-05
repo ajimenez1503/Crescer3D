@@ -34,6 +34,7 @@ namespace Crescer3D
 
 	void Sound::playSound(int index)
 	{
+#ifndef __CENTOS__
 		if(engine)
 		{
 			// play sounds according to index 
@@ -46,5 +47,6 @@ namespace Crescer3D
 				engine->play2D("sounds/male-thijs-loud-scream.wav");
 			}
 		}
+#endif
 	}
 } 
