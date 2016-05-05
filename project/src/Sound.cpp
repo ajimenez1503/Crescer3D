@@ -21,12 +21,14 @@ namespace Crescer3D
 
 	bool Sound::Initialize()
 	{
+#ifndef __CENTOS__
 		engine = irrklang::createIrrKlangDevice();
 		if(!engine) {
 			Logger::Log("Could not startup engine\n");
 			return false;
 		}
 		else
+#endif
 			return true;
 	}
 
