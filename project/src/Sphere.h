@@ -8,7 +8,13 @@
 		#include "../../common/Linux/MicroGlut.h"
 	}
 #endif
-
+#ifdef __CENTOS__
+	extern "C"
+	{
+		#define GL_GLEXT_PROTOTYPES
+		#include "../../common/Linux/MicroGlut.h"
+	}
+#endif
 #ifdef __OSX__
 	extern "C"
 	{
