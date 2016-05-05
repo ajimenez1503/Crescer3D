@@ -2,7 +2,9 @@
 
 namespace Crescer3D
 {
+#ifndef __CENTOS__
 	irrklang::ISoundEngine* Sound::engine;
+#endif
 
 	Sound::Sound()
 	: System(SystemType::Sys_Sound)
@@ -28,14 +30,17 @@ namespace Crescer3D
 
 	void Sound::playSound(int index)
 	{
-		// play sounds according to index 
-		if (index == 1)
+		if(engine)
 		{
-			engine->play2D("sounds/slurp.wav");
-		}
-		if (index == 2)
-		{
-			engine->play2D("sounds/male-thijs-loud-scream.wav");
+			// play sounds according to index 
+			if (index == 1)
+			{
+				engine->play2D("sounds/slurp.wav");
+			}
+			if (index == 2)
+			{
+				engine->play2D("sounds/male-thijs-loud-scream.wav");
+			}
 		}
 	}
 } 

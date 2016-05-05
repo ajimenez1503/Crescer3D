@@ -3,10 +3,11 @@
 
 #include "System.h"
 #include "Logger.h"
-#include "../../irrKlang/include/irrKlang.h"
 
-#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
-
+#ifndef __CENTOS__
+	#include "../../irrKlang/include/irrKlang.h"
+	#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+#endif
 
 namespace Crescer3D
 {
@@ -19,7 +20,11 @@ namespace Crescer3D
 		static void playSound(int index);
 
 	private:
+#ifndef __CENTOS__
 		static irrklang::ISoundEngine* engine;
+#else
+		void* engine;
+#endif
 	};
 }
 

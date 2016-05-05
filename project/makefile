@@ -5,6 +5,11 @@ src = src/
 cStd = c99
 cppStd = c++0x
 
+# Variables to build for centos
+centos: SYSTEM_FLAG := -D__CENTOS__
+centos: MICROGLUT := Linux/MicroGlut.c
+centos: PARAM := -lGL -lm -DGL_GLEXT_PROTOTYPES -lXt -lX11
+
 # Variables to build for Linux
 linux: SYSTEM_FLAG := -D__LINUX__
 linux: MICROGLUT := Linux/MicroGlut.c
@@ -20,6 +25,9 @@ linux: compile link
 
 # Build Target for OS X
 mac: compile link
+
+# Build Target for Cent OS (Without sound)
+centos: compile link
 
 # Compile Commands
 compile:
