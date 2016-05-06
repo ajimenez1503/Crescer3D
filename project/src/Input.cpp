@@ -91,22 +91,22 @@ namespace Crescer3D
 				Game::GetPlayer()->moveBack();
 			break;
 			case 'w' :
-				Game::GetCamera() -> moveForwardPlayer(velocity);
+				Game::GetCamera()->moveForwardPlayer(velocity);
 			break;
 			case 's' :
-				Game::GetCamera() -> moveBackPlayer(velocity);
+				Game::GetCamera()->moveBackPlayer(velocity);
 			break;
 			case 'a' :
-				Game::GetCamera() -> moveLeftPlayer(velocity);
+				Game::GetCamera()->moveLeftPlayer(velocity);
 			break;
 			case 'd' :
-				Game::GetCamera() -> moveRightPlayer(velocity);
+				Game::GetCamera()->moveRightPlayer(velocity);
 			break;
 			case 'n' :
-				Game::GetCamera() -> increaseCameraDistance();
+				Game::GetCamera()->increaseCameraDistance();
 			break;
 			case 'm' :
-				Game::GetCamera() -> decreaseCameraDistance();
+				Game::GetCamera()->decreaseCameraDistance();
 			break;
 			case '1' :
 				Sound::playSound(1);

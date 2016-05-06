@@ -7,6 +7,7 @@
 
 namespace Crescer3D
 {
+
 	class Enemy : public System, public Sphere
 	{
 		public:

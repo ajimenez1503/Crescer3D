@@ -37,6 +37,7 @@ compile:
 	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)LoadTGA.o $(commondir)LoadTGA.c
 	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)simplefont.o $(commondir)simplefont.c
 	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
+	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sphere.o $(src)Sphere.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)HighScore.o $(src)HighScore.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Button.o $(src)Button.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)GUI.o $(src)GUI.cpp
@@ -46,7 +47,6 @@ compile:
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Camera.o $(src)Camera.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Enemy.o $(src)Enemy.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)System.o $(src)System.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sphere.o $(src)Sphere.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Cube.o $(src)Cube.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)World.o $(src)World.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Input.o $(src)Input.cpp

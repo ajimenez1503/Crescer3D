@@ -75,12 +75,16 @@ void Cube::setPosition(float x, float y,float z){
 	setPositionZ(z);
 }
 
-void Cube::draw(mat4 viewMatrix, vec3 cameraPos) {
-	glUseProgram(m_Shader);
+void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
+	if(shader == 666)
+		shader = m_Shader;
+	vec3 lightDir = Light::GetLightDirection();
+	glUseProgram(shader);
 	mat4 mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(size,size,size)));
-	glUniformMatrix4fv(glGetUniformLocation(m_Shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
-	glUniform3fv(glGetUniformLocation(m_Shader, "cameraPosition"), 1, &cameraPos.x);
-	DrawModel(m_Model, m_Shader, "inPosition", "inNormal", "inTexCoord");
+	glUniformMatrix4fv(glGetUniformLocation(shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
+	glUniform3fv(glGetUniformLocation(shader, "cameraPosition"), 1, &cameraPos.x);
+	glUniform3fv(glGetUniformLocation(shader, "lightDirection"), 1, &lightDir.x);
+	DrawModel(m_Model, shader, "inPosition", "inNormal", NULL);
 }
 
 vec3  Cube::getMinBox()

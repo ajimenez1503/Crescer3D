@@ -23,7 +23,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "Cube.h"
-
+#include "Light.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +32,7 @@ namespace Crescer3D
 {
 
 class Sphere {
+	
 	private:
 		float positionx,positiony,positionz;
 		GLuint m_Shader;
@@ -44,7 +45,7 @@ class Sphere {
 	public:
 		Sphere();
 		void init(int x, GLuint shader);
-		void draw(mat4 total, vec3 cameraPos);
+		void draw(mat4 total, vec3 cameraPos, GLuint shader = 666);
 		void moveForward ();
 		void moveBack () ;
 		void moveLeft ();

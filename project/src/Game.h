@@ -12,7 +12,6 @@
 
 namespace Crescer3D
 {	
-	class Camera;
 	enum GameStates
 	{
 		Game_Init,

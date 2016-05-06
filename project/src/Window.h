@@ -24,9 +24,12 @@
 #include "Input.h"
 #include "DeleteUtil.h"
 #include "Logger.h"
+#include "Light.h"
 
 namespace Crescer3D
 {
+	class World;
+	
 	class Window : public System
 	{
 	private:
@@ -34,6 +37,10 @@ namespace Crescer3D
 		char* m_Title;
 		static World m_World;
 		static mat4 m_ProjMat;
+		static mat4 m_DepthMat;
+		static GLuint m_DepthBuffer;
+		static GLuint m_DepthTexture;
+		static GLuint m_DepthShader;
 		static bool m_CollisionState;
 
 	public:
@@ -44,6 +51,7 @@ namespace Crescer3D
 
 		inline static int GetWidth() { return m_Width; };
 		inline static int GetHeight() { return m_Height; };
+		inline static GLuint GetDepthTexture() { return m_DepthTexture; };
 		inline static int SetWidth(int w) { m_Width = w; };
 		inline static int SetHeight(int h) { m_Height = h; };
 

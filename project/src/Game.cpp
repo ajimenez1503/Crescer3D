@@ -98,7 +98,7 @@ namespace Crescer3D
 			HighScore::CalculateListScores();
 			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
 			Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
-			Game::GetFood()->setPosition(3.0,2.0,0.0);
+			Game::GetFood()->setPosition(3.0,1.5,0.0);
 			gameNeedReset=false;
 		}
 

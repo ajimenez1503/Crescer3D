@@ -22,6 +22,7 @@
 #include "../../common/LoadTGA.h"
 #include <math.h>
 #include <stdlib.h>
+#include "Light.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ class Cube {
 	public:
 		Cube();
 		void init(int x, GLuint shader);
-		void draw(mat4 total, vec3 cameraPos);
+		void draw(mat4 total, vec3 cameraPos, GLuint shader = 666);
 		void moveForward ();
 		void moveBack () ;
 		void moveLeft ();
