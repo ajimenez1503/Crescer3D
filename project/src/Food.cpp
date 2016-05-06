@@ -5,7 +5,6 @@
 namespace Crescer3D
 {
 	Food::Food()
-	: System(SystemType::Sys_Food)	
 	{
 	}
 

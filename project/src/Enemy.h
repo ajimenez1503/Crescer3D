@@ -1,13 +1,12 @@
 #ifndef _ENEMY_H
 #define _ENEMY_H
 
-#include "System.h"
 #include "Logger.h"
 #include "Sphere.h"
 
 namespace Crescer3D
 {
-	class Enemy : public System, public Sphere
+	class Enemy : public Sphere
 	{
 		public:
 			Enemy();

@@ -1,13 +1,12 @@
 #ifndef _FOOD_H
 #define _FOOD_H
 
-#include "System.h"
 #include "Logger.h"
 #include "Cube.h"
 
 namespace Crescer3D
 {
-	class Food : public System, public Cube
+	class Food : public Cube
 	{
 		public:
 			Food();

@@ -61,6 +61,7 @@ class Sphere {
 		void setPositionY(float y);
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
+		int getID();
 		bool collision(Sphere* other);
 		bool collisionAABB(Cube* AABB);
 };

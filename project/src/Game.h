@@ -11,7 +11,7 @@
 #include "HighScore.h"
 #include "Camera.h"
 
-//#include <list>
+#include <list>
 
 namespace Crescer3D
 {	
@@ -33,6 +33,8 @@ namespace Crescer3D
 
 		static Player* GetPlayer();
 		static Enemy* GetEnemy();
+		static std::list<Enemy*> GetEnemyList();
+		static void SetEnemyList(std::list<Enemy*> in_enemy_list);
 		static Cube* GetFood();
 		static Camera* GetCamera();
 
@@ -47,11 +49,11 @@ namespace Crescer3D
 		static void ResetGame();
 
 	private:
-		static Player* m_Player;
-		//static std::list<Enemy> enemy_list;
+		static Player* m_Player;		
 		static Enemy* m_Enemy;
+		static std::list<Enemy*> m_enemy_list;
 		static Cube * m_Food;
-		//static std::list<Food> food_list;
+		static std::list<Food*> m_food_list;
 		static Camera* m_Camera;
 		static GameStates gameState;
 		static bool gameNeedReset;

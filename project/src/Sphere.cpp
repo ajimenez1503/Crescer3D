@@ -58,6 +58,11 @@ void Sphere::setPosition(float x, float y,float z)
 	setPositionZ(z);
 }
 
+int Sphere::getID()
+{
+	return id;
+}
+
 Sphere::Sphere()
 {
 	positionx=0.0f;

@@ -5,7 +5,6 @@
 namespace Crescer3D
 {
 	Player::Player()
-	: System(SystemType::Sys_Player)
 	{
 	}
 

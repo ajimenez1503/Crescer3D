@@ -1,13 +1,12 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "System.h"
 #include "Logger.h"
 #include "Sphere.h"
 
 namespace Crescer3D
 {
-	class Player : public System, public Sphere
+	class Player : public Sphere
 	{
 		public:
 			Player();

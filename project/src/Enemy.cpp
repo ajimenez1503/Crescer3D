@@ -5,7 +5,6 @@
 namespace Crescer3D
 {
 	Enemy::Enemy()
-	: System(SystemType::Sys_Enemy)
 	{
 	}
 

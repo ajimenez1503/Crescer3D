@@ -55,9 +55,31 @@ namespace Crescer3D
 		printError("Shader Init");
 
 		m_World.init(skyboxShader, groundShader, wallShader);
+
+
 		Game::GetPlayer()->init(0, sphereShader);
-		Game::GetEnemy()->init(1, sphereShader);
-		Game::GetFood()->init(2, sphereShader);
+
+		//Iterate through the enemy list and initialize them with the shaders and an increasing index
+		//Game::GetEnemy()->init(1, sphereShader);
+
+		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
+		
+		std::cout << "Window Initialize" << std::endl;
+		std::cout << local_enemy_list.size() << std::endl;
+	
+		int enemy_index=1;
+		for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+		{
+			(*list_iter)->init(enemy_index,sphereShader);
+			//std::cout << (*list_iter)->getX()<< std::endl;
+			std::cout << (*list_iter)->getID()<< std::endl;
+			enemy_index++;
+		}
+		Game::SetEnemyList(local_enemy_list);
+	
+
+		//Game::GetFood()->init(2, sphereShader);
+
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
@@ -92,7 +114,8 @@ namespace Crescer3D
 
 		if(Game::IsStateInit())
 		{
-			Game::ResetGame();
+			//Game::ResetGame();
+
 			GUI::InitView();
 		}
 		else if(Game::IsStatePlay())
@@ -102,12 +125,24 @@ namespace Crescer3D
 
 			// Draw Objects
 			Game::GetPlayer()->draw(viewMatrix, cameraPosition);
-			Game::GetEnemy()->draw(viewMatrix, cameraPosition);
-			Game::GetFood()->draw(viewMatrix, cameraPosition);
+			
+			//Game::GetEnemy()->draw(viewMatrix, cameraPosition);
+			std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
+			//(*local_enemy_list.begin())->draw(viewMatrix, cameraPosition);
+
+			//std::cout << local_enemy_list.size() << std::endl;				
+			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+			{
+				(*list_iter)->draw(viewMatrix, cameraPosition);
+				//std::cout << (*list_iter)->getID()<< std::endl;
+				//std::cout << (*list_iter)->getX()<< std::endl;
+			}
+			Game::SetEnemyList(local_enemy_list);
+			//Game::GetFood()->draw(viewMatrix, cameraPosition);
 
 			printError("Drawing");
 
-			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
+/*			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
 			|| Game::GetPlayer()->collisionAABB(Game::GetFood())))
 			{
 				Logger::Log("Collision!");
@@ -121,6 +156,7 @@ namespace Crescer3D
 				Logger::Log("No Collision!");
 				m_CollisionState=false;
 			}
+*/
 			GUI::PlayView();
 		}
 		else if(Game::IsStateGameOver())
