@@ -4,11 +4,14 @@
 #include "System.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Food.h"
 #include "Sphere.h"
 #include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
 #include "Camera.h"
+
+//#include <list>
 
 namespace Crescer3D
 {	
@@ -25,6 +28,9 @@ namespace Crescer3D
 		Game();
 		virtual ~Game();
 		virtual bool Update();
+		virtual bool Initialize();
+		virtual bool ShutDown();
+
 		static Player* GetPlayer();
 		static Enemy* GetEnemy();
 		static Cube* GetFood();
@@ -42,8 +48,10 @@ namespace Crescer3D
 
 	private:
 		static Player* m_Player;
+		//static std::list<Enemy> enemy_list;
 		static Enemy* m_Enemy;
 		static Cube * m_Food;
+		//static std::list<Food> food_list;
 		static Camera* m_Camera;
 		static GameStates gameState;
 		static bool gameNeedReset;

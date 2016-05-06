@@ -30,12 +30,18 @@ float Sphere::getZ(){
 vec3 Sphere::getPosition() {
 	return vec3(positionx, positiony, positionz);
 }
+
 void Sphere::incrementRadius(){
 	radius+=0.5;
 }
 void Sphere::decrementRadius(){
 	radius-=0.5;
 }
+
+void Sphere::setRadius(float in_radius){
+	radius=in_radius;
+}
+
 void Sphere::setPositionX(float x){
 	positionx=x;
 }
@@ -51,6 +57,7 @@ void Sphere::setPosition(float x, float y,float z)
 	setPositionY(y);
 	setPositionZ(z);
 }
+
 Sphere::Sphere()
 {
 	positionx=0.0f;
@@ -117,6 +124,7 @@ float Sphere::SquaredDistPointAABB( float pn, float bmin, float bmax  )
         }
         return out;
 }
+
 // True if the Sphere and AABB intersects
 bool Sphere::collisionAABB(Cube* AABB)
 {

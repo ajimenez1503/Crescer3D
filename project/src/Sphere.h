@@ -56,6 +56,7 @@ class Sphere {
 		vec3 getPosition();
 		void incrementRadius();
 		void decrementRadius();
+		void setRadius(float in_radius);
 		void setPositionX(float x);
 		void setPositionY(float y);
 		void setPositionZ(float z);

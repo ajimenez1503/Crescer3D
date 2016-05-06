@@ -30,11 +30,25 @@ namespace Crescer3D
 		SafeDelete(m_Camera);
 	}
 
+	bool Game::Initialize()
+	{
+		//m_Player=new Player();
+
+
+		
+	}
+
 	bool Game::Update()
 	{
 		//std::cout << "Game is Running!" << std::endl;
 		return true;
 	}
+	
+	bool Game::ShutDown()
+	{
+		
+	}
+	
 
 	Player* Game::GetPlayer()
 	{
@@ -89,7 +103,7 @@ namespace Crescer3D
 		return gameState==Game_GameOver;
 	}
 
-	// set init all postion ans reset all
+	// set init all postion and reset all
 	void Game::ResetGame()
 	{
 		if(gameNeedReset)

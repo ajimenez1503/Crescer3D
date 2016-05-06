@@ -56,7 +56,7 @@ namespace Crescer3D
 		printError("Shader Init");
 
 		m_Ground.init();
-		Game::GetPlayer()->init(0);
+		Game::GetPlayer()->init(0);		
 		Game::GetEnemy()->init(1);
 		Game::GetFood()->init(2);
 		glutTimerFunc(20, &Timer, 0);
