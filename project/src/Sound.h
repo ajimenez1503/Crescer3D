@@ -17,7 +17,8 @@ namespace Crescer3D
 		Sound();
 		virtual ~Sound();
 		virtual bool Initialize();
-		static void playSound(int index);
+		void playBackgroundMusic();
+		static void playSound(int index, bool looped = false);
 
 	private:
 #ifndef __CENTOS__

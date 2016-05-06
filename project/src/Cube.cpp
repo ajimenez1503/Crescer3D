@@ -12,13 +12,12 @@ Cube::Cube()
 	size=0.5;
 }
 
-void Cube::init(int x)
+void Cube::init(int x, GLuint shader)
 {
-	id=x;
-	LoadTGATextureSimple("model/cube/grass.tga", &tex1);
-	model=LoadModelPlus("model/cube/cubeplus.obj");
+	id = x;
+	m_Model = LoadModelPlus("model/cube/cubeplus.obj");
+	m_Shader = shader;
 }
-
 
 void Cube::moveForward () {
 	positionz-=velocity;
@@ -76,16 +75,12 @@ void Cube::setPosition(float x, float y,float z){
 	setPositionZ(z);
 }
 
-void Cube::draw(mat4 viewMatrix, GLuint program){
-	mat4 mdlViewMatrix;
-	glUseProgram(program);
-	mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(size,size,size)));
-	glUniformMatrix4fv(glGetUniformLocation(program, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, tex1);		// Bind Our Texture tex1
-	glUniform1i(glGetUniformLocation(program, "tex"), 2); // Texture unit 0
-	// draw cube
-	DrawModel(model, program, "inPosition", "inNormal", "inTexCoord");
+void Cube::draw(mat4 viewMatrix, vec3 cameraPos) {
+	glUseProgram(m_Shader);
+	mat4 mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(size,size,size)));
+	glUniformMatrix4fv(glGetUniformLocation(m_Shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
+	glUniform3fv(glGetUniformLocation(m_Shader, "cameraPosition"), 1, &cameraPos.x);
+	DrawModel(m_Model, m_Shader, "inPosition", "inNormal", "inTexCoord");
 }
 
 vec3  Cube::getMinBox()

@@ -28,11 +28,22 @@ namespace Crescer3D
 			return false;
 		}
 		else
+			this->playBackgroundMusic();
 #endif
 			return true;
 	}
 
-	void Sound::playSound(int index)
+	void Sound::playBackgroundMusic()
+	{
+#ifndef __CENTOS__
+		if(engine)
+		{
+			engine->play2D("sounds/backgroundMusic.mp3", true);
+		}
+#endif
+	}
+
+	void Sound::playSound(int index, bool looped)
 	{
 #ifndef __CENTOS__
 		if(engine)

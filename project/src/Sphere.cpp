@@ -67,25 +67,20 @@ Sphere::Sphere()
 	radius=1.0;
 }
 
-void Sphere::init(int x)
+void Sphere::init(int x, GLuint shader)
 {
 	id=x;
-	LoadTGATextureSimple("model/sphere/conc.tga", &tex1);
-	model=LoadModelPlus("model/sphere/groundsphere.obj");
+	m_Shader = shader;
+	m_Model=LoadModelPlus("model/sphere/groundsphere.obj");
 }
 
 
-void Sphere::draw(mat4 viewMatrix, GLuint program)
-{
-	mat4 mdlViewMatrix;
-	glUseProgram(program);
-	mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(radius,radius,radius)));
-	glUniformMatrix4fv(glGetUniformLocation(program, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, tex1);		// Bind Our Texture tex1
-	glUniform1i(glGetUniformLocation(program, "tex"), 2); // Texture unit 0
-	printError("Drawing Predefines");
-	DrawModel(model, program, "inPosition", "inNormal", "inTexCoord");
+void Sphere::draw(mat4 viewMatrix, vec3 cameraPos) {
+	glUseProgram(m_Shader);
+	mat4 mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(radius,radius,radius)));
+	glUniformMatrix4fv(glGetUniformLocation(m_Shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
+	glUniform3fv(glGetUniformLocation(m_Shader, "cameraPosition"), 1, &cameraPos.x);
+	DrawModel(m_Model, m_Shader, "inPosition", "inNormal", "inTexCoord");
 }
 
 bool Sphere::collision(Sphere* other)

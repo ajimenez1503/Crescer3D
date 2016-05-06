@@ -34,15 +34,15 @@ namespace Crescer3D
 class Cube {
 	private:
 		float positionx,positiony,positionz;
-		GLuint tex1;
-		Model *model;
+		GLuint m_Shader;
+		Model *m_Model;
 		int id;
 		float velocity;
 		float size;
 	public:
 		Cube();
-		void init(int x);
-		void draw(mat4 total,GLuint program);
+		void init(int x, GLuint shader);
+		void draw(mat4 total, vec3 cameraPos);
 		void moveForward ();
 		void moveBack () ;
 		void moveLeft ();

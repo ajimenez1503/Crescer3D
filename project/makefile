@@ -48,7 +48,7 @@ compile:
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)System.o $(src)System.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sphere.o $(src)Sphere.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Cube.o $(src)Cube.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Ground.o $(src)Ground.cpp
+	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)World.o $(src)World.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Input.o $(src)Input.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Logger.o $(src)Logger.cpp
 	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Player.o $(src)Player.cpp
@@ -58,7 +58,7 @@ compile:
 # Link Commands
 link:
 	gcc -c -w -std=$(cStd) -o $(bindir)MicroGlut.o $(commondir)$(MICROGLUT)
-	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)Sound.o $(bindir)HighScore.o $(bindir)GUI.o $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)Player.o $(bindir)System.o $(bindir)Cube.o $(bindir)Sphere.o $(bindir)Ground.o $(bindir)Camera.o $(bindir)Enemy.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o $(PARAM)
+	g++ -o game $(bindir)GL_utilities.o $(bindir)loadobj.o $(bindir)VectorUtils3.o $(bindir)LoadTGA.o $(bindir)simplefont.o $(bindir)Engine.o $(bindir)Logger.o $(bindir)Sound.o $(bindir)HighScore.o $(bindir)GUI.o $(bindir)Button.o $(bindir)Window.o $(bindir)Game.o $(bindir)Player.o $(bindir)System.o $(bindir)Cube.o $(bindir)Sphere.o $(bindir)World.o $(bindir)Camera.o $(bindir)Enemy.o $(bindir)Input.o $(bindir)MicroGlut.o $(bindir)main.o $(PARAM)
 
 # Removing the Binary
 clean:
