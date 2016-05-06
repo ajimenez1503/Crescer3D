@@ -9,6 +9,7 @@ namespace Crescer3D
 	class Enemy : public Sphere
 	{
 		public:
+
 			Enemy();
 			virtual ~Enemy();
 			virtual bool Initialize();

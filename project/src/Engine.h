@@ -33,9 +33,19 @@
 
 namespace Crescer3D
 {
-	// Forward Declaration
+	// Forward Declarations in main file
 	class System;
+	class Window;
+	class Player;
+	class Camera;
+	class Enemy;
 	class Game;
+	class Input;
+	class Logger;
+	class HighScore;
+	class GUI;
+	class Sound;
+
 	enum  SystemType;
 
 	enum EngineState

@@ -1,10 +1,16 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+
 #include "System.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Food.h"
+
+#include "System.h"
+#include "Player.h"
+#include "Enemy.h"
+
 #include "Sphere.h"
 #include "Cube.h"
 #include "DeleteUtil.h"
@@ -15,7 +21,6 @@
 
 namespace Crescer3D
 {	
-	class Camera;
 	enum GameStates
 	{
 		Game_Init,

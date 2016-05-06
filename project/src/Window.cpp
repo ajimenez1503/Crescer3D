@@ -1,3 +1,4 @@
+
 #include "Window.h"
 
 namespace Crescer3D
@@ -168,3 +169,4 @@ namespace Crescer3D
 		printError("Swapping Buffers");
 	}
 }
+

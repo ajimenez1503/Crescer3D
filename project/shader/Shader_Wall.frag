@@ -6,6 +6,6 @@ out vec4 outColor;
 
 void main(void)
 {
-    vec4 surface = texture(tex, uv);
-    outColor = vec4(surface.rgb, surface.a);
+	vec4 textureColor = texture(tex, uv);
+	outColor = textureColor;
 }

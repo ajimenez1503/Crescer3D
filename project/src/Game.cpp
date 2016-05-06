@@ -123,6 +123,7 @@ namespace Crescer3D
 			std::cout <<  "Reset Game" << std::endl;
 
 			HighScore::Reset();
+
 			HighScore::CalculateListScores();
 			
 					
@@ -156,6 +157,7 @@ namespace Crescer3D
 			
 			//Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 			Game::GetFood()->setPosition(3.0,2.0,0.0);
+
 			gameNeedReset=false;
 		}
 

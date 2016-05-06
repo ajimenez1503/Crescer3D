@@ -73,6 +73,8 @@ void glutInitContextVersion(int major, int minor);
 // No support for middle yet
 #define GLUT_MIDDLE_BUTTON		1
 #define GLUT_RIGHT_BUTTON		2
+#define MOUSE_SCROLL_UP			3
+#define MOUSE_SCROLL_DOWN		4
 
 /* Mouse button  state. */
 #define GLUT_DOWN			0
