@@ -41,6 +41,7 @@ namespace Crescer3D
 		static GLuint m_DepthBuffer;
 		static GLuint m_DepthTexture;
 		static GLuint m_DepthShader;
+		static GLuint m_sphereShader;
 		static bool m_CollisionState;
 
 	public:
@@ -60,6 +61,7 @@ namespace Crescer3D
 		static void Draw();
 		static void Clear();
 		static void Timer(int i);
+		static void InitObjects();
 
 	};
 }

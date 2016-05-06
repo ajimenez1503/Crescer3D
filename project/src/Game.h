@@ -7,12 +7,6 @@
 #include "Enemy.h"
 #include "Food.h"
 
-#include "System.h"
-#include "Player.h"
-#include "Enemy.h"
-
-#include "Sphere.h"
-#include "Cube.h"
 #include "DeleteUtil.h"
 #include "HighScore.h"
 #include "Camera.h"
@@ -37,10 +31,11 @@ namespace Crescer3D
 		virtual bool ShutDown();
 
 		static Player* GetPlayer();
-		static Enemy* GetEnemy();
 		static std::list<Enemy*> GetEnemyList();
 		static void SetEnemyList(std::list<Enemy*> in_enemy_list);
-		static Cube* GetFood();
+		static std::list<Food*> GetFoodList();
+		static void SetFoodList(std::list<Food*> in_food_list);	
+
 		static Camera* GetCamera();
 
 
@@ -55,9 +50,7 @@ namespace Crescer3D
 
 	private:
 		static Player* m_Player;		
-		static Enemy* m_Enemy;
-		static std::list<Enemy*> m_enemy_list;
-		static Cube * m_Food;
+		static std::list<Enemy*> m_enemy_list;		
 		static std::list<Food*> m_food_list;
 		static Camera* m_Camera;
 		static GameStates gameState;

@@ -40,6 +40,7 @@ class Cube {
 		int id;
 		float velocity;
 		float size;
+		bool m_is_init;
 	public:
 		Cube();
 		void init(int x, GLuint shader);
@@ -62,6 +63,7 @@ class Cube {
 		void setPositionY(float y);
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
+		bool isInit();
 };
 
 }

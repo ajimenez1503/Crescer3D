@@ -3,6 +3,7 @@
 namespace Crescer3D
 {
 
+
 void Sphere::moveForward () {
 	positionz-=velocity;
 }
@@ -70,6 +71,7 @@ Sphere::Sphere()
 	positionz=0.0f;
 	velocity = 0.5;
 	radius=1.0;
+	m_is_init=false;
 }
 
 void Sphere::init(int x, GLuint shader)
@@ -77,8 +79,13 @@ void Sphere::init(int x, GLuint shader)
 	id=x;
 	m_Shader = shader;
 	m_Model=LoadModelPlus("model/sphere/groundsphere.obj");
+	m_is_init=true;
 }
 
+bool Sphere::isInit()
+{
+	return m_is_init;
+}
 
 void Sphere::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	if(shader == 666)

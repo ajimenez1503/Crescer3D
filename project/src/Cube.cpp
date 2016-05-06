@@ -10,6 +10,7 @@ Cube::Cube()
 	positionz=0.0f;
 	velocity = 0.5;
 	size=0.5;
+	m_is_init=false;
 }
 
 void Cube::init(int x, GLuint shader)
@@ -17,6 +18,12 @@ void Cube::init(int x, GLuint shader)
 	id = x;
 	m_Model = LoadModelPlus("model/cube/cubeplus.obj");
 	m_Shader = shader;
+	m_is_init=true;
+}
+
+bool Cube::isInit()
+{
+	return m_is_init;
 }
 
 void Cube::moveForward () {

@@ -41,6 +41,7 @@ class Sphere {
 		float velocity;
 		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
 		float SquaredDistPointAABB( float pn, float bmin, float bmax);
+		bool m_is_init;
 
 	public:
 		Sphere();
@@ -63,6 +64,7 @@ class Sphere {
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
 		int getID();
+		bool isInit();
 		bool collision(Sphere* other);
 		bool collisionAABB(Cube* AABB);
 };

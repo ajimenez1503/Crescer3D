@@ -4,10 +4,9 @@ namespace Crescer3D
 {
 	// forward declaration of static members
 	Player* Game::m_Player;
-	Enemy* Game::m_Enemy;
 	std::list<Enemy*> Game::m_enemy_list;	
-
-	Cube * Game::m_Food;
+	std::list<Food*> Game::m_food_list;
+	
 	Camera* Game::m_Camera;
 	bool Game::gameNeedReset;
 	GameStates Game::gameState;
@@ -16,9 +15,7 @@ namespace Crescer3D
 	Game::Game()
 		: System(SystemType::Sys_Game)
 	{
-		m_Player = new Player();
-		//m_Enemy = new Enemy();			
-		m_Food = new Cube();
+		m_Player = new Player();					
 		m_Camera = new Camera();
 
 		gameNeedReset=true;
@@ -29,8 +26,8 @@ namespace Crescer3D
 	Game::~Game()
 	{
 		SafeDelete(m_Player);
-		SafeDelete(m_Enemy);
-		SafeDelete(m_Food);
+		//SafeDelete(m_enemy_list);
+		//SafeDelete(m_food_list);
 		SafeDelete(m_Camera);
 	}
 
@@ -61,10 +58,6 @@ namespace Crescer3D
 		return m_Camera;
 	}
 
-	Enemy* Game::GetEnemy()
-	{
-		return m_Enemy;
-	}
 
 	std::list<Enemy*> Game::GetEnemyList()
 	{
@@ -76,9 +69,14 @@ namespace Crescer3D
 		m_enemy_list=in_enemy_list;
 	}
 
-	Cube* Game::GetFood()
+	std::list<Food*> Game::GetFoodList()
 	{
-		return m_Food;
+		return m_food_list;
+	}
+	
+	void Game::SetFoodList(std::list<Food*> in_food_list)
+	{
+		m_food_list=in_food_list;
 	}
 
 	void Game::GameOver()
@@ -132,31 +130,38 @@ namespace Crescer3D
 			
 			//Create an initial number of enemies and set their positions
 			m_enemy_list.clear();
-			std::list<Enemy*> local_enemy_list=GetEnemyList();
 			int number_of_enemies=10;
 			for(int number_of_enemy=1; number_of_enemy<=number_of_enemies; number_of_enemy++)
 			{	
 				Enemy* local_enemy=new Enemy();
 				m_enemy_list.push_back( local_enemy);
-				//std::cout << number_of_enemy<< std::endl;
 			}
-			//m_enemy_list=local_enemy_list;
 
-			
-			std::cout <<  m_enemy_list.size() << std::endl;
-			int position_index=3;
-			
-						
-
+			int enemy_position_index=3;						
 			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
 			{
-				(*list_iter)->setPosition(-position_index,1.0,0.0);
-				position_index++;
+				(*list_iter)->setPosition(-enemy_position_index*2,1.0,0.0);
+				enemy_position_index++;
 			}
 
+			//Create an initial number of food and set the positions
+			m_food_list.clear();
+			int total_number_of_food=10;
+			for(int number_of_food=1; number_of_food<=total_number_of_food; number_of_food++)
+			{	
+				Food* local_food=new Food();
+				m_food_list.push_back( local_food);
+			}
+
+			int food_position_index=3;						
+			for(std::list<Food*>::iterator list_iter = m_food_list.begin(), end=m_food_list.end(); list_iter !=end; list_iter++)
+			{
+				(*list_iter)->setPosition(food_position_index*2,2.0,0.0);
+				food_position_index++;
+			}
 			
 			//Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
-			Game::GetFood()->setPosition(3.0,2.0,0.0);
+			//Game::GetFood()->setPosition(3.0,2.0,0.0);
 
 			gameNeedReset=false;
 		}

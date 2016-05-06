@@ -6,6 +6,12 @@ namespace Crescer3D
 	// forward declaration of static members
 	World Window::m_World;
 	mat4 Window::m_ProjMat;
+	mat4 Window::m_DepthMat;
+	GLuint Window::m_DepthBuffer;
+	GLuint Window::m_DepthTexture;
+	GLuint Window::m_DepthShader;
+	GLuint Window::m_sphereShader;
+
 	bool Window::m_CollisionState;
 	int Window::m_Width;
 	int Window::m_Height;
@@ -37,54 +43,83 @@ namespace Crescer3D
 		glDisable(GL_CULL_FACE);
 		printError("OpenGL Init");
 
-		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 1000.0);
 
 		// Load and compile shader
 		GLuint skyboxShader = loadShaders("shader/Shader_Skybox.vert", "shader/Shader_Skybox.frag");
 		GLuint sphereShader = loadShaders("shader/Shader_Objects.vert", "shader/Shader_Objects.frag");
+		m_sphereShader=sphereShader;
 		GLuint groundShader = loadShaders("shader/Shader_Ground.vert", "shader/Shader_Ground.frag");
-		GLuint wallShader = loadShaders("shader/Shader_Ground.vert", "shader/Shader_Ground.frag");
-
+		GLuint wallShader = loadShaders("shader/Shader_Wall.vert", "shader/Shader_Wall.frag");
+		m_DepthShader = loadShaders("shader/Shader_Depth.vert", "shader/Shader_Depth.frag");
+		m_World.init(skyboxShader, groundShader, wallShader, m_DepthShader);
+		vec3 worldMin = m_World.GetWorldMinimum();
+		vec3 worldMax = m_World.GetWorldMaximum();
+		m_ProjMat = frustum(-0.1, 0.1, -0.1, 0.1, 0.2, 1000.0);
+		// Depth Map Orthographic Projection
+		// left, right, bottom, top, near, far
+		m_DepthMat = ortho(worldMin.x, worldMax.x, worldMin.x, worldMax.y, worldMin.x, worldMax.z);
 		glUseProgram(skyboxShader);
 		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		glUseProgram(sphereShader);
 		glUniformMatrix4fv(glGetUniformLocation(sphereShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		glUseProgram(groundShader);
-		glUniformMatrix4fv(glGetUniformLocation(groundShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUniformMatrix4fv(glGetUniformLocation(groundShader, "normalProjMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUniformMatrix4fv(glGetUniformLocation(groundShader, "depthProjMatrix"), 1, GL_TRUE, m_DepthMat.m);
 		glUseProgram(wallShader);
 		glUniformMatrix4fv(glGetUniformLocation(wallShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
+		glUseProgram(m_DepthShader);
+		glUniformMatrix4fv(glGetUniformLocation(m_DepthShader, "projMatrix"), 1, GL_TRUE, m_DepthMat.m);
 		printError("Shader Init");
 
-		m_World.init(skyboxShader, groundShader, wallShader);
-
-
-		Game::GetPlayer()->init(0, sphereShader);
-
-		//Iterate through the enemy list and initialize them with the shaders and an increasing index
-		//Game::GetEnemy()->init(1, sphereShader);
-
-		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
+		// Depth Buffer Init
+ 		glGenFramebuffers(1, &m_DepthBuffer);
+ 		glBindFramebuffer(GL_FRAMEBUFFER, m_DepthBuffer);
+ 		glActiveTexture(GL_TEXTURE6);
+		glGenTextures(1, &m_DepthTexture);
+		glBindTexture(GL_TEXTURE_2D, Window::GetDepthTexture());
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);  
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, Window::GetDepthTexture(), 0);
+ 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		printError("Creating Depthmap");
 		
-		std::cout << "Window Initialize" << std::endl;
-		std::cout << local_enemy_list.size() << std::endl;
-	
-		int enemy_index=1;
-		for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
-		{
-			(*list_iter)->init(enemy_index,sphereShader);
-			//std::cout << (*list_iter)->getX()<< std::endl;
-			std::cout << (*list_iter)->getID()<< std::endl;
-			enemy_index++;
-		}
-		Game::SetEnemyList(local_enemy_list);
-	
-
-		//Game::GetFood()->init(2, sphereShader);
+		InitObjects();
 
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
 	}
+
+	void Window::InitObjects()
+	{
+		Game::GetPlayer()->init(0, m_sphereShader);
+
+		//Iterate through the enemy list and initialize them with the shaders and an increasing index
+		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
+		int enemy_index=1;
+		for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+		{
+			(*list_iter)->init(enemy_index,m_sphereShader);			
+			enemy_index++;
+		}
+		Game::SetEnemyList(local_enemy_list);
+
+		//Iterate through the food list and initialize them with the shaders and an increasing index
+		std::list<Food*> local_food_list=Game::GetFoodList();
+		int food_index=enemy_index+1;
+		for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
+		{
+			(*list_iter)->init(food_index,m_sphereShader);			
+			food_index++;
+		}
+		Game::SetFoodList(local_food_list);
+
+		
+	}
+
 
 	bool Window::Update()
 	{
@@ -104,44 +139,152 @@ namespace Crescer3D
 
 	void Window::Draw()
 	{
-		// clear the screen
-		Clear();
-		printError("Clearing Screen");
 		// Update View Matrix
-
+		Clear();
 		Game::GetCamera() -> CameraUpdate();
 		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
 		vec3 cameraPosition = Game::GetCamera() -> getCameraPos();
 
 		if(Game::IsStateInit())
 		{
-			//Game::ResetGame();
 
+			printError("Clearing Screen");
+			bool game_must_reset=false;
+
+			if(Game::GetPlayer()->isInit()==false)
+			{
+				game_must_reset=true;
+				std::cout<<"Player"<<std::endl;
+			}
+
+			std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
+			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+			{
+				if((*list_iter)->isInit()==false)
+				{
+					game_must_reset=true;
+					std::cout<<"Enemy"<<std::endl;
+				}
+			}
+			
+			std::list<Food*> local_food_list=Game::GetFoodList();
+			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
+			{
+				if((*list_iter)->isInit()==false)
+				{
+					game_must_reset=true;
+					std::cout<<"Food"<<std::endl;
+				}
+			}
+
+			if(game_must_reset==true)
+			{
+				Game::ResetGame();	
+			}
+			
+			InitObjects();
 			GUI::InitView();
 		}
 		else if(Game::IsStatePlay())
 		{
-			// Draw World
-			m_World.draw(viewMatrix, cameraPosition);
+			// Draw Depthmap from Objects
+			vec3 lightDir = Light::GetLightDirection();
+ 			vec3 lightPosition = vec3(-lightDir.x, -lightDir.y, -lightDir.z);
+ 			mat4 depthViewMatrix = lookAtv(lightPosition, vec3(0,0,0), vec3(0,1,0));
+ 			glViewport(0, 0, 1024, 1024);
+			glBindFramebuffer(GL_FRAMEBUFFER, m_DepthBuffer);
+			glClear(GL_DEPTH_BUFFER_BIT);
+			glUseProgram(m_DepthShader);
+			glActiveTexture(GL_TEXTURE6);
+			glBindTexture(GL_TEXTURE_2D, Window::GetDepthTexture());
 
-			// Draw Objects
-			Game::GetPlayer()->draw(viewMatrix, cameraPosition);
-			
-			//Game::GetEnemy()->draw(viewMatrix, cameraPosition);
+			Game::GetPlayer()->draw(depthViewMatrix, cameraPosition, m_DepthShader);
+
 			std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
-			//(*local_enemy_list.begin())->draw(viewMatrix, cameraPosition);
-
-			//std::cout << local_enemy_list.size() << std::endl;				
 			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
 			{
-				(*list_iter)->draw(viewMatrix, cameraPosition);
-				//std::cout << (*list_iter)->getID()<< std::endl;
-				//std::cout << (*list_iter)->getX()<< std::endl;
+				(*list_iter)->draw(depthViewMatrix, cameraPosition, m_DepthShader);
 			}
 			Game::SetEnemyList(local_enemy_list);
-			//Game::GetFood()->draw(viewMatrix, cameraPosition);
+
+
+			std::list<Food*> local_food_list=Game::GetFoodList();
+			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
+			{
+				(*list_iter)->draw(depthViewMatrix, cameraPosition, m_DepthShader);
+			}
+			Game::SetFoodList(local_food_list);
+			
+
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glViewport(0, 0, Window::GetWidth(), Window::GetHeight());
+			printError("Drawing Depthbuffer");
+
+			// Draw World
+			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
+			printError("Drawing World");
+
+
+
+			// Draw Objects
+			Game::GetPlayer()->draw(viewMatrix, cameraPosition, m_sphereShader);
+
+			local_enemy_list=Game::GetEnemyList();
+	
+			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+			{
+				(*list_iter)->draw(viewMatrix, cameraPosition, m_sphereShader);
+			}
+			Game::SetEnemyList(local_enemy_list);
+
+			
+			local_food_list=Game::GetFoodList();
+	
+			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
+			{
+				(*list_iter)->draw(viewMatrix, cameraPosition, m_sphereShader);
+			}
+			Game::SetFoodList(local_food_list);
+
+
 
 			printError("Drawing");
+
+			local_enemy_list=Game::GetEnemyList();
+	
+			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
+			{					
+				if(Game::GetPlayer()->collision(*list_iter))
+				{
+					list_iter=local_enemy_list.erase(list_iter);
+					Logger::Log("Collision with enemy!");
+					HighScore::IncrementScore();
+					//m_CollisionState=true;
+				}else
+				{
+
+				}
+			}
+
+			Game::SetEnemyList(local_enemy_list);
+
+
+			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
+			{
+				if(Game::GetPlayer()->collisionAABB(*list_iter))
+				{
+					list_iter=local_food_list.erase(list_iter);
+					Logger::Log("Collision with food!");
+					HighScore::IncrementScore();
+				}
+			}
+			Game::SetFoodList(local_food_list);
+			
+			
+			
+
+
 
 /*			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
 			|| Game::GetPlayer()->collisionAABB(Game::GetFood())))
@@ -162,6 +305,7 @@ namespace Crescer3D
 		}
 		else if(Game::IsStateGameOver())
 		{
+			Clear();
 			GUI::GameOverView();
 		}
 		// swapping buffers
