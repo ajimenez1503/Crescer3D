@@ -30,7 +30,7 @@ namespace Crescer3D {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glUseProgram(m_wallShader);
 		glActiveTexture(GL_TEXTURE2);
-		LoadTGATextureSimple("model/cube/wall2.tga", &m_wallTexture);
+		LoadTGATextureSimple("model/cube/wall3.tga", &m_wallTexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
