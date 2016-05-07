@@ -3,6 +3,8 @@
 
 #include "Logger.h"
 #include "Sphere.h"
+#include "Food.h"
+#
 
 namespace Crescer3D
 {
@@ -12,6 +14,11 @@ namespace Crescer3D
 			Player();
 			virtual ~Player();
 			virtual bool Initialize();
+			void eat(int weight_eaten);
+			int getWeight();
+		private:
+			static int m_weight;
+			
 
 		
 	};

@@ -12,6 +12,9 @@ namespace Crescer3D
 			Food();
 			virtual ~Food();
 			virtual bool Initialize();
+			int getWeight();
+		private:
+			int m_weight;
 
 		
 	};

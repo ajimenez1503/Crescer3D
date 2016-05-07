@@ -4,8 +4,10 @@
 
 namespace Crescer3D
 {
+
 	Enemy::Enemy()
 	{
+		m_weight=5;
 	}
 
 	Enemy::~Enemy()
@@ -16,5 +18,10 @@ namespace Crescer3D
 	{
 		//Logger::Log("Hello Enemy!");
 		return true;
+	}
+
+	int Enemy::getWeight()
+	{
+		return m_weight;
 	}
 }

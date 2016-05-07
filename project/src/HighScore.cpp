@@ -38,6 +38,12 @@ namespace Crescer3D
 	{
 		m_Score++;
 	}
+
+	void HighScore::IncrementScore(int score)
+	{
+		m_Score=m_Score+score;
+	}
+
 	void HighScore::Reset()
 	{
 		m_Score=0;

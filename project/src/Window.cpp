@@ -86,6 +86,8 @@ namespace Crescer3D
  		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		printError("Creating Depthmap");
 		
+		std::cout<< "World init"<<std::endl;
+		
 		InitObjects();
 
 		glutTimerFunc(20, &Timer, 0);
@@ -96,13 +98,15 @@ namespace Crescer3D
 	void Window::InitObjects()
 	{
 		Game::GetPlayer()->init(0, m_sphereShader);
+		Game::GetPlayer()->setPosition(0.0,1.0,0.0);
 
 		//Iterate through the enemy list and initialize them with the shaders and an increasing index
 		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
 		int enemy_index=1;
 		for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
 		{
-			(*list_iter)->init(enemy_index,m_sphereShader);			
+			(*list_iter)->init(enemy_index,m_sphereShader);
+			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);			
 			enemy_index++;
 		}
 		Game::SetEnemyList(local_enemy_list);
@@ -112,7 +116,8 @@ namespace Crescer3D
 		int food_index=enemy_index+1;
 		for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
 		{
-			(*list_iter)->init(food_index,m_sphereShader);			
+			(*list_iter)->init(food_index,m_sphereShader);
+			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);			
 			food_index++;
 		}
 		Game::SetFoodList(local_food_list);
@@ -176,7 +181,8 @@ namespace Crescer3D
 					std::cout<<"Food"<<std::endl;
 				}
 			}
-
+			
+			
 			if(game_must_reset==true)
 			{
 				Game::ResetGame();	
@@ -251,56 +257,6 @@ namespace Crescer3D
 
 			printError("Drawing");
 
-			local_enemy_list=Game::GetEnemyList();
-	
-			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
-			{					
-				if(Game::GetPlayer()->collision(*list_iter))
-				{
-					list_iter=local_enemy_list.erase(list_iter);
-					Logger::Log("Collision with enemy!");
-					HighScore::IncrementScore();
-					//m_CollisionState=true;
-				}else
-				{
-
-				}
-			}
-
-			Game::SetEnemyList(local_enemy_list);
-
-
-			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
-			{
-				if(Game::GetPlayer()->collisionAABB(*list_iter))
-				{
-					list_iter=local_food_list.erase(list_iter);
-					Logger::Log("Collision with food!");
-					HighScore::IncrementScore();
-				}
-			}
-			Game::SetFoodList(local_food_list);
-			
-			
-			
-
-
-
-/*			if(!m_CollisionState && (Game::GetPlayer()->collision(Game::GetEnemy())
-			|| Game::GetPlayer()->collisionAABB(Game::GetFood())))
-			{
-				Logger::Log("Collision!");
-				HighScore::IncrementScore();
-				m_CollisionState=true;
-			}
-
-			if(m_CollisionState && (!Game::GetPlayer()->collision(Game::GetEnemy())
-			&& !Game::GetPlayer()->collisionAABB(Game::GetFood())))
-			{
-				Logger::Log("No Collision!");
-				m_CollisionState=false;
-			}
-*/
 			GUI::PlayView();
 		}
 		else if(Game::IsStateGameOver())

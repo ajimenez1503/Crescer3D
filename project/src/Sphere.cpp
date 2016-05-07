@@ -16,9 +16,7 @@ void Sphere::moveLeft(){
 void Sphere::moveRight () {
 	positionx+=velocity;
 }
-float Sphere::getRadius(){
-	 return radius;
-}
+
 float Sphere::getX(){
 	return positionx;
 }
@@ -39,9 +37,24 @@ void Sphere::decrementRadius(){
 	radius-=0.5;
 }
 
-void Sphere::setRadius(float in_radius){
+void Sphere::setRadius(float in_radius){	
 	radius=in_radius;
+	std::cout<< "radius:"<<in_radius<<std::endl;
 }
+
+float Sphere::getRadius(){
+	 return radius;
+}
+
+void Sphere::setVelocity(float in_velocity)
+{
+	velocity=in_velocity;
+}
+float Sphere::getVelocity()
+{
+	return velocity;
+}
+
 
 void Sphere::setPositionX(float x){
 	positionx=x;
@@ -57,6 +70,12 @@ void Sphere::setPosition(float x, float y,float z)
 	setPositionX(x);
 	setPositionY(y);
 	setPositionZ(z);
+}
+void Sphere::setRndPosition(int x_max,int x_min,int y_max,int y_min)
+{
+	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
+	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
+	setPositionY(1.0);
 }
 
 int Sphere::getID()

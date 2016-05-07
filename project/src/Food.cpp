@@ -6,6 +6,7 @@ namespace Crescer3D
 {
 	Food::Food()
 	{
+		m_weight=1;
 	}
 
 	Food::~Food()
@@ -16,5 +17,10 @@ namespace Crescer3D
 	{
 		//Logger::Log("Hello Food!");
 		return true;
+	}
+
+	int Food::getWeight()
+	{
+		return m_weight;
 	}
 }

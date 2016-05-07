@@ -13,6 +13,10 @@ namespace Crescer3D
 			Enemy();
 			virtual ~Enemy();
 			virtual bool Initialize();
+			int getWeight();
+	
+		private:
+			int m_weight;
 
 		
 	};

@@ -82,6 +82,13 @@ void Cube::setPosition(float x, float y,float z){
 	setPositionZ(z);
 }
 
+void Cube::setRndPosition(int x_max,int x_min,int y_max,int y_min)
+{
+	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
+	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
+	setPositionY(2.0);
+}
+
 void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	if(shader == 666)
 		shader = m_Shader;

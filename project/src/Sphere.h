@@ -22,6 +22,7 @@
 #include "../../common/LoadTGA.h"
 #include <math.h>
 #include <stdlib.h>
+#include <iostream>
 #include "Cube.h"
 #include "Light.h"
 
@@ -47,22 +48,31 @@ class Sphere {
 		Sphere();
 		void init(int x, GLuint shader);
 		void draw(mat4 total, vec3 cameraPos, GLuint shader = 666);
+
 		void moveForward ();
 		void moveBack () ;
 		void moveLeft ();
 		void moveRight ();
-		float getRadius();
-		float getX();
-		float getY();
-		float getZ();
-		vec3 getPosition();
+		
+
+
 		void incrementRadius();
 		void decrementRadius();
 		void setRadius(float in_radius);
+		float getRadius();
+		void setVelocity(float in_velocity);
+		float getVelocity();
+
 		void setPositionX(float x);
 		void setPositionY(float y);
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
+		void setRndPosition(int x_max,int x_min,int ymax,int ymin);
+		float getX();
+		float getY();
+		float getZ();
+		vec3 getPosition();
+
 		int getID();
 		bool isInit();
 		bool collision(Sphere* other);

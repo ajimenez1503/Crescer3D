@@ -40,6 +40,7 @@ namespace Crescer3D
 		virtual ~HighScore();
 		static void DisplayScore();
 		static void IncrementScore();
+		static void IncrementScore(int score);
 		static void SaveScore(std::string name);
 		static void CalculateListScores();
 		static void DisplayListScores();

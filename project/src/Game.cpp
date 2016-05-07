@@ -38,7 +38,37 @@ namespace Crescer3D
 
 	bool Game::Update()
 	{
-		//std::cout << "Game is Running!" << std::endl;
+		//////
+		// Check for Collision
+		/////
+		for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
+		{					
+			if(m_Player->collision(*list_iter))
+			{
+				m_Player->eat((*list_iter)->getWeight());
+				HighScore::IncrementScore((*list_iter)->getWeight());
+
+				list_iter=m_enemy_list.erase(list_iter);
+				Logger::Log("Collision with enemy!");
+							
+			}
+		}
+
+
+		for(std::list<Food*>::iterator list_iter = m_food_list.begin(), end=m_food_list.end(); list_iter !=end; list_iter++)
+		{
+			if(m_Player->collisionAABB(*list_iter))
+			{
+				m_Player->eat((*list_iter)->getWeight());
+				HighScore::IncrementScore((*list_iter)->getWeight());
+
+				list_iter=m_food_list.erase(list_iter);
+				Logger::Log("Collision with food!");
+			}
+		}
+		
+
+
 		return true;
 	}
 	
@@ -123,12 +153,12 @@ namespace Crescer3D
 			HighScore::Reset();
 
 			HighScore::CalculateListScores();
-			
-					
+
+		
 			//Set the initial Position of the Player
-			Game::GetPlayer()->setPosition(0.0,1.0,0.0);
+			//Game::GetPlayer()->setPosition(0.0,1.0,0.0);
 			
-			//Create an initial number of enemies and set their positions
+			//Create an initial number of enemies 
 			m_enemy_list.clear();
 			int number_of_enemies=10;
 			for(int number_of_enemy=1; number_of_enemy<=number_of_enemies; number_of_enemy++)
@@ -137,14 +167,9 @@ namespace Crescer3D
 				m_enemy_list.push_back( local_enemy);
 			}
 
-			int enemy_position_index=3;						
-			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
-			{
-				(*list_iter)->setPosition(-enemy_position_index*2,1.0,0.0);
-				enemy_position_index++;
-			}
 
-			//Create an initial number of food and set the positions
+
+			//Create an initial number of food
 			m_food_list.clear();
 			int total_number_of_food=10;
 			for(int number_of_food=1; number_of_food<=total_number_of_food; number_of_food++)
@@ -153,12 +178,6 @@ namespace Crescer3D
 				m_food_list.push_back( local_food);
 			}
 
-			int food_position_index=3;						
-			for(std::list<Food*>::iterator list_iter = m_food_list.begin(), end=m_food_list.end(); list_iter !=end; list_iter++)
-			{
-				(*list_iter)->setPosition(food_position_index*2,2.0,0.0);
-				food_position_index++;
-			}
 			
 			//Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
 			//Game::GetFood()->setPosition(3.0,2.0,0.0);

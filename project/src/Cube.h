@@ -22,6 +22,7 @@
 #include "../../common/LoadTGA.h"
 #include <math.h>
 #include <stdlib.h>
+#include <iostream>
 #include "Light.h"
 
 
@@ -63,6 +64,7 @@ class Cube {
 		void setPositionY(float y);
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
+		void setRndPosition(int x_max,int x_min,int ymax,int ymin);
 		bool isInit();
 };
 

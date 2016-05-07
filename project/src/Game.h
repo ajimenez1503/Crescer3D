@@ -10,6 +10,7 @@
 #include "DeleteUtil.h"
 #include "HighScore.h"
 #include "Camera.h"
+#include "Logger.h"
 
 #include <list>
 
