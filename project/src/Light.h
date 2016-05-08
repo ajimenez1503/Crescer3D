@@ -10,7 +10,8 @@ namespace Crescer3D
 	public:
 		Light();
 		~Light();
-		inline static vec3 GetLightDirection() { return vec3(10.0, 5.0, 0); };
+		inline static vec3 GetLightPosition() { return vec3(0.0, 15.0, 0.0); };
+		inline static vec3 GetLightDirection() { return vec3(0.1, 5.0, 0.0); };
 	};
 }
 

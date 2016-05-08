@@ -47,6 +47,7 @@ class Sphere {
 
 	public:
 		Sphere();
+		static GLuint m_Texture;
 		void init(int x, GLuint shader);
 		void draw(mat4 total, vec3 cameraPos, GLuint shader = 666);
 

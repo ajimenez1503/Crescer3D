@@ -193,9 +193,9 @@ namespace Crescer3D
 		else if(Game::IsStatePlay())
 		{
 			// Draw Depthmap from Objects
-			vec3 lightDir = Light::GetLightDirection();
- 			vec3 lightPosition = vec3(-lightDir.x, -lightDir.y, -lightDir.z);
- 			mat4 depthViewMatrix = lookAtv(lightPosition, vec3(0,0,0), vec3(0,1,0));
+			vec3 lightPos = Light::GetLightDirection();
+			vec3 minus = vec3(-lightPos.x, -lightPos.y, -lightPos.z);
+ 			mat4 depthViewMatrix = lookAtv(minus, vec3(0,0,0), vec3(0,1,0));
  			glViewport(0, 0, 1024, 1024);
 			glBindFramebuffer(GL_FRAMEBUFFER, m_DepthBuffer);
 			glClear(GL_DEPTH_BUFFER_BIT);
