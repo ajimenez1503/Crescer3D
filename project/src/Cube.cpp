@@ -3,6 +3,9 @@
 namespace Crescer3D
 {
 
+	// Forward Declaration of Static Stuff
+	Model* Cube::m_Model;
+
 Cube::Cube()
 {
 	positionx=0.0f;
@@ -16,7 +19,8 @@ Cube::Cube()
 void Cube::init(int x, GLuint shader)
 {
 	id = x;
-	m_Model = LoadModelPlus("model/cube/cubeplus.obj");
+	if(m_Model == NULL)
+		m_Model = LoadModelPlus("model/cube/cubeplus.obj");
 	m_Shader = shader;
 	m_is_init=true;
 }

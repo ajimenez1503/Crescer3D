@@ -3,6 +3,8 @@
 namespace Crescer3D
 {
 
+	// Forward Declaration of Static Stuff
+	Model* Sphere::m_Model;
 
 void Sphere::moveForward () {
 	positionz-=velocity;
@@ -97,7 +99,8 @@ void Sphere::init(int x, GLuint shader)
 {
 	id=x;
 	m_Shader = shader;
-	m_Model=LoadModelPlus("model/sphere/groundsphere.obj");
+	if(m_Model == NULL)
+		m_Model=LoadModelPlus("model/sphere/groundsphere.obj");
 	m_is_init=true;
 }
 

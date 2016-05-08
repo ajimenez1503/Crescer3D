@@ -37,7 +37,7 @@ class Sphere {
 	private:
 		float positionx,positiony,positionz;
 		GLuint m_Shader;
-		Model *m_Model;
+		static Model *m_Model;
 		int id;
 		float velocity;
 		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
