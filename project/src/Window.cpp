@@ -149,6 +149,9 @@ namespace Crescer3D
 		Game::GetCamera() -> CameraUpdate();
 		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
 		vec3 cameraPosition = Game::GetCamera() -> getCameraPos();
+		vec3 lightPos = Light::GetLightDirection();
+		vec3 minus = vec3(-lightPos.x, -lightPos.y, -lightPos.z);
+ 		mat4 depthViewMatrix = IdentityMatrix();
 
 		if(Game::IsStateInit())
 		{
@@ -188,20 +191,19 @@ namespace Crescer3D
 			}
 			
 			InitObjects();
+			depthViewMatrix = IdentityMatrix();
+			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::InitView();
 		}
 		else if(Game::IsStatePlay())
 		{
-			// Draw Depthmap from Objects
-			vec3 lightPos = Light::GetLightDirection();
-			vec3 minus = vec3(-lightPos.x, -lightPos.y, -lightPos.z);
- 			mat4 depthViewMatrix = lookAtv(minus, vec3(0,0,0), vec3(0,1,0));
  			glViewport(0, 0, 1024, 1024);
 			glBindFramebuffer(GL_FRAMEBUFFER, m_DepthBuffer);
 			glClear(GL_DEPTH_BUFFER_BIT);
 			glUseProgram(m_DepthShader);
 			glActiveTexture(GL_TEXTURE6);
 			glBindTexture(GL_TEXTURE_2D, Window::GetDepthTexture());
+			depthViewMatrix = lookAtv(minus, vec3(0,0,0), vec3(0,1,0));
 
 			Game::GetPlayer()->draw(depthViewMatrix, cameraPosition, m_DepthShader);
 
@@ -259,6 +261,8 @@ namespace Crescer3D
 		else if(Game::IsStateGameOver())
 		{
 			Clear();
+			depthViewMatrix = IdentityMatrix();
+			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::GameOverView();
 		}
 		// swapping buffers
