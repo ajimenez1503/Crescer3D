@@ -74,7 +74,7 @@ namespace Crescer3D
 	
 	bool Game::ShutDown()
 	{
-		
+		return true;
 	}
 	
 

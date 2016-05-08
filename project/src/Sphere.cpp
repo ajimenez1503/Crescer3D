@@ -93,6 +93,9 @@ Sphere::Sphere()
 	velocity = 0.5;
 	radius=1.0;
 	m_is_init=false;
+	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5) );
 }
 
 void Sphere::init(int x, GLuint shader)
@@ -118,6 +121,7 @@ void Sphere::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	glUniformMatrix4fv(glGetUniformLocation(shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
 	glUniform3fv(glGetUniformLocation(shader, "cameraPosition"), 1, &cameraPos.x);
 	glUniform3fv(glGetUniformLocation(shader, "lightDirection"), 1, &lightDir.x);
+	glUniform3fv(glGetUniformLocation(shader, "objectColor"), 1, &color.x);
 	DrawModel(m_Model, shader, "inPosition", "inNormal", NULL);
 }
 

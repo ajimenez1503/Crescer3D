@@ -14,6 +14,9 @@ Cube::Cube()
 	velocity = 0.5;
 	size=0.5;
 	m_is_init=false;
+	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5) );
 }
 
 void Cube::init(int x, GLuint shader)
@@ -90,7 +93,7 @@ void Cube::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
 	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
 	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
-	setPositionY(2.0);
+	setPositionY(1.5);
 }
 
 void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
@@ -102,6 +105,7 @@ void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	glUniformMatrix4fv(glGetUniformLocation(shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
 	glUniform3fv(glGetUniformLocation(shader, "cameraPosition"), 1, &cameraPos.x);
 	glUniform3fv(glGetUniformLocation(shader, "lightDirection"), 1, &lightDir.x);
+	glUniform3fv(glGetUniformLocation(shader, "objectColor"), 1, &color.x);
 	DrawModel(m_Model, shader, "inPosition", "inNormal", NULL);
 }
 

@@ -38,6 +38,7 @@ class Sphere {
 		float positionx,positiony,positionz;
 		GLuint m_Shader;
 		static Model *m_Model;
+		vec3 color;
 		int id;
 		float velocity;
 		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
@@ -53,8 +54,6 @@ class Sphere {
 		void moveBack () ;
 		void moveLeft ();
 		void moveRight ();
-		
-
 
 		void incrementRadius();
 		void decrementRadius();

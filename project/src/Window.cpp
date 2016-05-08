@@ -182,7 +182,6 @@ namespace Crescer3D
 				}
 			}
 			
-			
 			if(game_must_reset==true)
 			{
 				Game::ResetGame();	
@@ -230,8 +229,6 @@ namespace Crescer3D
 			// Draw World
 			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			printError("Drawing World");
-
-
 
 			// Draw Objects
 			Game::GetPlayer()->draw(viewMatrix, cameraPosition, m_sphereShader);
