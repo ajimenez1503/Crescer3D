@@ -37,7 +37,9 @@ class Cube {
 	private:
 		float positionx,positiony,positionz;
 		GLuint m_Shader;
-		Model *m_Model;
+		static Model *m_Model;
+		static GLuint m_Texture;
+		vec3 color;
 		int id;
 		float velocity;
 		float size;

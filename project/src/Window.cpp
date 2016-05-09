@@ -80,8 +80,8 @@ namespace Crescer3D
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);  
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, Window::GetDepthTexture(), 0);
  		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		printError("Creating Depthmap");
@@ -149,6 +149,9 @@ namespace Crescer3D
 		Game::GetCamera() -> CameraUpdate();
 		mat4 viewMatrix = Game::GetCamera() -> getLookAtMatrix();
 		vec3 cameraPosition = Game::GetCamera() -> getCameraPos();
+		vec3 lightPos = Light::GetLightDirection();
+		vec3 minus = vec3(-lightPos.x, -lightPos.y, -lightPos.z);
+ 		mat4 depthViewMatrix = IdentityMatrix();
 
 		if(Game::IsStateInit())
 		{
@@ -182,27 +185,25 @@ namespace Crescer3D
 				}
 			}
 			
-			
 			if(game_must_reset==true)
 			{
 				Game::ResetGame();	
 			}
 			
 			InitObjects();
+			depthViewMatrix = IdentityMatrix();
+			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::InitView();
 		}
 		else if(Game::IsStatePlay())
 		{
-			// Draw Depthmap from Objects
-			vec3 lightDir = Light::GetLightDirection();
- 			vec3 lightPosition = vec3(-lightDir.x, -lightDir.y, -lightDir.z);
- 			mat4 depthViewMatrix = lookAtv(lightPosition, vec3(0,0,0), vec3(0,1,0));
  			glViewport(0, 0, 1024, 1024);
 			glBindFramebuffer(GL_FRAMEBUFFER, m_DepthBuffer);
 			glClear(GL_DEPTH_BUFFER_BIT);
 			glUseProgram(m_DepthShader);
 			glActiveTexture(GL_TEXTURE6);
 			glBindTexture(GL_TEXTURE_2D, Window::GetDepthTexture());
+			depthViewMatrix = lookAtv(minus, vec3(0,0,0), vec3(0,1,0));
 
 			Game::GetPlayer()->draw(depthViewMatrix, cameraPosition, m_DepthShader);
 
@@ -230,8 +231,6 @@ namespace Crescer3D
 			// Draw World
 			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			printError("Drawing World");
-
-
 
 			// Draw Objects
 			Game::GetPlayer()->draw(viewMatrix, cameraPosition, m_sphereShader);
@@ -262,6 +261,8 @@ namespace Crescer3D
 		else if(Game::IsStateGameOver())
 		{
 			Clear();
+			depthViewMatrix = IdentityMatrix();
+			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::GameOverView();
 		}
 		// swapping buffers

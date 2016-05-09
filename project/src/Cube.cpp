@@ -3,6 +3,10 @@
 namespace Crescer3D
 {
 
+	// Forward Declaration of Static Stuff
+	Model* Cube::m_Model;
+	GLuint Cube::m_Texture = 0;
+
 Cube::Cube()
 {
 	positionx=0.0f;
@@ -11,13 +15,25 @@ Cube::Cube()
 	velocity = 0.5;
 	size=0.5;
 	m_is_init=false;
+	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
+				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5) );
 }
 
 void Cube::init(int x, GLuint shader)
 {
 	id = x;
-	m_Model = LoadModelPlus("model/cube/cubeplus.obj");
+	if(m_Model == NULL)
+		m_Model = LoadModelPlus("model/cube/cubeplus.obj");
 	m_Shader = shader;
+	if(m_Texture == 0) {
+		glUseProgram(m_Shader);
+		glActiveTexture(GL_TEXTURE3);
+		LoadTGATextureSimple("model/cube/wall3.tga", &m_Texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
+
 	m_is_init=true;
 }
 
@@ -86,19 +102,24 @@ void Cube::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
 	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
 	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
-	setPositionY(2.0);
+	setPositionY(1.5);
 }
 
 void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	if(shader == 666)
 		shader = m_Shader;
-	vec3 lightDir = Light::GetLightDirection();
+	vec3 lightPos = Light::GetLightPosition();
 	glUseProgram(shader);
-	mat4 mdlViewMatrix = Mult(viewMatrix, Mult(T(positionx,positiony,positionz),S(size,size,size)));
-	glUniformMatrix4fv(glGetUniformLocation(shader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, m_Texture);
+	glUniform1i(glGetUniformLocation(shader, "tex"), 3);
+	mat4 worldMatrix = Mult(T(positionx,positiony,positionz),S(size,size,size));
+	glUniformMatrix4fv(glGetUniformLocation(shader, "viewMatrix"), 1, GL_TRUE, viewMatrix.m);
+	glUniformMatrix4fv(glGetUniformLocation(shader, "worldMatrix"), 1, GL_TRUE, worldMatrix.m);
 	glUniform3fv(glGetUniformLocation(shader, "cameraPosition"), 1, &cameraPos.x);
-	glUniform3fv(glGetUniformLocation(shader, "lightDirection"), 1, &lightDir.x);
-	DrawModel(m_Model, shader, "inPosition", "inNormal", NULL);
+	glUniform3fv(glGetUniformLocation(shader, "lightPosition"), 1, &lightPos.x);
+	glUniform3fv(glGetUniformLocation(shader, "objectColor"), 1, &color.x);
+	DrawModel(m_Model, shader, "inPosition", "inNormal", "inTexCoord");
 }
 
 vec3  Cube::getMinBox()

@@ -3,11 +3,11 @@ Inspired by the online game "agar.io" we want to do a "smash and run" game where
 
 
 ## Build Targets
-The project makefile consists of a build target for OS X and Linux.
+The project makefile consists of a build target for OS X, Linux and Cent OS 6.7.
 
 ### How to build Crescer3D:
 
-####1.) Run "make mac" for OS X or "make linux" for Linux
+####1.) Run "make mac" for OS X, "make linux" for Linux or "make centos" for Cent OS 6.7
 #### Depending on the build target everything should work automatically now.
 
 ####2.) Run the game with "./game" from Console

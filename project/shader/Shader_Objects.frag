@@ -2,44 +2,51 @@
 
 in vec3 vertNormal;
 in vec3 fragPosition;
+in vec2 uv;
 
 uniform sampler2D tex;
 uniform mat4 projMatrix;
-uniform mat4 mdlViewMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 worldMatrix;
 uniform vec3 cameraPosition;
-uniform vec3 lightDirection;
+uniform vec3 objectColor;
+uniform vec3 lightPosition;
 
 out vec4 outColor;
 
 void main(void)
 {
-	vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
-	vec3 thisPosition = vec3(mdlViewMatrix * vec4(fragPosition, 1));
-	vec3 thisNormal = normalize(mat3(mdlViewMatrix) * vertNormal);
+	mat4 modelToView = viewMatrix * worldMatrix;
+	vec4 tc = texture(tex, uv);
+	vec4 color = vec4(objectColor, 1.0);
+	vec4 black = vec4(0.1, 0.1, 0.1, 1.0);
+	vec3 fragPos = vec3(modelToView * vec4(fragPosition, 1.0));
+	vec3 lightPos = vec3(viewMatrix * vec4(lightPosition, 1.0));
+	vec3 camPos = vec3(viewMatrix * vec4(cameraPosition, 1.0));
+	vec3 normalVector = normalize(mat3(modelToView) * vertNormal);
+	vec3 cameraVector = normalize(camPos - fragPos);
 
-	// light calculation
-	vec3 lightVector = normalize(mat3(mdlViewMatrix) * lightDirection);
-	float intensity = dot(lightVector, thisNormal);
+	vec3 lightVector = normalize(lightPos - fragPos);
+	float intensity = dot(lightVector, normalVector);
 	if(intensity < 0)
 		intensity = 0;
 
-	if (intensity > 0.95)
-		color = vec4(1.0,0.65,0.65,1.0);
-	else if (intensity > 0.6)
-		color = vec4(1.0,0.4,0.4,1.0);
-	else if (intensity > 0.35)
-		color = vec4(0.4,0.2,0.2,1.0);
-	else
-		color = vec4(0.2,0.1,0.1,1.0);
+	if (intensity < 0.95 && intensity > 0.94)
+		color = black;
+	if (intensity < 0.94 && intensity > 0.74)
+		color = vec4(objectColor.rgb * 0.65, 1.0);
+	if (intensity < 0.74 && intensity > 0.71)
+		color = black;
+	if (intensity < 0.71)
+		color = vec4(objectColor.rgb * 0.35, 1.0);
 
-	// camera vector calculation
-	vec3 cameraVector = normalize(cameraPosition - thisPosition);
-	float outline = dot(cameraVector, thisNormal);
+	
+	float outline = dot(cameraVector, normalVector);
 	if(outline < 0)
 		outline = 0;
 
-	//if ( outline < 0.35 )
-	//	color = vec4(0.1, 0.1, 0.1, 1.0);
-	
+	if ( outline < 0.2 )
+		color = black;
+
 	outColor = color;
 }
