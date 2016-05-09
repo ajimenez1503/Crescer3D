@@ -117,7 +117,7 @@ namespace Crescer3D
 		for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
 		{
 			(*list_iter)->init(food_index,m_sphereShader);
-			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);			
+			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);				
 			food_index++;
 		}
 		Game::SetFoodList(local_food_list);
@@ -155,14 +155,13 @@ namespace Crescer3D
 
 		if(Game::IsStateInit())
 		{
-
+			//std::cout<< "Init window"<<std::endl;
 			printError("Clearing Screen");
 			bool game_must_reset=false;
 
 			if(Game::GetPlayer()->isInit()==false)
 			{
-				game_must_reset=true;
-				std::cout<<"Player"<<std::endl;
+				game_must_reset=true;				
 			}
 
 			std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
@@ -170,8 +169,7 @@ namespace Crescer3D
 			{
 				if((*list_iter)->isInit()==false)
 				{
-					game_must_reset=true;
-					std::cout<<"Enemy"<<std::endl;
+					game_must_reset=true;				
 				}
 			}
 			
@@ -180,8 +178,7 @@ namespace Crescer3D
 			{
 				if((*list_iter)->isInit()==false)
 				{
-					game_must_reset=true;
-					std::cout<<"Food"<<std::endl;
+					game_must_reset=true;				
 				}
 			}
 			
@@ -190,7 +187,7 @@ namespace Crescer3D
 				Game::ResetGame();	
 			}
 			
-			InitObjects();
+			
 			depthViewMatrix = IdentityMatrix();
 			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::InitView();

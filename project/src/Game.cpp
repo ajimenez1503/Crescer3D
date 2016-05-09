@@ -21,6 +21,7 @@ namespace Crescer3D
 		gameNeedReset=true;
 		ResetGame();		
 		SetGameStateInit();
+
 	}
 
 	Game::~Game()
@@ -38,39 +39,122 @@ namespace Crescer3D
 
 	bool Game::Update()
 	{
-		//////
-		// Check for Collision
-		/////
-		for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
-		{					
-			if(m_Player->collision(*list_iter))
-			{
-				m_Player->eat((*list_iter)->getWeight());
-				HighScore::IncrementScore((*list_iter)->getWeight());
-
-				list_iter=m_enemy_list.erase(list_iter);
-				Logger::Log("Collision with enemy!");
-							
-			}
-		}
-
-
-		for(std::list<Food*>::iterator list_iter = m_food_list.begin(), end=m_food_list.end(); list_iter !=end; list_iter++)
+		if(IsStatePlay()==true)
 		{
-			if(m_Player->collisionAABB(*list_iter))
-			{
-				m_Player->eat((*list_iter)->getWeight());
-				HighScore::IncrementScore((*list_iter)->getWeight());
+			//////
+			// Check for Collision between objects
+			/////
+			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
+			{					
+				if(m_Player->collision(*list_iter))
+				{
+					m_Player->eat((*list_iter)->getWeight());
+					HighScore::IncrementScore((*list_iter)->getWeight());
 
-				list_iter=m_food_list.erase(list_iter);
-				Logger::Log("Collision with food!");
+					list_iter=m_enemy_list.erase(list_iter);
+					Logger::Log("Collision with enemy!");
+							
+				}
 			}
-		}
-		
 
+
+			for(std::list<Food*>::iterator list_iter = m_food_list.begin(), end=m_food_list.end(); list_iter !=end; list_iter++)
+			{
+				if(m_Player->collisionAABB(*list_iter))
+				{
+					m_Player->eat((*list_iter)->getWeight());
+					HighScore::IncrementScore((*list_iter)->getWeight());
+
+					list_iter=m_food_list.erase(list_iter);
+					Logger::Log("Collision with food!");
+				}			
+			}
+
+	/*
+			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
+			{					
+				(*list_iter)->moveAngle(90.0);
+			}
+		
+	*/		
+			//////
+			// Define what enemies are doing
+			/////
+			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
+			{					
+				//Iterate over all enemies
+			
+				if((*list_iter)->getGoalState()==undefined)
+				{
+					float positionx=(*list_iter)->getX();
+					float positionz=(*list_iter)->getZ();
+			
+					float radius=(*list_iter)->getRadius();
+
+					float radius_of_interest=10.0*radius;
+
+					//Check for player in circle
+					float player_positionx=m_Player->getX();
+					float player_positionz=m_Player->getZ();
+			
+					float distance_to_player=sqrt(pow(player_positionx-positionx,2)+pow(player_positionz-positionz,2));	
+			
+			
+					if(distance_to_player<=radius_of_interest)
+					{
+						(*list_iter)->setGoalState(eat_player);
+						std::cout<< (*list_iter)->getID()<< ": eat_player"<<std::endl;
+						continue;
+					}
+			
+					//Check for food in circle
+					for(std::list<Food*>::iterator food_list_iter = m_food_list.begin(), end=m_food_list.end(); food_list_iter !=end; food_list_iter++)
+					{
+						Food* nearest_food=NULL;
+						float food_positionx=(*food_list_iter)->getX();
+						float food_positionz=(*food_list_iter)->getZ();
+				
+						float distance_to_food=sqrt(pow(food_positionx-positionx,2)+pow(food_positionz-positionz,2));	
+						if(distance_to_food<=radius_of_interest)
+						{
+							if(nearest_food!=NULL)
+							{
+								if(distance_to_food>sqrt(pow((nearest_food)->getX()-positionx,2)+pow((nearest_food)->getZ()-positionz,2)))
+								{
+							
+								}
+								else
+								{
+									nearest_food=(*food_list_iter);
+								}
+							}
+							else
+							{
+								nearest_food=(*food_list_iter);
+							}
+						}
+
+						if(nearest_food!=NULL)
+						{
+							(*list_iter)->setGoalState(eat_food);
+							std::cout<< (*list_iter)->getID()<< ": eat_food "<<nearest_food->getID()<<std::endl;
+							continue;
+						}
+					}
+				
+				}
+
+			
+			
+			}
+		
+		}
 
 		return true;
 	}
+	
+
+	
 	
 	bool Game::ShutDown()
 	{
@@ -153,7 +237,9 @@ namespace Crescer3D
 			HighScore::Reset();
 
 			HighScore::CalculateListScores();
-
+			
+			//The random number generator needs to be reseted every time a new game starts so the positions of all objects are different every time
+			std::srand (time(NULL));
 		
 			//Set the initial Position of the Player
 			//Game::GetPlayer()->setPosition(0.0,1.0,0.0);

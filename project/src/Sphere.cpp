@@ -20,6 +20,11 @@ void Sphere::moveRight () {
 	positionx+=velocity;
 }
 
+void Sphere::moveAngle(float angle){
+	positionx+=sin(angle*M_PI/180)*velocity;
+	positionz+=cos(angle*M_PI/180)*velocity;
+}
+
 float Sphere::getX(){
 	return positionx;
 }
@@ -42,7 +47,6 @@ void Sphere::decrementRadius(){
 
 void Sphere::setRadius(float in_radius){	
 	radius=in_radius;
-	std::cout<< "radius:"<<in_radius<<std::endl;
 }
 
 float Sphere::getRadius(){

@@ -67,6 +67,7 @@ class Cube {
 		void setPositionZ(float z);
 		void setPosition(float x, float y,float z);
 		void setRndPosition(int x_max,int x_min,int ymax,int ymin);
+		int getID();
 		bool isInit();
 };
 
