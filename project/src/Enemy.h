@@ -18,6 +18,7 @@
 
 #include "Logger.h"
 #include "Sphere.h"
+#include "Timing.h"
 
 namespace Crescer3D
 {
