@@ -177,11 +177,6 @@ namespace Crescer3D
 				Food* local_food=new Food();
 				m_food_list.push_back( local_food);
 			}
-
-			
-			//Game::GetEnemy()->setPosition(-3.0,1.0,0.0);
-			//Game::GetFood()->setPosition(3.0,2.0,0.0);
-
 			gameNeedReset=false;
 		}
 
