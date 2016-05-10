@@ -41,6 +41,7 @@ namespace Crescer3D
 	{
 		if(IsStatePlay()==true)
 		{
+			GetCamera()->moveForwardPlayer(GetPlayer()->getVelocity());
 			//////
 			// Check for Collision between objects
 			/////

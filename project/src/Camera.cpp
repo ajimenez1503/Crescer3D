@@ -106,33 +106,18 @@ namespace Crescer3D
 			cameraDir.x = cos(pitch*PI/180) * cos(yaw*PI/180);
 			cameraDir.y = sin(pitch*PI/180);
 			cameraDir.z = cos(pitch*PI/180) * sin(yaw*PI/180);
-			cameraDir = Normalize(cameraDir);
-			cameraPos = VectorSub( playerPos, ScalarMult(cameraDir, cameraDistance));
+			cameraPos = VectorSub( playerPos, ScalarMult( Normalize(cameraDir), cameraDistance));
 		}
 		CameraUpdate();
-
-		//cameraPos.x = playerPosX - cameraDir.x * cameraDistance;
-		//cameraPos.y = playerPosY - cameraDir.y * cameraDistance;
-		//cameraPos.z = playerPosZ - cameraDir.z * cameraDistance;
-
-	/*
-		int mousedx = 100;
-		int windowCenterX = 300;
-		int windowCenterY = 300;
-		if(mousePosX > windowCenterX+mousedx || mousePosX < windowCenterX-mousedx || mousePosY > windowCenterY+mousedx || mousePosY < windowCenterY-mousedx)
-		{   
-			glutWarpPointer( windowCenterX, windowCenterY );
-		}
-
-*/
 	}
 	
 	// Should go in player class
 	void Camera::moveForwardPlayer(float velocity) 
 	{
 		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
-		vec3 cameraDirNorm = Normalize(cameraDir);
-		cameraDirNorm.y = 0; // move only in x,y plane
+		vec3 cameraDirNorm = cameraDir;
+		cameraDirNorm.y = 0;
+		cameraDirNorm = Normalize(cameraDirNorm);
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
 
@@ -149,7 +134,7 @@ namespace Crescer3D
 
 	void Camera::moveBackPlayer(float velocity)
 	{
-		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		/*playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 		vec3 cameraDirNorm = Normalize(cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
@@ -163,10 +148,11 @@ namespace Crescer3D
 			return;
 		playerPos = npp;
 		CameraUpdate();
+		*/
 	}
 	void Camera::moveLeftPlayer(float velocity)
 	{
-		vec3 upVector = {0, 1, 0};
+		/*vec3 upVector = {0, 1, 0};
 		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 		vec3 cameraDirNorm = Normalize(cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
@@ -181,10 +167,12 @@ namespace Crescer3D
 			return;
 		playerPos = npp;
 		CameraUpdate();
+*/
 	}
 
 	void Camera::moveRightPlayer (float velocity) 
 	{
+		
 		vec3 upVector = {0, 1, 0};
 		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 		vec3 cameraDirNorm = Normalize(cameraDir);

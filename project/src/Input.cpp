@@ -90,6 +90,7 @@ namespace Crescer3D
 			case GLUT_KEY_DOWN :
 				Game::GetPlayer()->moveBack();
 			break;
+		/*
 			case 'w' :
 				Game::GetCamera()->moveForwardPlayer(velocity);
 			break;
@@ -102,6 +103,7 @@ namespace Crescer3D
 			case 'd' :
 				Game::GetCamera()->moveRightPlayer(velocity);
 			break;
+			*/
 			case 'n' :
 				Game::GetCamera()->increaseCameraDistance();
 			break;
