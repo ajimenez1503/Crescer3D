@@ -18,6 +18,12 @@ namespace Crescer3D
 		static void Log(char* c);
 		static void Log(float f);
 		static void Log(vec3 v);
+
+		template<class T>
+		static void Log(const char* c, T v)
+		{
+			std::cout << c << v << std::endl;
+		}
 	};
 }
 

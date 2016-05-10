@@ -16,8 +16,24 @@
 	}
 #endif
 
+#if defined (__LINUX__) || (__CENTOS__)
+	extern "C"
+	{
+		#define GL_GLEXT_PROTOTYPES
+		#include "../../common/Linux/MicroGlut.h"
+	}
+#endif
+#ifdef __OSX__
+	extern "C"
+	{
+		#include <OpenGL/gl3.h>
+		#include "../../common/mac/MicroGlut.h"
+	}
+#endif
+
 #include "Logger.h"
 #include "Sphere.h"
+#include "Timing.h"
 
 namespace Crescer3D
 {
@@ -29,6 +45,7 @@ namespace Crescer3D
 		explore,
 		undefined
 	};
+
 
 	class Enemy : public Sphere
 	{
@@ -46,7 +63,6 @@ namespace Crescer3D
 		private:
 			int m_weight;
 			Goal_State m_goal_state;
-			void Timer(int i);
 
 		
 	};

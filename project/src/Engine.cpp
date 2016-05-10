@@ -8,6 +8,7 @@ namespace Crescer3D
 	Engine::Engine()
 	{
 		m_EngineState = Constructing;
+		Timing::SetStartTime();
 	}
 
 	Engine* Engine::GetEngine()
@@ -139,8 +140,8 @@ namespace Crescer3D
 			iterator->second->Update();
 		}
 
-			return true;
-		}
+		return true;
+	}
 
 	int Engine::Shutdown()
 	{

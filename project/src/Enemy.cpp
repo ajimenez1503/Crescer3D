@@ -1,12 +1,7 @@
 #include "Enemy.h"
 
-
-
 namespace Crescer3D
 {
-	
-
-
 
 	Enemy::Enemy()
 	{
@@ -33,8 +28,11 @@ namespace Crescer3D
 	{
 		if(goal_state!=undefined)
 		{
-			glutTimerFunc(3, &Crescer3D::Enemy::Timer,0);
-		}else
+			unsigned long gameisRunning = Timing::GetGameSeconds();
+			// Save the seconds when you set a state and check
+			// after some time if more then X seconds are gone.
+		}
+		else
 		{
 			std::cout<<"Reset enemy State"<<std::endl;
 		}
@@ -42,10 +40,6 @@ namespace Crescer3D
 		m_goal_state=goal_state;
 	}
 
-	void Enemy::Timer(int i)
-	{
-		setGoalState(undefined);
-	}
 	
 	int Enemy::getWeight()
 	{
