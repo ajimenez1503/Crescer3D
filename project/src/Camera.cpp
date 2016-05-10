@@ -2,7 +2,7 @@
 
 #define PI 3.14159265
 #define MAX_DISTANCE 50 // Pixel, which mouse can jump from one to the next call
-
+#define RATIO_WINDOW_PLAYER 15000
 namespace Crescer3D
 {
 	Camera::Camera()
@@ -18,7 +18,7 @@ namespace Crescer3D
 		m_cameraDistanceIncrement = 1;
 		m_cameraDir = {-1,-1,0}; // default view ? 
 		m_lookAtMatrix = IdentityMatrix();
-		m_manuellView = false;
+		m_manuellView = true;
 	}
 
 	Camera::~Camera()
@@ -208,6 +208,12 @@ namespace Crescer3D
 		
 		m_cameraPos = VectorSub( m_playerPos, ScalarMult(m_cameraDir, m_cameraDistance));
 		m_lookAtMatrix = lookAtv(m_cameraPos, m_playerPos, vec3(0.0f, 1.0f, 0.0f));	
+		
+		if(m_manuellView == true)
+		{	
+			float distance =  RATIO_WINDOW_PLAYER*Game::GetPlayer()->getRadius()/Window::GetWidth();
+			setCameraDistance(distance);
+		}
 	}
 	void Camera::CameraReset()
 	{
@@ -219,12 +225,11 @@ namespace Crescer3D
 	void Camera::changeManuellView()
 	{
 		if(m_manuellView)
-		{
 			m_manuellView = false;
-		}
 		else
 		{
 			m_manuellView = true;
 		}
 	}
 } 
+
