@@ -77,7 +77,7 @@ namespace Crescer3D
 		float velocity = 0.5f;
 
 		switch (key)
-		{
+		{/*
 			case GLUT_KEY_UP :
 				Game::GetPlayer()->moveForward();
 			break;
@@ -90,7 +90,7 @@ namespace Crescer3D
 			case GLUT_KEY_DOWN :
 				Game::GetPlayer()->moveBack();
 			break;
-		/*
+		
 			case 'w' :
 				Game::GetCamera()->moveForwardPlayer(velocity);
 			break;
@@ -104,6 +104,9 @@ namespace Crescer3D
 				Game::GetCamera()->moveRightPlayer(velocity);
 			break;
 			*/
+			case 'y' :
+				Game::GetCamera()->changeManuellView();
+			break;
 			case 'n' :
 				Game::GetCamera()->increaseCameraDistance();
 			break;
