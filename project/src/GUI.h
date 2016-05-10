@@ -35,6 +35,7 @@ namespace Crescer3D
 		static std::string namePlayer;
 		static Button buttonPlay;
 		static Button buttonExit;
+		static bool nameReady;
 
 		static bool NameIsReady();
 		static void ReadName(unsigned char key, int xx, int yy);

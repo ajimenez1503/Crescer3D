@@ -6,15 +6,18 @@ namespace Crescer3D
 	std::string GUI::namePlayer;
 	Button GUI::buttonPlay;
 	Button GUI::buttonExit;
+	bool GUI::nameReady;
 
 	GUI::GUI(): System(SystemType::Sys_GUI)
 	{
 		namePlayer="-------";//default name user
+		nameReady=false;
 	}
 
 	GUI::~GUI()
 	{
 		namePlayer="-------";//default name user
+		nameReady=false;
 	}
 	bool GUI::Initialize()
 	{
@@ -76,10 +79,10 @@ namespace Crescer3D
 		buttonPlay.setPositionSize(70,25,80,60);
 		buttonPlay.Draw();
 
-		if(NameIsReady())
+		if(nameReady)
 		{
 			//display name
-			sfDrawString(positionx,positiony, "HighScore and name saved. ");
+			sfDrawString(positionx,positiony, "HighScore name saved. ");
 			if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
 				HighScore::SaveScore(namePlayer);
 				Engine::GetEngine()->SetEngineState(ShuttingDown);
@@ -146,12 +149,18 @@ namespace Crescer3D
 	{
 		if(key==GLUT_KEY_RETURN)
 		{
-			std::size_t found = namePlayer.find("-");
-			std::size_t length = namePlayer.size()-found;
-			if (found!=std::string::npos)
-			{
-				namePlayer.replace (found, length, length, ' ');
+			if(NameIsReady()){
+				nameReady=true;
 			}
+			else{
+				std::size_t found = namePlayer.find("-");
+				std::size_t length = namePlayer.size()-found;
+				if (found!=std::string::npos)
+				{
+					namePlayer.replace (found, length, length, ' ');
+				}
+			}
+
 		}
 		else if((key>='a' && key<='z') || (key==' ') || (key>='A' && key<='Z'))
 		{
