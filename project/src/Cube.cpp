@@ -105,6 +105,11 @@ void Cube::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 	setPositionY(1.5);
 }
 
+int Cube::getID()
+{
+	return id;
+}
+
 void Cube::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	if(shader == 666)
 		shader = m_Shader;

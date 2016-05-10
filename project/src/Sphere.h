@@ -55,6 +55,7 @@ class Sphere {
 		void moveBack () ;
 		void moveLeft ();
 		void moveRight ();
+		void moveAngle(float angle);
 
 		void incrementRadius();
 		void decrementRadius();
