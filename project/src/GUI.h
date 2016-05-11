@@ -35,6 +35,8 @@ namespace Crescer3D
 		static std::string namePlayer;
 		static Button buttonPlay;
 		static Button buttonExit;
+		static Button background;//it is used to create the background behind the font
+		static bool nameReady;
 
 		static bool NameIsReady();
 		static void ReadName(unsigned char key, int xx, int yy);

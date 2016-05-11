@@ -29,9 +29,9 @@ namespace Crescer3D
 	{
 		std::string result("Score: ");
 		result = result + std::to_string(static_cast<long long unsigned>(m_Score));
-		int positionx = Window::GetWidth() * 90 / 100; // 90% of the width
+		int positionx = Window::GetWidth() * 88 / 100; // 88% of the width
 		int positiony = Window::GetHeight() * 5 / 100; //5% of the height
-		sfDrawString(-20, 20, result.c_str());
+		sfDrawString(positionx, positiony, result.c_str());
 	}
 
 	void HighScore::IncrementScore()
@@ -101,7 +101,7 @@ namespace Crescer3D
 	void HighScore::SaveScore(std::string name)
 	{
 		//TODO save only if score >0
-		if(m_Score>0)
+		if(m_Score>0 && name!="       ")
 		{
 			std::ofstream myfile ("dataBase/Score.txt", std::ios::out| std::ios::app );
 			if (myfile.is_open() )
