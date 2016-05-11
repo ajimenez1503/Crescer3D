@@ -58,6 +58,8 @@ namespace Crescer3D
 		// Depth Map Orthographic Projection
 		// left, right, bottom, top, near, far
 		m_DepthMat = ortho(worldMin.x, worldMax.x, worldMin.x, worldMax.y, worldMin.x, worldMax.z);
+		//m_DepthMat = ortho(worldMin.x, worldMax.x, worldMin.z, worldMax.z, 5.0, worldMin.y);
+		//m_DepthMat = ortho(-150, 150, -150, 150, -150, 150);
 		glUseProgram(skyboxShader);
 		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "projMatrix"), 1, GL_TRUE, m_ProjMat.m);
 		glUseProgram(sphereShader);
