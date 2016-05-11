@@ -17,9 +17,8 @@ void main(void)
 	float closestDepth = texture(depthTex, projPosition.xy).r; 	
 	if(closestDepth < 1.0)
 		textureColor = textureColor * 0.35;
-
-	if(worldPos.x < worldMin.x || worldPos.x > worldMax.x 
-		|| worldPos.z < worldMin.z || worldPos.z > worldMax.z)
+	else if(worldPos.x < (worldMin.x-1) || worldPos.x > (worldMax.x+1)
+			|| worldPos.z < (worldMin.z-1) || worldPos.z > (worldMax.z+1))
 		textureColor = textureColor * 0.35;
 	outColor = textureColor;
 }
