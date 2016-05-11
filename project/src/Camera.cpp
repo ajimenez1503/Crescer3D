@@ -138,8 +138,7 @@ namespace Crescer3D
 
 		vec3 npp = VectorAdd(ScalarMult(cameraDirNorm, velocity), playerPos);
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = (Game::GetPlayer()->getRadius() * 2);
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -156,8 +155,7 @@ namespace Crescer3D
 		vec3 worldMax = World::GetWorldMaximum();
 		vec3 npp = VectorAdd(ScalarMult(cameraDirNorm, -velocity), playerPos);
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = (Game::GetPlayer()->getRadius() * 2);
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -174,8 +172,7 @@ namespace Crescer3D
 		vec3 worldMax = World::GetWorldMaximum();
 		vec3 npp = VectorAdd(ScalarMult(Normalize(CrossProduct(cameraDirNorm, upVector)), -velocity), playerPos);
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = (Game::GetPlayer()->getRadius() * 2);
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -193,8 +190,7 @@ namespace Crescer3D
 		vec3 worldMax = World::GetWorldMaximum();
 		vec3 npp = VectorAdd(ScalarMult(Normalize(CrossProduct(cameraDirNorm, upVector)), velocity), playerPos);	
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = (Game::GetPlayer()->getRadius() * 2);
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
