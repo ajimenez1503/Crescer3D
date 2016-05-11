@@ -12,3 +12,4 @@ The project makefile consists of a build target for OS X, Linux and Cent OS 6.7.
 
 ####2.) Run the game with "./game" from Console
  
+![alt tag](https://raw.githubusercontent.com/softwarejimenez/Crescer3D/master/common/crescer3d_preview.jpg)
