@@ -32,7 +32,7 @@ namespace Crescer3D
 	void Player::eat(int weight_eaten)
 	{
 		m_weight=m_weight+weight_eaten;
-		std::cout<< "m_weight:"<<m_weight<<std::endl;
+		//std::cout<< "m_weight:"<<m_weight<<std::endl;
 		//float radius=this->getRadius();
 		this->setRadius(m_weight/5.0);	
 	}

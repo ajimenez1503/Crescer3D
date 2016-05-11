@@ -16,7 +16,7 @@ namespace Crescer3D
 			t.tv_sec = mts.tv_sec;
 			t.tv_nsec = mts.tv_nsec;
 		#else
-			clock_gettime(CLOCK_REALTIME, &t);
+			//clock_gettime(CLOCK_REALTIME, &t);
 		#endif
 	
 		return t.tv_sec;

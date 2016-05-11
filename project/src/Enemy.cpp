@@ -34,7 +34,7 @@ namespace Crescer3D
 		}
 		else
 		{
-			std::cout<<"Reset enemy State"<<std::endl;
+			//std::cout<<"Reset enemy State"<<std::endl;
 		}
 		
 		m_goal_state=goal_state;
@@ -45,4 +45,30 @@ namespace Crescer3D
 	{
 		return m_weight;
 	}
+
+	void Enemy::eat(int weight_eaten)
+	{
+		m_weight=m_weight+weight_eaten;
+		//std::cout<< "m_weight:"<<m_weight<<std::endl;
+		//float radius=this->getRadius();
+		this->setRadius(m_weight/5.0);	
+	}
+
+	Food* Enemy::getTargetFood()
+	{
+		return m_target_food;
+	}
+	void Enemy::setTargetFood(Food* target_food)
+	{
+		m_target_food=target_food;
+	} 
+	Enemy* Enemy::getTargetEnemy()
+	{
+		return m_target_enemy;
+	}
+	void Enemy::setEnemyFood(Enemy* target_enemy)
+	{
+		m_target_enemy=target_enemy;
+	}
+
 }

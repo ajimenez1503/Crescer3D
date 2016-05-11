@@ -91,16 +91,16 @@ namespace Crescer3D
 				Game::GetPlayer()->moveBack();
 			break;
 			case 'w' :
-				Game::GetCamera()->moveForwardPlayer(velocity);
+				Game::GetCamera()->moveForwardPlayer();
 			break;
 			case 's' :
-				Game::GetCamera()->moveBackPlayer(velocity);
+				Game::GetCamera()->moveBackPlayer();
 			break;
 			case 'a' :
-				Game::GetCamera()->moveLeftPlayer(velocity);
+				Game::GetCamera()->moveLeftPlayer();
 			break;
 			case 'd' :
-				Game::GetCamera()->moveRightPlayer(velocity);
+				Game::GetCamera()->moveRightPlayer();
 			break;
 			case 'n' :
 				Game::GetCamera()->increaseCameraDistance();
@@ -125,6 +125,13 @@ namespace Crescer3D
 
 	bool Input::Update()
 	{
+		/*
+		if(Game::IsStatePlay())
+		{
+			float velocity = 0.5f;
+			Game::GetCamera()->moveForwardPlayer();			
+		}
+		*/
 		return true;
 	}
 }

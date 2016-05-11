@@ -34,6 +34,7 @@
 #include "Logger.h"
 #include "Sphere.h"
 #include "Timing.h"
+#include "Food.h"
 
 namespace Crescer3D
 {
@@ -59,10 +60,21 @@ namespace Crescer3D
 			void setGoalState(Goal_State goal_state);
 
 			int getWeight();
+			void increaseWayWent();
+
+			void eat(int weight_eaten);
+
+			Food* getTargetFood();
+			void setTargetFood(Food* target_food); 
+			Enemy* getTargetEnemy();
+			void setEnemyFood(Enemy* target_enemy);
 	
 		private:
 			int m_weight;
 			Goal_State m_goal_state;
+			Food* m_target_food;
+			Enemy* m_target_enemy;
+			
 
 		
 	};

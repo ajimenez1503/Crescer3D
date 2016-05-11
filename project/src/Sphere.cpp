@@ -9,20 +9,25 @@ namespace Crescer3D
 
 void Sphere::moveForward () {
 	positionz-=velocity;
+	increaseWayWent();
 }
 void Sphere::moveBack(){
 	positionz+=velocity;
+	increaseWayWent();
 }
 void Sphere::moveLeft(){
 	positionx-=velocity;
+	increaseWayWent();
 }
 void Sphere::moveRight () {
 	positionx+=velocity;
+	increaseWayWent();
 }
 
 void Sphere::moveAngle(float angle){
 	positionx+=sin(angle*M_PI/180)*velocity;
 	positionz+=cos(angle*M_PI/180)*velocity;
+	increaseWayWent();
 }
 
 float Sphere::getX(){
@@ -84,6 +89,22 @@ void Sphere::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
 	setPositionY(1.0);
 }
+
+float Sphere::getWayWent()
+{
+	return m_way_went;
+}
+
+void Sphere::increaseWayWent()
+{
+	m_way_went+=velocity;
+}
+
+void Sphere::setWayWent(float way_went)
+{
+	m_way_went=way_went;
+}
+
 
 int Sphere::getID()
 {

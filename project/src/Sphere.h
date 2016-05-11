@@ -41,9 +41,11 @@ class Sphere {
 		vec3 color;
 		int id;
 		float velocity;
+		float m_way_went;
 		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
 		float SquaredDistPointAABB( float pn, float bmin, float bmax);
 		bool m_is_init;
+		
 
 	public:
 		Sphere();
@@ -73,6 +75,10 @@ class Sphere {
 		float getY();
 		float getZ();
 		vec3 getPosition();
+		
+		float getWayWent();
+		void increaseWayWent();
+		void setWayWent(float way_went);
 
 		int getID();
 		bool isInit();

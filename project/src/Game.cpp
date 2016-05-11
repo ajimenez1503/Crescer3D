@@ -41,18 +41,20 @@ namespace Crescer3D
 	{
 		if(IsStatePlay()==true)
 		{
+			
 			//////
 			// Check for Collision between objects
 			/////
 			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
-			{					
+			{	
+				//TODO 	check whether player is bigger than enemy			
 				if(m_Player->collision(*list_iter))
 				{
 					m_Player->eat((*list_iter)->getWeight());
 					HighScore::IncrementScore((*list_iter)->getWeight());
 
 					list_iter=m_enemy_list.erase(list_iter);
-					Logger::Log("Collision with enemy!");
+					Logger::Log("Player collision with enemy!");
 							
 				}
 			}
@@ -66,23 +68,68 @@ namespace Crescer3D
 					HighScore::IncrementScore((*list_iter)->getWeight());
 
 					list_iter=m_food_list.erase(list_iter);
-					Logger::Log("Collision with food!");
+					Logger::Log("Player collision with food!");
 				}			
 			}
 
-	/*
-			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
-			{					
-				(*list_iter)->moveAngle(90.0);
-			}
+			for(std::list<Enemy*>::iterator outer_enemy_list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); outer_enemy_list_iter  !=end; outer_enemy_list_iter ++)
+			{
+				for(std::list<Enemy*>::iterator inner_enemy_list_iter  = m_enemy_list.begin(), end=m_enemy_list.end(); inner_enemy_list_iter  !=end; inner_enemy_list_iter ++)
+				{
+					if((*outer_enemy_list_iter)!=(*inner_enemy_list_iter))
+					{
+						if((*outer_enemy_list_iter)->collision(*inner_enemy_list_iter))
+						{
+							Enemy* bigger_enemy;
+							Enemy* smaller_enemy;
+							
+
+							if((*outer_enemy_list_iter)->getWeight()>=(*inner_enemy_list_iter)->getWeight())
+							{
+								bigger_enemy=(*outer_enemy_list_iter);
+								smaller_enemy=(*inner_enemy_list_iter);
+							}else
+							{
+								bigger_enemy=(*inner_enemy_list_iter);
+								smaller_enemy=(*outer_enemy_list_iter);
+							}
+							
+							bigger_enemy->eat(smaller_enemy->getWeight());
+							bigger_enemy->setGoalState(undefined);
+
+							inner_enemy_list_iter=m_enemy_list.erase(inner_enemy_list_iter);
+							Logger::Log("Enemy collision with enemy!");
+							
+						}
+					}
+				}
+
+				for(std::list<Food*>::iterator food_list_iter = m_food_list.begin(), end=m_food_list.end(); food_list_iter !=end; food_list_iter++)
+				{
+					if((*outer_enemy_list_iter)->collisionAABB(*food_list_iter))
+					{
+						(*outer_enemy_list_iter)->eat((*food_list_iter)->getWeight());
+						(*outer_enemy_list_iter)->setGoalState(undefined);
+						food_list_iter=m_food_list.erase(food_list_iter);
+						
+						Logger::Log("Enemy collision with food!");
+					}		
+				}
+			}	
+
 		
-	*/		
 			//////
 			// Define what enemies are doing
 			/////
 			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
 			{					
 				//Iterate over all enemies
+				
+				if((*list_iter)->getWayWent()>10.0)
+				{
+					(*list_iter)->setGoalState(undefined);
+					(*list_iter)->setWayWent(0.0);
+				}
 			
 				if((*list_iter)->getGoalState()==undefined)
 				{
@@ -137,12 +184,60 @@ namespace Crescer3D
 						if(nearest_food!=NULL)
 						{
 							(*list_iter)->setGoalState(eat_food);
+							(*list_iter)->setTargetFood(nearest_food);
 							std::cout<< (*list_iter)->getID()<< ": eat_food "<<nearest_food->getID()<<std::endl;
 							continue;
 						}
 					}
 				
 				}
+				
+				//Handle the moving for the different states
+				if((*list_iter)->getGoalState()==eat_food)
+				{
+					float positionx=(*list_iter)->getX();
+					float positionz=(*list_iter)->getZ();
+					float target_positionx=(*list_iter)->getTargetFood()->getX();
+					float target_positionz=(*list_iter)->getTargetFood()->getZ();
+			
+
+					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
+					float angle=asin((target_positionx-positionx)/distance)* 180.0 / M_PI;
+					(*list_iter)->moveAngle(angle);
+				}
+								
+				if((*list_iter)->getGoalState()==eat_player)
+				{
+					float positionx=(*list_iter)->getX();
+					float positionz=(*list_iter)->getZ();
+					float target_positionx=m_Player->getX();
+					float target_positionz=m_Player->getZ();
+			
+					positionz=-positionz;
+					target_positionz=-target_positionz;
+
+					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
+					float angle=asin((target_positionz-positionz)/distance)* 180.0 / M_PI;
+					
+					std::cout<<"distance="<<distance<<" angle="<<angle<<std::endl;
+
+					float angle_offset=0.0;
+/*
+					if(positionx>target_positionx)
+					{
+						if(positionz>target_positionz)
+						{
+							angle_offset=-180.0;
+						}else
+						{
+							angle_offset=180.0;
+						}
+					}
+
+					(*list_iter)->moveAngle(angle_offset-angle);
+*/
+				}
+				
 
 			
 			

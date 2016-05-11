@@ -34,10 +34,10 @@ namespace Crescer3D
 		vec3 getCameraPos();
 
 		//temporarly should go in player class:
-		void moveForwardPlayer (float movement_speed); 
-		void moveBackPlayer (float movement_speed); 
-		void moveLeftPlayer (float movement_speed); 
-		void moveRightPlayer (float movement_speed); 
+		void moveForwardPlayer (); 
+		void moveBackPlayer (); 
+		void moveLeftPlayer (); 
+		void moveRightPlayer (); 
 
 	private:
 		mat4 lookAtMatrix;
