@@ -89,6 +89,9 @@ namespace Crescer3D
 				Game::GetCamera()->moveRightPlayer();
 			break;
 			*/
+			case 'w' :
+				Game::GetCamera()->moveForwardPlayer();
+			break;
 			case 'a' :
 				Game::GetCamera()->changeManuellView();
 			break;

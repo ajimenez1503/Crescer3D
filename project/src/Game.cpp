@@ -120,7 +120,7 @@ namespace Crescer3D
 
 		
 			//Move Player
-			GetCamera()->moveForwardPlayer(GetPlayer()->getVelocity());
+			//GetCamera()->moveForwardPlayer();
 		
 			//////
 			// Define what enemies are doing
@@ -129,10 +129,9 @@ namespace Crescer3D
 			{					
 				//Iterate over all enemies
 				
-				if((*list_iter)->getWayWent()>100.0)
+				if((*list_iter)->getWayWent()>20.0)
 				{
-					std::cout<< (*list_iter)->getID()<< ": Reset state"<<std::endl;
-					//(*list_iter)->setGoalState(undefined);
+					(*list_iter)->setGoalState(undefined);
 					(*list_iter)->setWayWent(0.0);
 
 				}
@@ -144,7 +143,7 @@ namespace Crescer3D
 			
 					float radius=(*list_iter)->getRadius();
 
-					float radius_of_interest=10.0*radius;
+					float radius_of_interest=3.0*radius;
 
 					//Check for player in circle
 					float player_positionx=m_Player->getX();
@@ -202,6 +201,12 @@ namespace Crescer3D
 						
 					}
 					
+					//If Goal state is still undefined, the enemy explores
+					if((*list_iter)->getGoalState()==undefined)
+					{
+						(*list_iter)->setGoalState(explore);
+					}
+					
 				}
 				
 				/////
@@ -220,35 +225,12 @@ namespace Crescer3D
 
 
 					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
-					float angle=asin((target_positionx-positionx)/distance)* 180.0 / M_PI;
 					
-					std::cout<<"EnX="<<positionx<<" EnZ="<<positionz<<" FoX="<<target_positionx<<" FoZ="<<target_positionz<<std::endl;
-					std::cout<<"angle1="<<angle<<std::endl;
+					float angle=atan2(target_positionz-positionz,target_positionx-positionx)*180.0 / M_PI;
 
-					angle=atan2(target_positionz-positionz,target_positionx-positionx);
-/*
-					//Calculate the real angle
-					if(target_positionz>=positionz)
-					{
-						if(target_positionx>=positionx)
-						{
-							angle=angle;
-						}else
-						{
-							angle=180.0-angle;
-						}
-					}else
-					{
-						if((target_positionx>=positionx)&&(angle<=0))
-						{
-							angle=360.0+angle;
-						}else
-						{
-							angle=180.0-angle;
-						}
-					}
-	*/				std::cout<<"angle2="<<angle<<std::endl;
+
 					(*list_iter)->moveAngle(angle);
+
 				}
 								
 				if((*list_iter)->getGoalState()==eat_player)
@@ -259,31 +241,17 @@ namespace Crescer3D
 					float target_positionz=m_Player->getZ();
 
 					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
-					float angle=asin((target_positionz-positionz)/distance)* 180.0 / M_PI;
-					
-					//Calculate the real angle
-					if(target_positionz>=positionz)
-					{
-						if(target_positionx>=positionx)
-						{
-							angle=angle;
-						}else
-						{
-							angle=180.0-angle;
-						}
-					}else
-					{
-						if(target_positionx>=positionx)
-						{
-							angle=360.0+angle;
-						}else
-						{
-							angle=180.0-angle;
-						}
-					}
+					float angle=atan2(target_positionz-positionz,target_positionx-positionx)* 180.0 / M_PI;
+
+
 					//Move the enemy
 					(*list_iter)->moveAngle(angle);
-				}			
+				}	
+				
+				if((*list_iter)->getGoalState()==explore)
+				{
+					
+				}		
 			}
 		
 		}

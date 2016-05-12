@@ -67,13 +67,17 @@ namespace Crescer3D
 			Food* getTargetFood();
 			void setTargetFood(Food* target_food); 
 			Enemy* getTargetEnemy();
-			void setEnemyFood(Enemy* target_enemy);
+			void setTargetEnemy(Enemy* target_enemy);
+
+			float getMovementAngle();
+			void setMovementAngle(float movement_angle);
 	
 		private:
 			int m_weight;
 			Goal_State m_goal_state;
 			Food* m_target_food;
 			Enemy* m_target_enemy;
+			float m_movement_angle;
 			
 
 		

@@ -54,9 +54,18 @@ namespace Crescer3D
 	{
 		return m_target_enemy;
 	}
-	void Enemy::setEnemyFood(Enemy* target_enemy)
+	void Enemy::setTargetEnemy(Enemy* target_enemy)
 	{
 		m_target_enemy=target_enemy;
+	}
+
+	float Enemy::getMovementAngle()
+	{
+		return m_movement_angle;
+	}
+	void Enemy::setMovementAngle(float movement_angle)
+	{
+		m_movement_angle=movement_angle;
 	}
 
 }
