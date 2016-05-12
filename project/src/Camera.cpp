@@ -3,6 +3,10 @@
 #define PI 3.14159265
 #define MAX_DISTANCE 50 // Pixel, which mouse can jump from one to the next call
 #define RATIO_WINDOW_PLAYER 15000
+#define MAX_CAMERA_DISTANCE 120
+#define MIN_CAMERA_DISTANCE 5
+
+
 namespace Crescer3D
 {
 	Camera::Camera()
@@ -59,11 +63,18 @@ namespace Crescer3D
 	
 	void Camera::increaseCameraDistance()
 	{
-		m_cameraDistance += m_cameraDistanceIncrement;
+		if(m_cameraDistance < MAX_CAMERA_DISTANCE)
+		{
+			m_cameraDistance += m_cameraDistanceIncrement;
+		}
+
 	}
 	void Camera::decreaseCameraDistance()
 	{
-		m_cameraDistance -= m_cameraDistanceIncrement;
+		if(m_cameraDistance > MIN_CAMERA_DISTANCE)
+		{
+			m_cameraDistance -= m_cameraDistanceIncrement;
+		}	
 	}
 
 	void Camera::handleMouseMovement(int mousePosX, int mousePosY)
