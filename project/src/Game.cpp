@@ -120,7 +120,10 @@ namespace Crescer3D
 
 		
 			//Move Player
+
 			//GetCamera()->moveForwardPlayer();
+
+
 		
 			//////
 			// Define what enemies are doing

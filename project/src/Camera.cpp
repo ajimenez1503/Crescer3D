@@ -3,6 +3,10 @@
 #define PI 3.14159265
 #define MAX_DISTANCE 50 // Pixel, which mouse can jump from one to the next call
 #define RATIO_WINDOW_PLAYER 15000
+#define MAX_CAMERA_DISTANCE 120
+#define MIN_CAMERA_DISTANCE 5
+
+
 namespace Crescer3D
 {
 	Camera::Camera()
@@ -59,11 +63,18 @@ namespace Crescer3D
 	
 	void Camera::increaseCameraDistance()
 	{
-		m_cameraDistance += m_cameraDistanceIncrement;
+		if(m_cameraDistance < MAX_CAMERA_DISTANCE)
+		{
+			m_cameraDistance += m_cameraDistanceIncrement;
+		}
+
 	}
 	void Camera::decreaseCameraDistance()
 	{
-		m_cameraDistance -= m_cameraDistanceIncrement;
+		if(m_cameraDistance > MIN_CAMERA_DISTANCE)
+		{
+			m_cameraDistance -= m_cameraDistanceIncrement;
+		}	
 	}
 
 	void Camera::handleMouseMovement(int mousePosX, int mousePosY)
@@ -126,10 +137,12 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius());
-		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
-		vec3 cameraDirNorm = Normalize(m_cameraDir);
-		cameraDirNorm.y = 0; // move only in x,y plane
+		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		
+		vec3 cameraDirNorm = m_cameraDir;
+		cameraDirNorm.y = 0;
+		cameraDirNorm = Normalize(cameraDirNorm);
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
 
@@ -147,7 +160,9 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
+
 		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		vec3 m_cameraDirNorm = m_cameraDir;
 
 		vec3 cameraDirNorm = Normalize(m_cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
@@ -168,6 +183,7 @@ namespace Crescer3D
 		
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
+
 		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
 		vec3 upVector = {0, 1, 0};
@@ -191,6 +207,7 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
+
 		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
 		vec3 upVector = {0, 1, 0};
