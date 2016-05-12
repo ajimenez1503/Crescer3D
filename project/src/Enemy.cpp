@@ -26,17 +26,7 @@ namespace Crescer3D
 
 	void Enemy::setGoalState(Goal_State goal_state)
 	{
-		if(goal_state!=undefined)
-		{
-			unsigned long gameisRunning = Timing::GetGameSeconds();
-			// Save the seconds when you set a state and check
-			// after some time if more then X seconds are gone.
-		}
-		else
-		{
-			//std::cout<<"Reset enemy State"<<std::endl;
-		}
-		
+		this->setWayWent(0.0);
 		m_goal_state=goal_state;
 	}
 
@@ -49,8 +39,6 @@ namespace Crescer3D
 	void Enemy::eat(int weight_eaten)
 	{
 		m_weight=m_weight+weight_eaten;
-		//std::cout<< "m_weight:"<<m_weight<<std::endl;
-		//float radius=this->getRadius();
 		this->setRadius(m_weight/5.0);	
 	}
 

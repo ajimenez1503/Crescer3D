@@ -25,8 +25,8 @@ void Sphere::moveRight () {
 }
 
 void Sphere::moveAngle(float angle){
-	positionx+=sin(angle*M_PI/180)*velocity;
-	positionz+=cos(angle*M_PI/180)*velocity;
+	positionx+=cos(angle*M_PI/180)*velocity;
+	positionz+=sin(angle*M_PI/180)*velocity;
 	increaseWayWent();
 }
 

@@ -125,10 +125,12 @@ namespace Crescer3D
 			{					
 				//Iterate over all enemies
 				
-				if((*list_iter)->getWayWent()>10.0)
+				if((*list_iter)->getWayWent()>100.0)
 				{
-					(*list_iter)->setGoalState(undefined);
+					std::cout<< (*list_iter)->getID()<< ": Reset state"<<std::endl;
+					//(*list_iter)->setGoalState(undefined);
 					(*list_iter)->setWayWent(0.0);
+
 				}
 			
 				if((*list_iter)->getGoalState()==undefined)
@@ -189,7 +191,13 @@ namespace Crescer3D
 							continue;
 						}
 					}
-				
+
+					//Check for other Enemies in circle
+					for(std::list<Enemy*>::iterator other_enemy_list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); other_enemy_list_iter !=end; other_enemy_list_iter++)
+					{
+						
+					}
+					
 				}
 				
 				//Handle the moving for the different states
@@ -201,8 +209,36 @@ namespace Crescer3D
 					float target_positionz=(*list_iter)->getTargetFood()->getZ();
 			
 
+
 					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
 					float angle=asin((target_positionx-positionx)/distance)* 180.0 / M_PI;
+					
+					std::cout<<"EnX="<<positionx<<" EnZ="<<positionz<<" FoX="<<target_positionx<<" FoZ="<<target_positionz<<std::endl;
+					std::cout<<"angle1="<<angle<<std::endl;
+
+					angle=atan2(target_positionz-positionz,target_positionx-positionx);
+/*
+					//Calculate the real angle
+					if(target_positionz>=positionz)
+					{
+						if(target_positionx>=positionx)
+						{
+							angle=angle;
+						}else
+						{
+							angle=180.0-angle;
+						}
+					}else
+					{
+						if((target_positionx>=positionx)&&(angle<=0))
+						{
+							angle=360.0+angle;
+						}else
+						{
+							angle=180.0-angle;
+						}
+					}
+	*/				std::cout<<"angle2="<<angle<<std::endl;
 					(*list_iter)->moveAngle(angle);
 				}
 								
@@ -212,30 +248,32 @@ namespace Crescer3D
 					float positionz=(*list_iter)->getZ();
 					float target_positionx=m_Player->getX();
 					float target_positionz=m_Player->getZ();
-			
-					positionz=-positionz;
-					target_positionz=-target_positionz;
 
 					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
 					float angle=asin((target_positionz-positionz)/distance)* 180.0 / M_PI;
 					
-					std::cout<<"distance="<<distance<<" angle="<<angle<<std::endl;
-
-					float angle_offset=0.0;
-/*
-					if(positionx>target_positionx)
+					//Calculate the real angle
+					if(target_positionz>=positionz)
 					{
-						if(positionz>target_positionz)
+						if(target_positionx>=positionx)
 						{
-							angle_offset=-180.0;
+							angle=angle;
 						}else
 						{
-							angle_offset=180.0;
+							angle=180.0-angle;
+						}
+					}else
+					{
+						if(target_positionx>=positionx)
+						{
+							angle=360.0+angle;
+						}else
+						{
+							angle=180.0-angle;
 						}
 					}
-
-					(*list_iter)->moveAngle(angle_offset-angle);
-*/
+					//Move the enemy
+					(*list_iter)->moveAngle(angle);
 				}
 				
 
