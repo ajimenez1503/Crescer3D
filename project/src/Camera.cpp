@@ -126,9 +126,9 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius());
-		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
-		vec3 cameraDirNorm = Normalize(cameraDir);
+		vec3 cameraDirNorm = Normalize(m_cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
@@ -147,9 +147,9 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
-		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
-		vec3 cameraDirNorm = Normalize(cameraDir);
+		vec3 cameraDirNorm = Normalize(m_cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
@@ -168,10 +168,10 @@ namespace Crescer3D
 		
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
-		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
 		vec3 upVector = {0, 1, 0};
-		vec3 cameraDirNorm = Normalize(cameraDir);
+		vec3 cameraDirNorm = Normalize(m_cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
@@ -191,10 +191,10 @@ namespace Crescer3D
 	{
 		float player_velocity=Game::GetPlayer()->getVelocity();
 		float player_radius = (Game::GetPlayer()->getRadius() );
-		playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
+		vec3 playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 
 		vec3 upVector = {0, 1, 0};
-		vec3 cameraDirNorm = Normalize(cameraDir);
+		vec3 cameraDirNorm = Normalize(m_cameraDir);
 		cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
