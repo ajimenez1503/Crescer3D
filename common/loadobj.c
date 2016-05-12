@@ -892,12 +892,12 @@ void ReportRerror(char *caller, char *name)
 	// Report error - but not more than NUM_DRAWMODEL_ERROR
    if(draw_error_counter < NUM_DRAWMODEL_ERROR)
    {
-		    fprintf(stderr, "%s warning: '%s' not found in shader!\n", caller, name);
+		    //fprintf(stderr, "%s warning: '%s' not found in shader!\n", caller, name);
 		    draw_error_counter++;
    }
    else if(draw_error_counter == NUM_DRAWMODEL_ERROR)
    {
-		    fprintf(stderr, "%s: Number of error bigger than %i. No more vill be printed.\n", caller, NUM_DRAWMODEL_ERROR);
+		    //fprintf(stderr, "%s: Number of error bigger than %i. No more vill be printed.\n", caller, NUM_DRAWMODEL_ERROR);
 		    draw_error_counter++;
    }
 }
