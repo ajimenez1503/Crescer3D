@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "Logger.h"
 #include "../../common/VectorUtils3.h"
+#include "Window.h"
 
 
 namespace Crescer3D

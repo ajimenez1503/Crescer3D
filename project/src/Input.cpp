@@ -4,14 +4,12 @@ namespace Crescer3D
 {
 	// forward declaration of static members
 	
-	int   Input::m_xOrigin;
 	int   Input::m_MouseXPos;
 	int   Input::m_MouseYPos;
 
 	Input::Input()
 		: System(SystemType::Sys_Input)
 	{	
-		m_xOrigin = -1;
 		m_MouseXPos = 0;
 		m_MouseYPos = 0;
 		glutMouseFunc(MouseButton);
@@ -27,8 +25,6 @@ namespace Crescer3D
 
 	void Input::Reset()
 	{
-
-		m_xOrigin = -1;
 		m_MouseXPos = 0;
 		m_MouseYPos = 0;
 		glutMouseFunc(MouseButton);
@@ -47,17 +43,6 @@ namespace Crescer3D
 		{
 			//check button
 			GUI::positionClickMouse(x,y);
-
-/*
-			// when the button is released
-			if (state == GLUT_UP)
-			{
-				m_CameraAngle += m_DeltaAngle;
-				m_xOrigin = -1;
-			}
-			else // state = GLUT_DOWN
-				m_xOrigin = x;
-				*/
 		}
 	}
 
@@ -104,13 +89,13 @@ namespace Crescer3D
 				Game::GetCamera()->moveRightPlayer(velocity);
 			break;
 			*/
-			case 'y' :
+			case 'a' :
 				Game::GetCamera()->changeManuellView();
 			break;
-			case 'n' :
+			case 's' :
 				Game::GetCamera()->increaseCameraDistance();
 			break;
-			case 'm' :
+			case 'd' :
 				Game::GetCamera()->decreaseCameraDistance();
 			break;
 			case '1' :

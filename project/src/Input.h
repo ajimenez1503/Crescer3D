@@ -33,18 +33,12 @@ namespace Crescer3D
 		virtual ~Input();
 
 		virtual bool Update();
-		//static inline mat4 GetLookAtMatrix() { return m_LookAtMatrix; }
 		static vec2 GetMousePosition();
 		static void Reset();
 	private:
 		static void Keyboard(unsigned char key, int xx, int yy);
 		static void MouseButton(int button, int state, int x, int y);
 		static void MouseMove(int x, int y);
-
-		// camera steering parameters
-		// should be moved into the camera class later
-		static mat4 m_LookAtMatrix;
-		static int m_xOrigin;
 		static int m_MouseXPos;
 		static int m_MouseYPos;
 	};

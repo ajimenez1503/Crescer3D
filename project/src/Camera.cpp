@@ -10,15 +10,15 @@ namespace Crescer3D
 	{
 		m_lastMousePosX = 0;
 		m_lastMousePosY = 0;
-		m_pitch = -45;
+		m_pitch = -30;
 		m_yaw = 0;
 		m_rotationSensitivity = 1.0f;
 		m_playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
-		m_cameraDistance = 10; // should change with player size
+		m_cameraDistance = 15; // should change with player size
 		m_cameraDistanceIncrement = 1;
 		m_cameraDir = {-1,-1,0}; // default view ? 
 		m_lookAtMatrix = IdentityMatrix();
-		m_manuellView = true;
+		m_manuellView = false;
 	}
 
 	Camera::~Camera()
@@ -209,7 +209,7 @@ namespace Crescer3D
 		m_cameraPos = VectorSub( m_playerPos, ScalarMult(m_cameraDir, m_cameraDistance));
 		m_lookAtMatrix = lookAtv(m_cameraPos, m_playerPos, vec3(0.0f, 1.0f, 0.0f));	
 		
-		if(m_manuellView == true)
+		if(m_manuellView == false)
 		{	
 			float distance =  RATIO_WINDOW_PLAYER*Game::GetPlayer()->getRadius()/Window::GetWidth();
 			setCameraDistance(distance);
