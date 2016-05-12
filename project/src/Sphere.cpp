@@ -28,7 +28,6 @@ void Sphere::moveAngle(float angle){
 	positionx+=cos(angle*M_PI/180)*velocity;
 	positionz+=sin(angle*M_PI/180)*velocity;
 
-	std::cout<<"deltax="<<cos(angle*M_PI/180)*velocity<<" deltaz="<<sin(angle*M_PI/180)*velocity<<std::endl;
 	increaseWayWent();
 }
 
@@ -54,6 +53,7 @@ void Sphere::decrementRadius(){
 
 void Sphere::setRadius(float in_radius){	
 	radius=in_radius;
+	this->setVelocity(1.0/radius);
 }
 
 float Sphere::getRadius(){
@@ -89,7 +89,7 @@ void Sphere::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
 	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
 	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
-	setPositionY(1.0);
+	setPositionY(radius);
 }
 
 float Sphere::getWayWent()
@@ -115,11 +115,13 @@ int Sphere::getID()
 
 Sphere::Sphere()
 {
+	
 	positionx=0.0f;
 	positiony=1.0f;
 	positionz=0.0f;
 	velocity = 0.5;
 	radius=1.0;
+	
 	m_is_init=false;
 	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
 				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),

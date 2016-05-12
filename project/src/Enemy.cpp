@@ -7,6 +7,7 @@ namespace Crescer3D
 	{
 		m_weight=5;
 		m_goal_state=undefined;
+		this->setRadius(m_weight/5.0);
 	}
 
 	Enemy::~Enemy()

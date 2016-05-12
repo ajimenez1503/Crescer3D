@@ -59,7 +59,6 @@ namespace Crescer3D
 	void Input::Keyboard(unsigned char key, int xx, int yy)
 	{
 		float fraction = 0.1f;
-		float velocity = 0.5f;
 
 		switch (key)
 		{/*
