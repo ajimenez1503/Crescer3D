@@ -10,8 +10,8 @@ namespace Crescer3D {
 
 	void World::init(GLuint skyboxShader, GLuint groundShader, GLuint wallShader, GLuint depthShader) {
 		
-		worldMinimum = vec3(-100, -100, -100);
-		worldMaximum = vec3(100, 100, 100);
+		worldMinimum = vec3(-102, -102, -102);
+		worldMaximum = vec3(102, 102, 102);
 
 		m_skyboxShader = skyboxShader;
 		m_groundShader = groundShader;
@@ -70,6 +70,10 @@ namespace Crescer3D {
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "worldMatrix"), 1, GL_TRUE, groundWorldMatrix.m);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "normalViewMatrix"), 1, GL_TRUE, normalViewMatrix.m);
 		glUniformMatrix4fv(glGetUniformLocation(m_groundShader, "depthViewMatrix"), 1, GL_TRUE, depthViewMatrix.m);
+		vec3 worldMin = World::GetWorldMinimum();
+		vec3 worldMax = World::GetWorldMaximum();
+		glUniform3fv(glGetUniformLocation(m_groundShader, "worldMin"), 1, &worldMin.x);
+		glUniform3fv(glGetUniformLocation(m_groundShader, "worldMax"), 1, &worldMax.x);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_groundTexture);
 		glUniform1i(glGetUniformLocation(m_groundShader, "tex"), 1);
@@ -80,36 +84,49 @@ namespace Crescer3D {
 		printError("Rendering Ground");
 
 		// Draw Walls
+		mat4 wallWorldMatrix, wallMatrix;
+
 		glUseProgram(m_wallShader);
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, m_wallTexture);
 		glUniform1i(glGetUniformLocation(m_wallShader, "tex"), 2);
 		// Wall 1
-		mat4 wallWorldMatrix = Mult(T(0.0, 1.5, 100.0), S(220.0, 4.0, 1.0));
-		mat4 wallMatrix = normalViewMatrix * wallWorldMatrix;
-		glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
-		glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
-		DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+		for(int i = -26; i <= 26; ++i)
+		{
+			wallWorldMatrix = Mult(T(i*4, 1.5, (GetWorldMaximum().z+2)), S(2.0, 2.0, 2.0));
+			wallMatrix = normalViewMatrix * wallWorldMatrix;
+			glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
+			glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
+			DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+		}
 		// Wall 2
-		wallWorldMatrix = Mult(T(0.0, 1.5, -100.0), S(220.0, 4.0, 1.0));
-		wallMatrix = normalViewMatrix * wallWorldMatrix;
-		glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
-		glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
-		DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
-		printError("Rendering Walls");
+		for(int i = -26; i <= 26; ++i)
+		{
+			wallWorldMatrix = Mult(T(i*4, 1.5, (GetWorldMinimum().z-2)), S(2.0, 2.0, 2.0));
+			wallMatrix = normalViewMatrix * wallWorldMatrix;
+			glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
+			glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
+			DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+		}
 		// Wall 3
-		wallWorldMatrix = Mult(T(220.0, 1.5, 0.0), S(1.0, 4.0, 100.0));
-		wallMatrix = normalViewMatrix * wallWorldMatrix;
-		glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
-		glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
-		DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
-		printError("Rendering Walls");
+		for(int i = -25; i <= 25; ++i)
+		{
+			wallWorldMatrix = Mult(T((GetWorldMaximum().x+2), 1.5, i*4), S(2.0, 2.0, 2.0));
+			wallMatrix = normalViewMatrix * wallWorldMatrix;
+			glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
+			glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
+			DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+		}
 		// Wall 4
-		wallWorldMatrix = Mult(T(-220.0, 1.5, 0.0), S(1.0, 4.0, 100.0));
-		wallMatrix = normalViewMatrix * wallWorldMatrix;
-		glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
-		glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
-		DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+		for(int i = -25; i <= 25; ++i)
+		{
+			wallWorldMatrix = Mult(T((GetWorldMinimum().x-2), 1.5, i*4), S(2.0, 2.0, 2.0));
+			wallMatrix = normalViewMatrix * wallWorldMatrix;
+			glUniform1f(glGetUniformLocation(m_wallShader, "scale"), 0.25);
+			glUniformMatrix4fv(glGetUniformLocation(m_wallShader, "mdlViewMatrix"), 1, GL_TRUE, wallMatrix.m);
+			DrawModel(m_wallModel, m_wallShader, "inPosition", NULL, "inTexCoord");
+
+		}
 		printError("Rendering Walls");
 	}
 }

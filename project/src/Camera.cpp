@@ -132,27 +132,27 @@ namespace Crescer3D
 		vec3 worldMax = World::GetWorldMaximum();
 
 		vec3 npp = VectorAdd(ScalarMult(m_cameraDirNorm, velocity), m_playerPos);
-
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = Game::GetPlayer()->getRadius();
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
 		m_playerPos = npp;
 		CameraUpdate();
 	}
-/*
+
+/*	
 	void Camera::moveBackPlayer(float velocity)
 	{
 		m_playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};
 		vec3 m_cameraDirNorm = Normalize(m_cameraDir);
 		m_cameraDirNorm.y = 0; // move only in x,y plane
+		
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
+		float player_radius=0*Game::GetPlayer()->getRadius();
 		vec3 npp = VectorAdd(ScalarMult(m_cameraDirNorm, -velocity), m_playerPos);
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = Game::GetPlayer()->getRadius();
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -170,8 +170,7 @@ namespace Crescer3D
 		vec3 worldMax = World::GetWorldMaximum();
 		vec3 npp = VectorAdd(ScalarMult(Normalize(CrossProduct(m_cameraDirNorm, upVector)), -velocity), m_playerPos);
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = Game::GetPlayer()->getRadius();
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -189,10 +188,10 @@ namespace Crescer3D
 		m_cameraDirNorm.y = 0; // move only in x,y plane
 		vec3 worldMin = World::GetWorldMinimum();
 		vec3 worldMax = World::GetWorldMaximum();
+		
 		vec3 npp = VectorAdd(ScalarMult(Normalize(CrossProduct(m_cameraDirNorm, upVector)), velocity), m_playerPos);	
 
-		float player_radius=0*Game::GetPlayer()->getRadius();
-
+		float player_radius = Game::GetPlayer()->getRadius();
 		if(npp.x < worldMin.x+player_radius || npp.y < worldMin.y+player_radius || npp.z < worldMin.z+player_radius || 
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
@@ -231,5 +230,5 @@ namespace Crescer3D
 			m_manuellView = true;
 		}
 	}
-} 
 
+} 

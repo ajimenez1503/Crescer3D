@@ -11,6 +11,7 @@ uniform mat4 depthViewMatrix;
 uniform mat4 worldMatrix;
 
 out vec2 uv;
+out vec4 worldPos;
 out vec4 depthPosition;
 
 void main(void)
@@ -19,5 +20,6 @@ void main(void)
 	float unused = inNormal.x;
 	uv = vec2( inTexCoord.x * scale, inTexCoord.y * scale );
 	gl_Position = normalProjMatrix * normalViewMatrix * worldMatrix * vec4(inPosition, 1.0);
+	worldPos = worldMatrix * vec4(inPosition, 1.0);
 	depthPosition = depthProjMatrix * depthViewMatrix * worldMatrix * vec4(inPosition, 1.0);
 }

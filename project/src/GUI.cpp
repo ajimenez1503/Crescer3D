@@ -6,15 +6,19 @@ namespace Crescer3D
 	std::string GUI::namePlayer;
 	Button GUI::buttonPlay;
 	Button GUI::buttonExit;
+	Button GUI::background;//it is used to create the background behind the font
+	bool GUI::nameReady;
 
 	GUI::GUI(): System(SystemType::Sys_GUI)
 	{
 		namePlayer="-------";//default name user
+		nameReady=false;
 	}
 
 	GUI::~GUI()
 	{
 		namePlayer="-------";//default name user
+		nameReady=false;
 	}
 	bool GUI::Initialize()
 	{
@@ -32,11 +36,14 @@ namespace Crescer3D
 		//define button
 		buttonPlay.set("Play", GUIshader);
 		buttonExit.set("Exit", GUIshader);
+		background.set("", GUIshader);
 		return true;
 	}
 
 	void GUI::InitView()
 	{
+		background.setPositionSize( 70 ,50 ,100,200);//postion 670% of the width and 50% of the height
+		background.Draw();
 		HighScore::DisplayListScores();
 
 		buttonExit.setPositionSize(25,30,100,75);
@@ -56,6 +63,8 @@ namespace Crescer3D
 
 	void GUI::PlayView()
 	{
+		background.setPositionSize( 93 ,5 ,50,20);//postion 93% of the width and 5% of the height
+		background.Draw();
 		HighScore::DisplayScore();
 
 		buttonExit.setPositionSize(5,5,30,20);
@@ -67,8 +76,9 @@ namespace Crescer3D
 
 	void GUI::GameOverView()
 	{
-		int positionx=Window::GetWidth()/*800*/*40 /100;//40% of the width
-		int positiony=Window::GetHeight()/*600*/*50 /100;//50% of the height
+		int positionx=Window::GetWidth()*40 /100;//40% of the width
+		int positiony=Window::GetHeight()*50 /100;//50% of the height
+
 		buttonExit.setPositionSize(30,25,80,60);
 		buttonExit.Draw();
 		//save score and name
@@ -76,10 +86,12 @@ namespace Crescer3D
 		buttonPlay.setPositionSize(70,25,80,60);
 		buttonPlay.Draw();
 
-		if(NameIsReady())
+		if(nameReady)
 		{
+			background.setPositionSize( 50 ,50 ,90,40);//postion 50% of the width and 50% of the height
+			background.Draw();
 			//display name
-			sfDrawString(positionx,positiony, "HighScore and name saved. ");
+			sfDrawString(positionx,positiony, "HighScore saved");
 			if(buttonExit.isClick()){// move to Game_GameOver when click on Exit
 				HighScore::SaveScore(namePlayer);
 				Engine::GetEngine()->SetEngineState(ShuttingDown);
@@ -95,6 +107,9 @@ namespace Crescer3D
 		}
 		else
 		{
+			background.setPositionSize( 50 ,55 ,90,55);//postion 50% of the width and 55% of the height
+			background.Draw();
+
 			//display name
 			sfDrawString(positionx,positiony, "Write your name: ");
 			positiony+=50;
@@ -146,12 +161,18 @@ namespace Crescer3D
 	{
 		if(key==GLUT_KEY_RETURN)
 		{
-			std::size_t found = namePlayer.find("-");
-			std::size_t length = namePlayer.size()-found;
-			if (found!=std::string::npos)
-			{
-				namePlayer.replace (found, length, length, ' ');
+			if(NameIsReady()){
+				nameReady=true;
 			}
+			else{
+				std::size_t found = namePlayer.find("-");
+				std::size_t length = namePlayer.size()-found;
+				if (found!=std::string::npos)
+				{
+					namePlayer.replace (found, length, length, ' ');
+				}
+			}
+
 		}
 		else if((key>='a' && key<='z') || (key==' ') || (key>='A' && key<='Z'))
 		{

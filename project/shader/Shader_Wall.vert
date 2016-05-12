@@ -10,6 +10,6 @@ out vec2 uv;
 
 void main(void)
 {
-	uv = vec2( inTexCoord.x * scale, inTexCoord.y * (scale*10));
+	uv = vec2( inTexCoord.x * scale, inTexCoord.y * scale);
 	gl_Position = projMatrix * mdlViewMatrix * vec4(inPosition, 1.0);
 }

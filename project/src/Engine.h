@@ -15,7 +15,6 @@
 		#include "../../common/mac/MicroGlut.h"
 	}
 #endif
-
 #include <map>
 #include "System.h"
 #include "Window.h"
@@ -29,10 +28,11 @@
 #include "GUI.h"
 #include "DeleteUtil.h"
 #include "Sound.h"
-
+#include "Timing.h"
 
 namespace Crescer3D
 {
+
 	// Forward Declarations in main file
 	class System;
 	class Window;
@@ -70,6 +70,8 @@ namespace Crescer3D
 		static EngineState GetEngineState() { return m_EngineState; }
 		static void SetEngineState(EngineState);
 		static Engine* GetEngine();
+		unsigned long GetWorldSeconds();
+		unsigned long GetGameSeconds();
 
 	private:
 		Engine();
@@ -77,7 +79,6 @@ namespace Crescer3D
 		static Engine* m_Engine;
 		static EngineState m_EngineState;
 		std::map<Crescer3D::SystemType, Crescer3D::System*> m_mapSystems;
-
 		int Initialize();
 		int Update();
 
