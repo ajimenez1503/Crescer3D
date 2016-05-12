@@ -41,6 +41,7 @@ namespace Crescer3D
 	{
 		if(IsStatePlay()==true)
 		{
+
 			
 			//////
 			// Check for Collision between objects
@@ -117,6 +118,9 @@ namespace Crescer3D
 				}
 			}	
 
+		
+			//Move Player
+			GetCamera()->moveForwardPlayer(GetPlayer()->getVelocity());
 		
 			//////
 			// Define what enemies are doing
@@ -200,7 +204,12 @@ namespace Crescer3D
 					
 				}
 				
-				//Handle the moving for the different states
+				/////
+				// Move Objects
+				////
+
+
+				//Handle the moving for the different enemy states
 				if((*list_iter)->getGoalState()==eat_food)
 				{
 					float positionx=(*list_iter)->getX();
@@ -274,11 +283,7 @@ namespace Crescer3D
 					}
 					//Move the enemy
 					(*list_iter)->moveAngle(angle);
-				}
-				
-
-			
-			
+				}			
 			}
 		
 		}

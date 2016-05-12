@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "Logger.h"
 #include "../../common/VectorUtils3.h"
+#include "Window.h"
 
 
 namespace Crescer3D
@@ -27,7 +28,7 @@ namespace Crescer3D
 		void setCameraDistance(float distance);
 		void increaseCameraDistance();
 		void decreaseCameraDistance();
-
+		void changeManuellView();
 
 		mat4 getLookAtMatrix();
 		vec3 getCameraDir();
@@ -39,24 +40,22 @@ namespace Crescer3D
 		void moveLeftPlayer (); 
 		void moveRightPlayer (); 
 
-	private:
-		mat4 lookAtMatrix;
 
-		float cameraPosX;
-		float cameraPosZ;
-		float cameraPosY;
-		vec3 cameraPos;
-		vec3 cameraDir;
-		vec3 cameraViewDir;
-		int xOrigin;	
-		int lastMousePosX;
-		int lastMousePosY;
-		float pitch;
-		float yaw;
-		float rotationSensitivity;
-		float cameraDistance;
-		float cameraDistanceIncrement;
-		vec3 playerPos;
+	private:
+		mat4 m_lookAtMatrix;
+		vec3 m_cameraPos;
+		vec3 m_cameraDir;
+		vec3 m_cameraViewDir;
+		int m_xOrigin;	
+		int m_lastMousePosX;
+		int m_lastMousePosY;
+		float m_pitch;
+		float m_yaw;
+		float m_rotationSensitivity;
+		float m_cameraDistance;
+		float m_cameraDistanceIncrement;
+		vec3 m_playerPos;
+		bool m_manuellView;
 
 	};
 }

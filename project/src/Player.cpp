@@ -11,7 +11,7 @@ namespace Crescer3D
 	{
 		m_weight=5;
 		this->setRadius(m_weight/5.0);
-		this->setVelocity(1.0);
+		this->setVelocity(0.2f);
 	}
 
 	Player::~Player()
