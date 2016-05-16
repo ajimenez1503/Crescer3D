@@ -17,8 +17,7 @@
 #include <time.h>
 
 namespace Crescer3D
-{	class Sound;
-
+{	
 	enum GameStates
 	{
 		Game_Init,
