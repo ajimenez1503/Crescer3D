@@ -61,9 +61,11 @@ namespace Crescer3D
 						list_iter=m_enemy_list.erase(list_iter);
 					}else
 					{
+						Sound::playGameOverMusic();
 						GameOver();
 					}
 
+					Sound::playEatEnemyMusic();
 					Logger::Log("Player collision with enemy!");
 							
 				}
@@ -78,6 +80,7 @@ namespace Crescer3D
 					HighScore::IncrementScore((*list_iter)->getWeight());
 
 					list_iter=m_food_list.erase(list_iter);
+					Sound::playEatFoodMusic();
 					Logger::Log("Player collision with food!");
 				}			
 			}

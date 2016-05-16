@@ -4,11 +4,18 @@ namespace Crescer3D
 {
 #ifndef __CENTOS__
 	irrklang::ISoundEngine* Sound::engine;
+	irrklang::ISoundSource* background;
+	irrklang::ISoundSource* eatFood;
+	irrklang::ISoundSource* eatEnemy;
+	irrklang::ISoundSource* gameOver;
+
+
 #endif
 
 	Sound::Sound()
 	: System(SystemType::Sys_Sound)
 	{
+
 	}
 
 	Sound::~Sound()
@@ -23,6 +30,7 @@ namespace Crescer3D
 	{
 #ifndef __CENTOS__
 		engine = irrklang::createIrrKlangDevice();
+
 		if(!engine) {
 			Logger::Log("Could not startup engine\n");
 			return false;
@@ -38,25 +46,37 @@ namespace Crescer3D
 #ifndef __CENTOS__
 		if(engine)
 		{
-			engine->play2D("sounds/backgroundMusic.mp3", true);
+			engine->play2D("sounds/backgroundMusic.mp3");
 		}
 #endif
 	}
 
-	void Sound::playSound(int index, bool looped)
+	void Sound::playEatFoodMusic()
 	{
 #ifndef __CENTOS__
 		if(engine)
 		{
-			// play sounds according to index 
-			if (index == 1)
-			{
-				engine->play2D("sounds/slurp.wav");
-			}
-			if (index == 2)
-			{
-				engine->play2D("sounds/male-thijs-loud-scream.wav");
-			}
+			engine->play2D("sounds/eatFood.wav");
+		}
+#endif
+	}
+
+	void Sound::playEatEnemyMusic()
+	{
+#ifndef __CENTOS__
+		if(engine)
+		{
+			engine->play2D("sounds/eatEnemy.wav");
+		}
+#endif
+	}
+
+	void Sound::playGameOverMusic()
+	{
+#ifndef __CENTOS__
+		if(engine)
+		{
+			engine->play2D("sounds/gameOver.mp3");
 		}
 #endif
 	}

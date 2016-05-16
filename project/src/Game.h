@@ -11,12 +11,14 @@
 #include "HighScore.h"
 #include "Camera.h"
 #include "Logger.h"
+#include "Sound.h"
 
 #include <list>
 #include <time.h>
 
 namespace Crescer3D
-{	
+{	class Sound;
+
 	enum GameStates
 	{
 		Game_Init,
