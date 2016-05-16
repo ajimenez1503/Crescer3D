@@ -51,10 +51,19 @@ namespace Crescer3D
 				//TODO 	check whether player is bigger than enemy			
 				if(m_Player->collision(*list_iter))
 				{
-					m_Player->eat((*list_iter)->getWeight());
-					HighScore::IncrementScore((*list_iter)->getWeight());
+					float player_weight=m_Player->getWeight();
+					float enemy_weight=(*list_iter)->getWeight();
 
-					list_iter=m_enemy_list.erase(list_iter);
+					if(player_weight>=enemy_weight)
+					{
+						m_Player->eat((*list_iter)->getWeight());
+						HighScore::IncrementScore((*list_iter)->getWeight());
+						list_iter=m_enemy_list.erase(list_iter);
+					}else
+					{
+						GameOver();
+					}
+
 					Logger::Log("Player collision with enemy!");
 							
 				}
@@ -89,16 +98,21 @@ namespace Crescer3D
 							{
 								bigger_enemy=(*outer_enemy_list_iter);
 								smaller_enemy=(*inner_enemy_list_iter);
+
+								bigger_enemy->eat(smaller_enemy->getWeight());
+								bigger_enemy->setGoalState(undefined);
+								inner_enemy_list_iter=m_enemy_list.erase(inner_enemy_list_iter);
+								
 							}else
 							{
 								bigger_enemy=(*inner_enemy_list_iter);
 								smaller_enemy=(*outer_enemy_list_iter);
+
+								bigger_enemy->eat(smaller_enemy->getWeight());
+								bigger_enemy->setGoalState(undefined);
+								outer_enemy_list_iter=m_enemy_list.erase(outer_enemy_list_iter);
 							}
 							
-							bigger_enemy->eat(smaller_enemy->getWeight());
-							bigger_enemy->setGoalState(undefined);
-
-							inner_enemy_list_iter=m_enemy_list.erase(inner_enemy_list_iter);
 							Logger::Log("Enemy collision with enemy!");
 							
 						}
@@ -121,7 +135,7 @@ namespace Crescer3D
 		
 			//Move Player
 
-			//GetCamera()->moveForwardPlayer();
+			GetCamera()->moveForwardPlayer();
 
 
 		
@@ -132,21 +146,21 @@ namespace Crescer3D
 			{					
 				//Iterate over all enemies
 				
-				if((*list_iter)->getWayWent()>20.0)
+				if((*list_iter)->getWayWent()>40.0)
 				{
 					(*list_iter)->setGoalState(undefined);
 					(*list_iter)->setWayWent(0.0);
 
 				}
 			
-				if((*list_iter)->getGoalState()==undefined)
+				if((*list_iter)->getGoalState()==undefined||(*list_iter)->getGoalState()==explore)
 				{
 					float positionx=(*list_iter)->getX();
 					float positionz=(*list_iter)->getZ();
 			
 					float radius=(*list_iter)->getRadius();
 
-					float radius_of_interest=3.0*radius;
+					float radius_of_interest=5.0*radius;
 
 					//Check for player in circle
 					float player_positionx=m_Player->getX();
@@ -155,7 +169,7 @@ namespace Crescer3D
 					float distance_to_player=sqrt(pow(player_positionx-positionx,2)+pow(player_positionz-positionz,2));	
 			
 			
-					if(distance_to_player<=radius_of_interest)
+					if((distance_to_player<=radius_of_interest)&&(m_Player->getWeight()<(*list_iter)->getWeight()))
 					{
 						(*list_iter)->setGoalState(eat_player);
 						std::cout<< (*list_iter)->getID()<< ": eat_player"<<std::endl;
@@ -163,9 +177,10 @@ namespace Crescer3D
 					}
 			
 					//Check for food in circle
+					Food* nearest_food=NULL;
 					for(std::list<Food*>::iterator food_list_iter = m_food_list.begin(), end=m_food_list.end(); food_list_iter !=end; food_list_iter++)
 					{
-						Food* nearest_food=NULL;
+						
 						float food_positionx=(*food_list_iter)->getX();
 						float food_positionz=(*food_list_iter)->getZ();
 				
@@ -189,25 +204,62 @@ namespace Crescer3D
 							}
 						}
 
-						if(nearest_food!=NULL)
-						{
-							(*list_iter)->setGoalState(eat_food);
-							(*list_iter)->setTargetFood(nearest_food);
-							std::cout<< (*list_iter)->getID()<< ": eat_food "<<nearest_food->getID()<<std::endl;
-							continue;
-						}
+
+					}
+					if(nearest_food!=NULL)
+					{
+						(*list_iter)->setGoalState(eat_food);
+						(*list_iter)->setTargetFood(nearest_food);
 					}
 
 					//Check for other Enemies in circle
+					Enemy* nearest_enemy=NULL;
 					for(std::list<Enemy*>::iterator other_enemy_list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); other_enemy_list_iter !=end; other_enemy_list_iter++)
 					{
-						
+						if((list_iter)!=(other_enemy_list_iter))
+						{
+							float positionx=(*list_iter)->getX();
+							float positionz=(*list_iter)->getZ();
+							float radius=(*list_iter)->getRadius();
+							float weight=(*list_iter)->getWeight();
+
+							float other_positionx=(*other_enemy_list_iter)->getX();
+							float other_positionz=(*other_enemy_list_iter)->getZ();
+							float other_radius=(*other_enemy_list_iter)->getRadius();
+							float other_weight=(*other_enemy_list_iter)->getWeight();
+							
+							float distance_to_other=sqrt(pow(other_positionx-positionx,2)+pow(other_positionz-positionz,2));
+
+							if(distance_to_other<=radius_of_interest)
+							{
+								if(nearest_enemy!=NULL)
+								{
+									if(distance_to_other<sqrt(pow(nearest_enemy->getX()-positionx,2)+pow(nearest_enemy->getZ()-positionz,2)));
+									{
+										nearest_enemy=(*other_enemy_list_iter);
+									}
+								}else
+								{
+									nearest_enemy=(*other_enemy_list_iter);
+								}
+								
+							}
+						}
+	
+					}
+					if(nearest_enemy!=NULL)
+					{
+						(*list_iter)->setGoalState(eat_enemy);
+						(*list_iter)->setTargetEnemy(nearest_enemy);
 					}
 					
+
 					//If Goal state is still undefined, the enemy explores
 					if((*list_iter)->getGoalState()==undefined)
 					{
 						(*list_iter)->setGoalState(explore);
+						float movement_angle=rand() % 360;
+						(*list_iter)->setMovementAngle(movement_angle);
 					}
 					
 				}
@@ -218,6 +270,21 @@ namespace Crescer3D
 
 
 				//Handle the moving for the different enemy states
+				if((*list_iter)->getGoalState()==eat_player)
+				{
+					float positionx=(*list_iter)->getX();
+					float positionz=(*list_iter)->getZ();
+					float target_positionx=m_Player->getX();
+					float target_positionz=m_Player->getZ();
+
+					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
+					float angle=atan2(target_positionz-positionz,target_positionx-positionx)* 180.0 / M_PI;
+
+
+					//Move the enemy
+					(*list_iter)->moveAngle(angle);
+				}	
+
 				if((*list_iter)->getGoalState()==eat_food)
 				{
 					float positionx=(*list_iter)->getX();
@@ -236,24 +303,59 @@ namespace Crescer3D
 
 				}
 								
-				if((*list_iter)->getGoalState()==eat_player)
+
+				
+				if((*list_iter)->getGoalState()==eat_enemy)
 				{
 					float positionx=(*list_iter)->getX();
 					float positionz=(*list_iter)->getZ();
-					float target_positionx=m_Player->getX();
-					float target_positionz=m_Player->getZ();
+					float target_positionx=(*list_iter)->getTargetEnemy()->getX();
+					float target_positionz=(*list_iter)->getTargetEnemy()->getZ();
+			
+
 
 					float distance=sqrt(pow(target_positionx-positionx,2)+pow(target_positionz-positionz,2));
-					float angle=atan2(target_positionz-positionz,target_positionx-positionx)* 180.0 / M_PI;
+					
+					float angle=atan2(target_positionz-positionz,target_positionx-positionx)*180.0 / M_PI;
 
 
-					//Move the enemy
 					(*list_iter)->moveAngle(angle);
-				}	
-				
+				}
+
 				if((*list_iter)->getGoalState()==explore)
 				{
+					float movement_angle=(*list_iter)->getMovementAngle();
+					(*list_iter)->moveAngle(movement_angle);
+
+					float positionx=(*list_iter)->getX();
+					float positionz=(*list_iter)->getZ();
+					float radius=(*list_iter)->getRadius();
+
+					vec3 worldMin = World::GetWorldMinimum();
+					vec3 worldMax = World::GetWorldMaximum();
+
+					bool valid_position=true;	
 					
+					if(positionx>=worldMax.x-radius||positionx<=worldMin.x+radius)
+					{
+						valid_position=false;
+					}
+					if(positionz>=worldMax.y-radius||positionz<=worldMin.y+radius)
+					{
+						valid_position=false;
+					}
+					if(valid_position==false)
+					{
+						if(movement_angle>180.0)
+						{
+							movement_angle=movement_angle-180.0;
+						}else
+						{
+							movement_angle=movement_angle+180.0;
+						}
+						(*list_iter)->moveAngle(movement_angle);
+						(*list_iter)->setMovementAngle(movement_angle);
+					}
 				}		
 			}
 		
@@ -351,7 +453,7 @@ namespace Crescer3D
 			std::srand (time(NULL));
 		
 			//Set the initial Position of the Player
-			//Game::GetPlayer()->setPosition(0.0,1.0,0.0);
+			Game::GetPlayer()->setPosition(0.0,Game::GetPlayer()->getRadius(),0.0);
 			
 			//Create an initial number of enemies 
 			m_enemy_list.clear();
