@@ -99,8 +99,12 @@ namespace Crescer3D
 
 	void Window::InitObjects()
 	{
+		
 		Game::GetPlayer()->init(0, m_sphereShader);
+
+
 		Game::GetPlayer()->setPosition(0.0,1.0,0.0);
+		Camera::setCameraPlayerPosition(0.0,1.0,0.0);
 
 		//Iterate through the enemy list and initialize them with the shaders and an increasing index
 		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
@@ -159,37 +163,7 @@ namespace Crescer3D
 		{
 			//std::cout<< "Init window"<<std::endl;
 			printError("Clearing Screen");
-			bool game_must_reset=false;
-
-			if(Game::GetPlayer()->isInit()==false)
-			{
-				game_must_reset=true;				
-			}
-
-			std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
-			for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
-			{
-				if((*list_iter)->isInit()==false)
-				{
-					game_must_reset=true;				
-				}
-			}
-			
-			std::list<Food*> local_food_list=Game::GetFoodList();
-			for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
-			{
-				if((*list_iter)->isInit()==false)
-				{
-					game_must_reset=true;				
-				}
-			}
-			
-			if(game_must_reset==true)
-			{
-				Game::ResetGame();	
-			}
-			
-			
+		
 			depthViewMatrix = IdentityMatrix();
 			m_World.draw(depthViewMatrix, viewMatrix, cameraPosition);
 			GUI::InitView();

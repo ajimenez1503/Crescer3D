@@ -55,13 +55,13 @@ namespace Crescer3D
 		inline static GLuint GetDepthTexture() { return m_DepthTexture; };
 		inline static int SetWidth(int w) { m_Width = w; };
 		inline static int SetHeight(int h) { m_Height = h; };
+		static void InitObjects();
 
 	private:
 		virtual bool Initialize();
 		static void Draw();
 		static void Clear();
 		static void Timer(int i);
-		static void InitObjects();
 
 	};
 }

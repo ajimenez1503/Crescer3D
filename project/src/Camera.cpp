@@ -9,6 +9,23 @@
 
 namespace Crescer3D
 {
+	
+
+	mat4 Camera::m_lookAtMatrix;
+	vec3 Camera::m_cameraPos;
+	vec3 Camera::m_cameraDir;
+	vec3 Camera::m_cameraViewDir;
+	int Camera::m_xOrigin;	
+	int Camera::m_lastMousePosX;
+	int Camera::m_lastMousePosY;
+	float Camera::m_pitch;
+	float Camera::m_yaw;
+	float Camera::m_rotationSensitivity;
+	float Camera::m_cameraDistance;
+	float Camera::m_cameraDistanceIncrement;
+	vec3 Camera::m_playerPos;
+	bool Camera::m_manuellView;
+
 	Camera::Camera()
 	: System(SystemType::Sys_Camera)
 	{
@@ -255,6 +272,14 @@ namespace Crescer3D
 		{
 			m_manuellView = true;
 		}
+	}
+
+	void Camera::setCameraPlayerPosition(float x, float y, float z)
+	{
+		m_playerPos.x=x;
+		m_playerPos.y=y;
+		m_playerPos.z=z;
+		CameraUpdate();
 	}
 
 } 

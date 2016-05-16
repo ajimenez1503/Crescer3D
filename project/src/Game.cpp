@@ -18,8 +18,6 @@ namespace Crescer3D
 		m_Player = new Player();					
 		m_Camera = new Camera();
 
-		gameNeedReset=true;
-		ResetGame();		
 		SetGameStateInit();
 
 	}
@@ -34,7 +32,42 @@ namespace Crescer3D
 
 	bool Game::Initialize()
 	{
-				
+
+		HighScore::Reset();
+
+		HighScore::CalculateListScores();
+			
+			//The random number generator needs to be reseted every time a new game starts so the positions of all objects are different every time
+		std::srand (time(NULL));
+
+		//m_Player->setPosition(0.0,100.0,0.0);
+		
+		//Set the initial Position of the Player
+		//Game::GetPlayer()->setPosition(0.0,Game::GetPlayer()->getRadius(),0.0);
+		
+		//Create an initial number of enemies 
+		m_enemy_list.clear();
+		int number_of_enemies=10;
+		for(int number_of_enemy=1; number_of_enemy<=number_of_enemies; number_of_enemy++)
+		{	
+			Enemy* local_enemy=new Enemy();
+			m_enemy_list.push_back( local_enemy);
+		}
+
+
+
+		//Create an initial number of food
+		m_food_list.clear();
+		int total_number_of_food=10;
+		for(int number_of_food=1; number_of_food<=total_number_of_food; number_of_food++)
+		{	
+			Food* local_food=new Food();
+			m_food_list.push_back( local_food);
+		}
+		
+		gameNeedReset=false;
+
+		return true;		
 	}
 
 	bool Game::Update()
@@ -422,12 +455,15 @@ namespace Crescer3D
 
 	void Game::SetGameStateInit()
 	{
-		gameNeedReset=true;
+		//gameNeedReset=true;
 		gameState = Game_Init;
 	}
 	void Game::SetGameStateGameOver()
 	{
+		std::cout <<  "Game over" << std::endl;
 		gameState = Game_GameOver;
+		gameNeedReset=true;
+		ResetGame();
 	}
 
 	bool Game::IsStateInit()
@@ -456,10 +492,12 @@ namespace Crescer3D
 			
 			//The random number generator needs to be reseted every time a new game starts so the positions of all objects are different every time
 			std::srand (time(NULL));
-		
-			//Set the initial Position of the Player
-			Game::GetPlayer()->setPosition(0.0,Game::GetPlayer()->getRadius(),0.0);
+
+
+			m_Player = new Player();
 			
+			
+
 			//Create an initial number of enemies 
 			m_enemy_list.clear();
 			int number_of_enemies=10;
@@ -468,7 +506,7 @@ namespace Crescer3D
 				Enemy* local_enemy=new Enemy();
 				m_enemy_list.push_back( local_enemy);
 			}
-
+			
 
 
 			//Create an initial number of food
@@ -479,6 +517,9 @@ namespace Crescer3D
 				Food* local_food=new Food();
 				m_food_list.push_back( local_food);
 			}
+
+			Window::InitObjects();
+		
 			gameNeedReset=false;
 		}
 

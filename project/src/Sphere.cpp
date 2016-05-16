@@ -89,7 +89,7 @@ void Sphere::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
 	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
 	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
-	setPositionY(radius);
+	setPositionY(1.0);
 }
 
 float Sphere::getWayWent()
@@ -117,11 +117,13 @@ Sphere::Sphere()
 {
 	
 	positionx=0.0f;
-	positiony=1.0f;
+	positiony=10.0f;
 	positionz=0.0f;
-	velocity = 0.5;
-	radius=1.0;
+
+	//velocity = 0.5;
+	//radius=1.0;
 	
+
 	m_is_init=false;
 	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
 				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
@@ -157,7 +159,8 @@ void Sphere::draw(mat4 viewMatrix, vec3 cameraPos, GLuint shader) {
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, m_Texture);
 	glUniform1i(glGetUniformLocation(shader, "tex"), 3);
-	mat4 worldMatrix = Mult(T(positionx,positiony,positionz),S(radius,radius,radius));
+
+	mat4 worldMatrix = Mult(T(this->positionx,this->positiony,this->positionz),S(radius,radius,radius));
 	glUniformMatrix4fv(glGetUniformLocation(shader, "viewMatrix"), 1, GL_TRUE, viewMatrix.m);
 	glUniformMatrix4fv(glGetUniformLocation(shader, "worldMatrix"), 1, GL_TRUE, worldMatrix.m);
 	glUniform3fv(glGetUniformLocation(shader, "cameraPosition"), 1, &cameraPos.x);
