@@ -3,7 +3,7 @@
 #define PI 3.14159265
 #define MAX_DISTANCE 50 // Pixel, which mouse can jump from one to the next call
 #define RATIO_WINDOW_PLAYER 15000
-#define MAX_CAMERA_DISTANCE 120
+#define MAX_CAMERA_DISTANCE 90
 #define MIN_CAMERA_DISTANCE 5
 
 
@@ -14,7 +14,7 @@ namespace Crescer3D
 	{
 		m_lastMousePosX = 0;
 		m_lastMousePosY = 0;
-		m_pitch = -30;
+		m_pitch = -25;
 		m_yaw = 0;
 		m_rotationSensitivity = 1.0f;
 		m_playerPos = {Game::GetPlayer() -> getX(), Game::GetPlayer() -> getY(), Game::GetPlayer() -> getZ()};

@@ -11,6 +11,7 @@
 #include "HighScore.h"
 #include "Camera.h"
 #include "Logger.h"
+#include "Sound.h"
 
 #include <list>
 #include <time.h>

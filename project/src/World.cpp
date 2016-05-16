@@ -53,7 +53,7 @@ namespace Crescer3D {
 		SkyboxToView.m[7] = 0.0f;
 		SkyboxToView.m[11] = 0.0f;
 		SkyboxToView.m[15] = 1.0f;
-		mat4 SkyboxToWorld = Mult(S(10.0, 10.0, 10.0), T(0.0, -0.1, 0.0));
+		mat4 SkyboxToWorld = Mult(S(10.0, 10.0, 10.0), T(0.0, -0.2, 0.0));
 		mat4 mdlViewMatrix = SkyboxToView * SkyboxToWorld;
 		glUniformMatrix4fv(glGetUniformLocation(m_skyboxShader, "mdlViewMatrix"), 1, GL_TRUE, mdlViewMatrix.m);
 		glActiveTexture(GL_TEXTURE0);

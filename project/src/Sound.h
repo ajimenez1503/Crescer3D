@@ -19,6 +19,10 @@ namespace Crescer3D
 		virtual bool Initialize();
 		void playBackgroundMusic();
 		static void playSound(int index, bool looped = false);
+		static void playEatFoodMusic();
+		static void playGameOverMusic();
+		static void playEatEnemyMusic();
+
 
 	private:
 #ifndef __CENTOS__
