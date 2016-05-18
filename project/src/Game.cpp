@@ -532,7 +532,7 @@ namespace Crescer3D
 	{
 		if(gameNeedReset)
 		{
-			std::cout <<  "Reset Game" << std::endl;
+			//std::cout <<  "Reset Game" << std::endl;
 			HighScore::CalculateListScores();
 
 			//The random number generator needs to be reseted every time a new game starts so the positions of all objects are different every time

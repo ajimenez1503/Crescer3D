@@ -1,0 +1,4 @@
+qq       1
+qq       5
+hola     1
+adfas    0

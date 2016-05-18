@@ -100,21 +100,17 @@ namespace Crescer3D
 
 	void HighScore::SaveScore(std::string name)
 	{
-		//TODO save only if score >0
-		if(m_Score>0)
+		std::ofstream myfile ("dataBase/Score.txt", std::ios::out| std::ios::app );
+		if (myfile.is_open() )
 		{
-			std::ofstream myfile ("dataBase/Score.txt", std::ios::out| std::ios::app );
-			if (myfile.is_open() )
-			{
-				std::string score = std::to_string(static_cast<long long unsigned>(m_Score));
-				myfile << name + std::string("  ") + score + std::string("\n");
-				Logger::Log( name + std::string(" ") + score + std::string("\n") );
-				myfile.close();
-			}
-			else
-			{
-				Logger::Log( "Unable to open file");
-			}
+			std::string score = std::to_string(static_cast<long long unsigned>(m_Score));
+			myfile << name + std::string("  ") + score + std::string("\n");
+			Logger::Log( name + std::string(" ") + score + std::string("\n") );
+			myfile.close();
+		}
+		else
+		{
+			Logger::Log( "Unable to open file");
 		}
 	}
 
