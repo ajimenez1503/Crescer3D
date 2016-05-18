@@ -88,6 +88,8 @@ namespace Crescer3D
 
 		// Init subsystems
 
+		if (!m_mapSystems[Crescer3D::SystemType::Sys_Game]->Initialize())
+			return false;
 
 		if (!m_mapSystems[Crescer3D::SystemType::Sys_Window]->Initialize())
 			return false;

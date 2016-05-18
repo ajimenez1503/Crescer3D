@@ -18,44 +18,46 @@ namespace Crescer3D
 		Camera();
 		virtual ~Camera();
 		virtual bool Initialize();
-		void CameraReset();
-		void CameraUpdate();
-		void setMousePosX(int x);
-		void setMousePosY(int y);
-		void setLastMousePosX(int y);
-		void setLastMousePosY(int y);
-		void handleMouseMovement(int mousePosX, int mousePosY);
-		void setCameraDistance(float distance);
-		void increaseCameraDistance();
-		void decreaseCameraDistance();
-		void changeManuellView();
+		static void CameraReset();
+		static void CameraUpdate();
+		static void setMousePosX(int x);
+		static void setMousePosY(int y);
+		static void setLastMousePosX(int y);
+		static void setLastMousePosY(int y);
+		static void handleMouseMovement(int mousePosX, int mousePosY);
+		static void setCameraDistance(float distance);
+		static void increaseCameraDistance();
+		static void decreaseCameraDistance();
+		static void changeManuellView();
 
-		mat4 getLookAtMatrix();
-		vec3 getCameraDir();
-		vec3 getCameraPos();
+		static mat4 getLookAtMatrix();
+		static vec3 getCameraDir();
+		static vec3 getCameraPos();
 
 		//temporarly should go in player class:
-		void moveForwardPlayer (); 
-		void moveBackPlayer (); 
-		void moveLeftPlayer (); 
-		void moveRightPlayer (); 
+		static void moveForwardPlayer (); 
+		static void moveBackPlayer (); 
+		static void moveLeftPlayer (); 
+		static void moveRightPlayer (); 
+		
+		static void setCameraPlayerPosition(float x, float y, float z);
 
 
 	private:
-		mat4 m_lookAtMatrix;
-		vec3 m_cameraPos;
-		vec3 m_cameraDir;
-		vec3 m_cameraViewDir;
-		int m_xOrigin;	
-		int m_lastMousePosX;
-		int m_lastMousePosY;
-		float m_pitch;
-		float m_yaw;
-		float m_rotationSensitivity;
-		float m_cameraDistance;
-		float m_cameraDistanceIncrement;
-		vec3 m_playerPos;
-		bool m_manuellView;
+		static mat4 m_lookAtMatrix;
+		static vec3 m_cameraPos;
+		static vec3 m_cameraDir;
+		static vec3 m_cameraViewDir;
+		static int m_xOrigin;	
+		static int m_lastMousePosX;
+		static int m_lastMousePosY;
+		static float m_pitch;
+		static float m_yaw;
+		static float m_rotationSensitivity;
+		static float m_cameraDistance;
+		static float m_cameraDistanceIncrement;
+		static vec3 m_playerPos;
+		static bool m_manuellView;
 
 	};
 }

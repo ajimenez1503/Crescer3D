@@ -111,13 +111,7 @@ namespace Crescer3D
 
 	bool Input::Update()
 	{
-		/*
-		if(Game::IsStatePlay())
-		{
-			float velocity = 0.5f;
-			Game::GetCamera()->moveForwardPlayer();			
-		}
-		*/
+
 		return true;
 	}
 }
