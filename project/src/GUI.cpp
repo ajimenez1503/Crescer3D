@@ -177,6 +177,7 @@ namespace Crescer3D
 				{
 					namePlayer.replace (found, length, length, ' ');
 				}
+				nameReady=true;
 			}
 
 		}
