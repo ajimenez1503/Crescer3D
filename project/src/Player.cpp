@@ -4,18 +4,17 @@
 
 namespace Crescer3D
 {
-	// forward declaration of static members
-	int Player::m_weight;
-
+	
 	Player::Player()
 	{
-		m_weight=5;
-		this->setRadius(log(m_weight));
+		this->setWeight(5);
+		this->setRadius(log(this->getWeight()));
 		//this->setVelocity(0.7f);
 	}
 
 	Player::~Player()
 	{
+
 	}
 
 	bool Player::Initialize()
@@ -24,16 +23,7 @@ namespace Crescer3D
 		return true;
 	}
 
-	int Player::getWeight()
-	{
-		return m_weight;
-	}
 
-	void Player::eat(int weight_eaten)
-	{
-		m_weight=m_weight+weight_eaten;
-		this->setRadius(log(m_weight));	
-	}
 
 	
 	

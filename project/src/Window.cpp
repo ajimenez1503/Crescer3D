@@ -90,14 +90,14 @@ namespace Crescer3D
 		
 		std::cout<< "World init"<<std::endl;
 		
-		InitObjects();
+		InitAllObjects();
 
 		glutTimerFunc(20, &Timer, 0);
 		printError("Rest Init");
 		return true;
 	}
 
-	void Window::InitObjects()
+	void Window::InitAllObjects()
 	{
 		
 		Game::GetPlayer()->init(0, m_sphereShader);
@@ -108,29 +108,40 @@ namespace Crescer3D
 
 		//Iterate through the enemy list and initialize them with the shaders and an increasing index
 		std::list<Enemy*> local_enemy_list=Game::GetEnemyList();
-		int enemy_index=1;
+		//int enemy_index=1;
 		for(std::list<Enemy*>::iterator list_iter = local_enemy_list.begin(), end=local_enemy_list.end(); list_iter !=end; list_iter++)
 		{
-			(*list_iter)->init(enemy_index,m_sphereShader);
+			(*list_iter)->init(1,m_sphereShader);
 			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);			
-			enemy_index++;
+			//enemy_index++;
 		}
 		Game::SetEnemyList(local_enemy_list);
 
 		//Iterate through the food list and initialize them with the shaders and an increasing index
 		std::list<Food*> local_food_list=Game::GetFoodList();
-		int food_index=enemy_index+1;
+		//int food_index=enemy_index+1;
 		for(std::list<Food*>::iterator list_iter = local_food_list.begin(), end=local_food_list.end(); list_iter !=end; list_iter++)
 		{
-			(*list_iter)->init(food_index,m_sphereShader);
+			(*list_iter)->init(2,m_sphereShader);
 			(*list_iter)->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);				
-			food_index++;
+			//food_index++;
 		}
 		Game::SetFoodList(local_food_list);
 
 		
 	}
 
+	void Window::InitEnemy(Enemy* local_enemy)
+	{
+		local_enemy->init(1,m_sphereShader);
+		local_enemy->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);	
+	}
+
+	void Window::InitFood(Food* local_food)
+	{
+		local_food->init(2,m_sphereShader);
+		local_food->setRndPosition(World::GetWorldMaximum().x, World::GetWorldMinimum().x, World::GetWorldMaximum().y, World::GetWorldMinimum().y);
+	}
 
 	bool Window::Update()
 	{

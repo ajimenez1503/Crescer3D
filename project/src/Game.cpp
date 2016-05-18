@@ -396,6 +396,34 @@ namespace Crescer3D
 					}
 				}		
 			}
+
+			//////
+			//Manage the Spawning of food and enemies
+			/////
+			int enemy_spawn_probability=rand()%100;
+			if(m_enemy_list.size()<7)
+			{		
+				if(enemy_spawn_probability<10)
+				{
+					spawnEnemy();
+				}
+			}else if(m_enemy_list.size()<15)
+			{
+				
+				if(enemy_spawn_probability<3)
+				{
+					spawnEnemy();
+				}
+			}
+
+			int food_spawn_probability=rand()%100;
+			if(m_food_list.size()<20)
+			{
+				if(food_spawn_probability<5)
+				{
+					spawnFood();
+				}
+			}
 		
 		}
 
@@ -449,7 +477,6 @@ namespace Crescer3D
 
 	void Game::SetGameStatePlay()
 	{
-		//TODO set initial position of Player
 		gameState = Game_Play;
 	}
 
@@ -479,6 +506,23 @@ namespace Crescer3D
 		return gameState==Game_GameOver;
 	}
 
+	void Game::spawnEnemy()
+	{
+		//std::cout<<"Spawn Enemy"<<std::endl;
+		Enemy* local_enemy=new Enemy();
+		Window::InitEnemy(local_enemy);
+		m_enemy_list.push_back(local_enemy);
+		
+	}
+
+	void Game::spawnFood()
+	{
+		//std::cout<<"Spawn Food"<<std::endl;
+		Food* local_food=new Food();
+		Window::InitFood(local_food);
+		m_food_list.push_back(local_food);
+	}
+	
 	// set init all postion and reset all
 	void Game::ResetGame()
 	{
@@ -518,7 +562,7 @@ namespace Crescer3D
 				m_food_list.push_back( local_food);
 			}
 
-			Window::InitObjects();
+			Window::InitAllObjects();
 		
 			gameNeedReset=false;
 		}

@@ -23,6 +23,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+//#include "Game.h"
 #include "Cube.h"
 #include "Light.h"
 
@@ -42,9 +43,12 @@ class Sphere {
 		int id;
 		float velocity;
 		float m_way_went;
+		float m_total_way_went;
 		float radius;//the radious can be incrmeent and decrement. By deafult it is 1.
 		float SquaredDistPointAABB( float pn, float bmin, float bmax);
 		bool m_is_init;
+		int m_weight;
+		
 		
 
 	public:
@@ -79,6 +83,10 @@ class Sphere {
 		float getWayWent();
 		void increaseWayWent();
 		void setWayWent(float way_went);
+
+		int getWeight();
+		void setWeight(int weight);
+		void eat(int weight_eaten);
 
 		int getID();
 		bool isInit();

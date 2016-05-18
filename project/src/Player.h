@@ -14,11 +14,7 @@ namespace Crescer3D
 			Player();
 			virtual ~Player();
 			virtual bool Initialize();
-			void eat(int weight_eaten);
-			int getWeight();
 		private:
-			static int m_weight;
-			
 
 		
 	};

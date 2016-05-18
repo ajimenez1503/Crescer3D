@@ -50,6 +50,8 @@ namespace Crescer3D
 		static bool IsStatePlay();
 		static bool IsStateGameOver();
 		static void ResetGame();
+		static void spawnEnemy();
+		static void spawnFood();
 
 	private:
 		static Player* m_Player;		

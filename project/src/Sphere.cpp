@@ -87,9 +87,30 @@ void Sphere::setPosition(float x, float y,float z)
 }
 void Sphere::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
-	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
-	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
+
+	float new_x=(float)(std::rand() % (x_max-x_min) + x_min);
+	float new_z=(float)(std::rand() % (y_max-y_min) + y_min);
+
+	setPositionX(new_x);
+	setPositionZ(new_z);
 	setPositionY(1.0);
+/*
+	float player_x=Game::GetPlayer()->getX();
+	float player_z=Game::GetPlayer()->getZ();
+	
+	float x_distance=abs(new_x-player_x);
+	float z_distance=abs(new_z-player_z);
+
+	if(x_distance<20.0&&z_distance<20.0)
+	{
+		this->setRndPosition(x_max,x_min,y_max,y_min);
+	}
+*/
+	if(new_x<20.0&&new_z<20.0)
+	{
+		this->setRndPosition(x_max,x_min,y_max,y_min);
+	}
+	
 }
 
 float Sphere::getWayWent()
@@ -100,12 +121,46 @@ float Sphere::getWayWent()
 void Sphere::increaseWayWent()
 {
 	m_way_went+=velocity;
+	m_total_way_went+=velocity;
+
+	//Decrease Weight if a certain amount of way is went
+	int decrease_rate=(int)round(1000*(5/m_weight));
+	if(decrease_rate<50)
+	{
+		decrease_rate=50;
+	}
+	if((int)m_total_way_went%decrease_rate==0)
+	{
+		if(m_weight>5)
+		{
+			m_weight--;
+			this->setRadius(log(m_weight));	
+		}
+	}
+	
 }
 
 void Sphere::setWayWent(float way_went)
 {
 	m_way_went=way_went;
 }
+
+int Sphere::getWeight()
+{
+	return m_weight;
+}
+
+void Sphere::setWeight(int weight)
+{
+	m_weight=weight;
+}
+
+void Sphere::eat(int weight_eaten)
+{
+	m_weight=m_weight+weight_eaten;
+	this->setRadius(log(m_weight));	
+}
+
 
 
 int Sphere::getID()
@@ -119,6 +174,9 @@ Sphere::Sphere()
 	positionx=0.0f;
 	positiony=10.0f;
 	positionz=0.0f;
+	
+	m_way_went=0.0;
+	m_total_way_went=0.0;
 
 	//velocity = 0.5;
 	//radius=1.0;

@@ -5,9 +5,9 @@ namespace Crescer3D
 
 	Enemy::Enemy()
 	{
-		m_weight=5;
+		this->setWeight(5);
+		this->setRadius(log(this->getWeight()));
 		m_goal_state=undefined;
-		this->setRadius(log(m_weight));
 	}
 
 	Enemy::~Enemy()
@@ -32,16 +32,6 @@ namespace Crescer3D
 	}
 
 	
-	int Enemy::getWeight()
-	{
-		return m_weight;
-	}
-
-	void Enemy::eat(int weight_eaten)
-	{
-		m_weight=m_weight+weight_eaten;
-		this->setRadius(log(m_weight));	
-	}
 
 	Food* Enemy::getTargetFood()
 	{

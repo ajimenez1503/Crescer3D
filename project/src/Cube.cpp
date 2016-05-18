@@ -9,11 +9,13 @@ namespace Crescer3D
 
 Cube::Cube()
 {
+
 	positionx=0.0f;
 	positiony=2.0f;
 	positionz=0.0f;
 	velocity = 0.5;
 	size=0.5;
+
 	m_is_init=false;
 	color = vec3( (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
 				  (((double) std::rand() / (double) RAND_MAX) / 2.0 + 0.5),
@@ -100,9 +102,17 @@ void Cube::setPosition(float x, float y,float z){
 
 void Cube::setRndPosition(int x_max,int x_min,int y_max,int y_min)
 {
-	setPositionX((float)(std::rand() % (x_max-x_min) + x_min));
-	setPositionZ((float)(std::rand() % (y_max-y_min) + y_min));
-	setPositionY(2);
+	float new_x=(float)(std::rand() % (x_max-x_min) + x_min);
+	float new_z=(float)(std::rand() % (y_max-y_min) + y_min);
+
+	setPositionX(new_x);
+	setPositionZ(new_z);
+	setPositionY(2.0);
+
+	if(new_x<20.0&&new_z<20.0)
+	{
+		this->setRndPosition(x_max,x_min,y_max,y_min);
+	}
 }
 
 int Cube::getID()

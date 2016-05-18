@@ -55,7 +55,9 @@ namespace Crescer3D
 		inline static GLuint GetDepthTexture() { return m_DepthTexture; };
 		inline static int SetWidth(int w) { m_Width = w; };
 		inline static int SetHeight(int h) { m_Height = h; };
-		static void InitObjects();
+		static void InitAllObjects();
+		static void InitEnemy(Enemy* local_enemy);
+		static void InitFood(Food* local_food);
 
 	private:
 		virtual bool Initialize();

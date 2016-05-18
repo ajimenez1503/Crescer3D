@@ -169,6 +169,7 @@ namespace Crescer3D
 			npp.x > worldMax.x-player_radius || npp.y > worldMax.y-player_radius || npp.z > worldMax.z-player_radius)
 			return;
 		m_playerPos = npp;
+		Game::GetPlayer()->increaseWayWent();
 		CameraUpdate();
 	}
 
