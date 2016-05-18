@@ -88,7 +88,7 @@ namespace Crescer3D
  		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		printError("Creating Depthmap");
 		
-		std::cout<< "World init"<<std::endl;
+		//std::cout<< "World init"<<std::endl;
 		
 		InitAllObjects();
 

@@ -79,29 +79,33 @@ namespace Crescer3D
 			//////
 			// Check for Collision between objects
 			/////
-			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter !=end; list_iter++)
+			for(std::list<Enemy*>::iterator list_iter = m_enemy_list.begin(), end=m_enemy_list.end(); list_iter != end; list_iter++)
 			{	
-				//TODO 	check whether player is bigger than enemy			
-				if(m_Player->collision(*list_iter))
+				Enemy* e = NULL;
+				if(*list_iter)
+					e = *list_iter;
+				if(e)
 				{
-					float player_weight=m_Player->getWeight();
-					float enemy_weight=(*list_iter)->getWeight();
-
-					if(player_weight>=enemy_weight)
+					if(m_Player->collision(e))
 					{
-						m_Player->eat((*list_iter)->getWeight());
-						HighScore::IncrementScore((*list_iter)->getWeight());
-						list_iter=m_enemy_list.erase(list_iter);
-					}else
-					{
+						float player_weight=m_Player->getWeight();
+						float enemy_weight=(*list_iter)->getWeight();
+						if(player_weight>=enemy_weight)
+						{
+							m_Player->eat((*list_iter)->getWeight());
+							HighScore::IncrementScore((*list_iter)->getWeight());
+							list_iter=m_enemy_list.erase(list_iter);
+						}
+						else
+						{
+							Sound::playGameOverMusic();
+							GameOver();
+							return true;
+						}
 
-						Sound::playGameOverMusic();
-						GameOver();
+						Sound::playEatEnemyMusic();
+						//Logger::Log("Player collision with enemy!");		
 					}
-
-					Sound::playEatEnemyMusic();
-					Logger::Log("Player collision with enemy!");
-							
 				}
 			}
 
@@ -115,7 +119,7 @@ namespace Crescer3D
 
 					list_iter=m_food_list.erase(list_iter);
 					Sound::playEatFoodMusic();
-					Logger::Log("Player collision with food!");
+					//Logger::Log("Player collision with food!");
 				}			
 			}
 
@@ -150,7 +154,7 @@ namespace Crescer3D
 								outer_enemy_list_iter=m_enemy_list.erase(outer_enemy_list_iter);
 							}
 							
-							Logger::Log("Enemy collision with enemy!");
+							//Logger::Log("Enemy collision with enemy!");
 							
 						}
 					}
@@ -164,7 +168,7 @@ namespace Crescer3D
 						(*outer_enemy_list_iter)->setGoalState(undefined);
 						food_list_iter=m_food_list.erase(food_list_iter);
 						
-						Logger::Log("Enemy collision with food!");
+						//Logger::Log("Enemy collision with food!");
 					}		
 				}
 			}	
@@ -209,7 +213,7 @@ namespace Crescer3D
 					if((distance_to_player<=radius_of_interest)&&(m_Player->getWeight()<(*list_iter)->getWeight()))
 					{
 						(*list_iter)->setGoalState(eat_player);
-						std::cout<< (*list_iter)->getID()<< ": eat_player"<<std::endl;
+						//std::cout<< (*list_iter)->getID()<< ": eat_player"<<std::endl;
 						continue;
 					}
 			
@@ -487,7 +491,7 @@ namespace Crescer3D
 	}
 	void Game::SetGameStateGameOver()
 	{
-		std::cout <<  "Game over" << std::endl;
+		//std::cout <<  "Game over" << std::endl;
 		gameState = Game_GameOver;
 		gameNeedReset=true;
 		ResetGame();
@@ -528,7 +532,7 @@ namespace Crescer3D
 	{
 		if(gameNeedReset)
 		{
-			std::cout <<  "Reset Game" << std::endl;
+			//std::cout <<  "Reset Game" << std::endl;
 
 			HighScore::Reset();
 

@@ -4,6 +4,7 @@ bindir = bin/
 src = src/
 cStd = c99
 cppStd = c++0x
+debugFlag = 
 
 # Variables to build for centos
 centos: SYSTEM_FLAG := -D__CENTOS__
@@ -31,31 +32,31 @@ centos: compile link
 
 # Compile Commands
 compile:
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)VectorUtils3.o $(commondir)VectorUtils3.c
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)loadobj.o $(commondir)loadobj.c
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)LoadTGA.o $(commondir)LoadTGA.c
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)simplefont.o $(commondir)simplefont.c
-	gcc -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sphere.o $(src)Sphere.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)HighScore.o $(src)HighScore.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Button.o $(src)Button.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)GUI.o $(src)GUI.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Engine.o $(src)Engine.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Window.o $(src)Window.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Game.o $(src)Game.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Camera.o $(src)Camera.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Enemy.o $(src)Enemy.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)System.o $(src)System.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Cube.o $(src)Cube.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)World.o $(src)World.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Input.o $(src)Input.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Logger.o $(src)Logger.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Player.o $(src)Player.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Food.o $(src)Food.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sound.o $(src)Sound.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Timing.o $(src)Timing.cpp
-	g++ -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)main.o main.cpp
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)VectorUtils3.o $(commondir)VectorUtils3.c
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)loadobj.o $(commondir)loadobj.c
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)LoadTGA.o $(commondir)LoadTGA.c
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)simplefont.o $(commondir)simplefont.c
+	gcc $(debugFlag) -c -w -std=$(cStd) $(SYSTEM_FLAG) -o $(bindir)GL_utilities.o $(commondir)GL_utilities.c
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sphere.o $(src)Sphere.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)HighScore.o $(src)HighScore.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Button.o $(src)Button.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)GUI.o $(src)GUI.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Engine.o $(src)Engine.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Window.o $(src)Window.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Game.o $(src)Game.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Camera.o $(src)Camera.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Enemy.o $(src)Enemy.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)System.o $(src)System.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Cube.o $(src)Cube.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)World.o $(src)World.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Input.o $(src)Input.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Logger.o $(src)Logger.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Player.o $(src)Player.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Food.o $(src)Food.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Sound.o $(src)Sound.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)Timing.o $(src)Timing.cpp
+	g++ $(debugFlag) -c -w -std=$(cppStd) $(SYSTEM_FLAG) -o $(bindir)main.o main.cpp
 
 # Link Commands
 link:
