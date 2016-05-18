@@ -76,7 +76,7 @@ namespace Crescer3D
 #ifndef __CENTOS__
 		if(engine)
 		{
-			engine->play2D("sounds/gameOver.mp3");
+			engine->play2D("sounds/gameOver.wav");
 		}
 #endif
 	}
