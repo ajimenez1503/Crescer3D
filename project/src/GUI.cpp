@@ -101,6 +101,7 @@ namespace Crescer3D
 			if(buttonPlay.isClick()){
 				HighScore::SaveScore(namePlayer);
 				namePlayer="-------";//default name user
+				nameReady=false;
 				Input::Reset();
 				Game::SetGameStateInit();
 			}
