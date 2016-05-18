@@ -103,6 +103,8 @@ namespace Crescer3D
 				namePlayer="-------";//default name user
 				nameReady=false;
 				Input::Reset();
+				HighScore::Reset();
+				HighScore::CalculateListScores();
 				Game::SetGameStateInit();
 			}
 		}
@@ -123,10 +125,13 @@ namespace Crescer3D
 				Engine::GetEngine()->SetEngineState(ShuttingDown);
 			}
 
-			//TODO set initial position of Player
+			//set initial position of Player
 			if(buttonPlay.isClick()){
+				std::cout <<  "save bad" << std::endl;
 				namePlayer="-------";//default name user
 				Input::Reset();
+				HighScore::Reset();
+				HighScore::CalculateListScores();
 				Game::SetGameStateInit();
 			}
 		}

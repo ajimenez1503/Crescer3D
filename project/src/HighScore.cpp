@@ -101,7 +101,7 @@ namespace Crescer3D
 	void HighScore::SaveScore(std::string name)
 	{
 		//TODO save only if score >0
-		if(m_Score>0 && name!="       ")
+		if(m_Score>0)
 		{
 			std::ofstream myfile ("dataBase/Score.txt", std::ios::out| std::ios::app );
 			if (myfile.is_open() )
